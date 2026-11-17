@@ -1,0 +1,5 @@
+# GitHub Pages (Jekyll) configuration.
+# Publish only the portfolio (index.html, kpc-game.html, pdfs/).
+# The KLUIVERT OS development sources and tools are kept in the repository but never published.
+exclude:
+  - development

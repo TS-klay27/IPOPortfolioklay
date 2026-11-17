@@ -1,0 +1,23 @@
+# Build output and temporary files.
+# Sources under development/kluivert-os/src and tools are always tracked: never ignore them here.
+development/kluivert-os/dist/
+*.tmp
+*.bak
+*.bmp
+*.log
+
+# Local tool caches
+node_modules/
+__pycache__/
+*.pyc
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Editor / OS / assistant files
+.claude/
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store

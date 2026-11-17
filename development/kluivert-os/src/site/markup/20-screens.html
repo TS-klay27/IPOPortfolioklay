@@ -1,0 +1,95 @@
+<!-- ============ INTRO ============ -->
+<section id="intro" class="screen" aria-label="Welcome" hidden>
+  <header class="in-nav">
+    <div class="in-mark"><span class="in-symbol">K<b>.</b></span><small>KLUIVERT <em>/</em> PORTFOLIO</small></div>
+    <div class="in-right"><span class="dot-live"></span><span>PERSONAL SPACE</span><span class="in-hide">/ 2026</span></div>
+  </header>
+  <div class="in-main">
+    <section aria-label="Introduction">
+      <div class="in-eyebrow eyebrow"><i></i>WELCOME TO MY WORLD <span>/ 01</span></div>
+      <p class="in-hello">Hello, I'm <b aria-hidden="true">✳</b></p>
+      <h1 class="in-name" aria-label="Kluivert Manuel Peralta Carrera" data-lines="Kluivert Manuel|Peralta Carrera"></h1>
+      <div class="in-title"><i></i><div><p class="in-role">IT Systems <span>&amp;</span> Networks Student</p><p class="in-desc">Exploring technology through systems, networks, development and creative ideas.</p></div></div>
+      <div class="in-entry">
+        <a class="in-btn" id="intro-enter" href="#/lab"><span>Enter Kian's Room</span><b aria-hidden="true">↗</b></a>
+        <div class="term" id="term" hidden>
+          <div class="term-cells" id="term-cells" role="progressbar" aria-label="Opening Kian's Room" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+          <div class="term-read"><span>SYS://KLUIVERT/KIANS-ROOM</span><strong id="term-pct">00%</strong></div>
+        </div>
+        <p class="in-status" id="intro-status">A digital space for everything I create <span>✦</span></p>
+      </div>
+    </section>
+    <section class="showcase" aria-hidden="true">
+      <div class="sc-grid"></div>
+      <i class="corner c-tl"></i><i class="corner c-tr"></i><i class="corner c-bl"></i><i class="corner c-br"></i>
+      <div class="sc-top"><span>CREATIVE SYSTEMS</span><b>+ + +</b></div>
+      <div class="orbit"><i class="ring r1"></i><i class="ring r2"></i><i class="ring r3"></i><i class="axis"></i><i class="axis b"></i><div class="heart"><b>K</b><span>/ M P</span></div></div>
+      <div class="sc-bot"><span><i class="dot-live"></i>SYSTEM ONLINE</span><span>001 — 026</span></div>
+    </section>
+  </div>
+  <footer class="in-foot"><span>© 2026 KMP <b>✳</b> ALL RIGHTS RESERVED</span><span class="in-hide">SYSTEMS <b>·</b> NETWORKS <b>·</b> CREATIVITY</span><span>INTERACTIVE PORTFOLIO <b>↗</b></span></footer>
+</section>
+<canvas id="fx" aria-hidden="true" hidden></canvas>
+
+<!-- ============ KPC GAME — full-screen game mode ============ -->
+<section id="arcade" class="screen" aria-label="KPC GAME" hidden>
+  <header class="ar-bar">
+    <button class="btn" type="button" id="ar-back"><svg class="i"><use href="#i-back"/></svg><span class="label">Projects</span></button>
+    <div class="ar-brand"><span class="ar-logo">K</span><div><strong>KPC <b>GAME</b></strong><small>3D PUZZLE · 25 LEVELS · 5 ZONES</small></div></div>
+    <div class="ar-actions"><button class="btn" type="button" id="ar-full"><svg class="i"><use href="#i-full"/></svg><span class="label">Fullscreen</span></button><button class="btn ar-x" type="button" id="ar-close" aria-label="Close KPC GAME"><svg class="i"><use href="#i-close"/></svg></button></div>
+  </header>
+  <div class="ar-stage" id="ar-stage">
+    <div class="ar-load" id="ar-load"><div><div class="ar-glyph">KPC</div><p>LOADING GAME MODULE</p><i></i></div></div>
+  </div>
+</section>
+
+<!-- ============ KIAN'S ROOM — entrance ============ -->
+<section id="room" class="screen" aria-label="Kian's Room">
+  <div class="r-view" id="view">
+    <canvas id="room-canvas" tabindex="0" aria-label="Kian's Room, an isometric bedroom with a computer desk. Press Enter to use the computer and open KLUIVERT OS. Use the left and right arrow keys to rotate the view."></canvas>
+    <div class="r-vignette"></div>
+    <div class="r-grain"></div>
+  </div>
+  <header class="r-head">
+    <a class="r-brand" href="#/index" data-route="index" aria-label="Back to the intro"><strong>KLUIVERT<b>.</b></strong><span>Kian's Room</span></a>
+    <div class="r-id">Kluivert Manuel Peralta Carrera<b>IT Systems &amp; Networks Student</b></div>
+  </header>
+  <div class="mon-hint" id="mon-hint" aria-hidden="true"><i></i><span id="mon-hint-text">CLICK THE MONITOR</span></div>
+  <button class="btn primary enter-btn" type="button" id="enter-os">Use the computer · Enter KLUIVERT OS</button>
+</section>
+
+<!-- ============ BOOT LAYER (monitor → screen) ============ -->
+<div id="boot" hidden aria-live="polite">
+  <div class="boot-core">
+    <div class="boot-mark">K</div>
+    <h1 class="boot-logo">KLUIVERT <span>OS</span></h1>
+    <p class="boot-sub">PERSONAL OPERATING ENVIRONMENT · v2.0</p>
+    <div class="boot-bar"><i id="boot-fill"></i></div>
+    <div class="boot-meta"><span class="boot-line" id="boot-line">Initialising</span><b id="boot-pct">00%</b></div>
+  </div>
+</div>
+
+<!-- ============ KLUIVERT OS ============ -->
+<section id="os" class="screen" aria-label="KLUIVERT OS" aria-hidden="true">
+  <div class="os-desk">
+    <nav class="os-icons" aria-label="KLUIVERT OS applications" id="os-icons"></nav>
+    <aside class="os-widget" aria-label="System widgets">
+      <div class="panel" style="--i:0"><div class="panel-k"><span>Local time</span><span class="dot-live"></span></div><div class="wg-clock" id="wg-clock">--:--</div><div class="wg-date" id="wg-date"></div></div>
+      <div class="panel" style="--i:1">
+        <div class="panel-k"><span>User</span><span>KMP</span></div>
+        <div class="wg-who"><img src="%%IMG_PORTRAIT%%" alt="" width="54" height="54" decoding="async"><div><strong>Kluivert Peralta</strong><span>IT Systems &amp; Networks Student</span></div></div>
+        <div class="wg-stats"><div><b>11</b><span>Certificates</span></div><div><b>2</b><span>CV formats</span></div><div><b>25</b><span>Game levels</span></div></div>
+      </div>
+      <div class="panel" style="--i:2"><div class="panel-k"><span>Interests</span><span>08</span></div><div class="wg-tags"><span>Systems &amp; networking</span><span>Linux &amp; Windows Server</span><span>System administration</span><span>Programming</span><span>AI</span><span>Game development</span><span>Music production</span><span>Creative projects</span></div></div>
+    </aside>
+  </div>
+  <div class="os-wins" id="os-wins"></div>
+  <div class="os-menu" id="os-menu" role="menu" hidden></div>
+  <footer class="os-tasks">
+    <button class="os-start" id="os-start" aria-haspopup="menu" aria-expanded="false" aria-controls="os-menu" title="KLUIVERT menu">K</button>
+    <div class="os-running" id="os-running" aria-label="Open windows"></div>
+    <div class="os-tray"><span class="clock" id="tray-clock"></span><button class="btn" id="leave-desk" title="Leave the desk and return to Kian's Room"><svg class="i"><use href="#i-room"/></svg><span class="label">Leave desk</span></button></div>
+  </footer>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>

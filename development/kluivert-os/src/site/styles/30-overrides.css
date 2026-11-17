@@ -1,0 +1,7 @@
+
+/* Icon tiles — one consistent teal family */
+.ico-shell{background:linear-gradient(150deg,#15434A,#0B262C);border:1px solid rgba(42,199,201,.32);color:var(--accent-2);box-shadow:inset 0 1px 0 rgba(200,255,248,.05),inset 0 0 16px rgba(42,199,201,.07)}
+.tone-b .ico-shell{background:linear-gradient(150deg,#123f45,#0a2428);border-color:rgba(42,199,201,.4);color:#7ad9da}
+.tone-v .ico-shell{background:linear-gradient(150deg,#11403a,#092522);border-color:rgba(24,183,160,.42);color:#3fcdb6}
+.pg-head h1,.h2,.statement{letter-spacing:-.035em}
+.card{border-radius:var(--r-lg)}
