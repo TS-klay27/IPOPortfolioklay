@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#050d17">
-<title>Bloxzord Game — Campaign 3.1.1</title>
+<title>KPC GAME — Campaign 3.1.1</title>
 <style>
 :root{color-scheme:dark;--bg:#07111c;--panel:#0d1a29;--line:#263d51;--text:#e4f7fc;--muted:#8095a6;--cyan:#55e7e4;--amber:#ffa45c;--danger:#ff6e77;--radius:18px}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif}body{background:radial-gradient(ellipse at 47% -30%,#18354b 0%,transparent 55%),linear-gradient(#060d17,#07111c);overflow-x:hidden}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}button:disabled{cursor:not-allowed;opacity:.32}
@@ -14,7 +14,7 @@
 @media(max-width:980px){.shell{padding:16px}.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.viewport{height:620px;min-height:520px}.introline{align-items:end}}@media(max-width:620px){.shell{padding:12px}.topbar{padding-bottom:15px}.brandlogo{width:42px;height:42px}.topactions .small-btn{font-size:9px;padding:8px}.brand h1{font-size:17px}.introline{margin:18px 0 13px}.introline h2{font-size:27px}.session{display:none}.side{display:flex}.viewport{height:480px;min-height:420px}.viewport-head{font-size:9px;padding:11px}.canvas-legend{font-size:9px;left:12px;top:12px}.modal{padding:25px 17px}.modal h2{font-size:27px}.footer{font-size:9px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 
-/* Bloxzord Game — HUD layout and true viewport fullscreen */\n
+/* KPC GAME — HUD layout and true viewport fullscreen */\n
 .viewport-head-meta{display:flex;align-items:center;gap:12px}
 .viewport-head-meta strong{color:var(--cyan);font:800 8px monospace;letter-spacing:.12em}
 .shell.is-fullscreen .viewport-head-meta{gap:9px}
@@ -144,7 +144,7 @@ html.game-fullscreen,html.game-fullscreen body{width:100%;height:100%;min-height
 @media(prefers-reduced-motion:reduce){.hud-panel,.level-dock,.help-modal{transition:none!important}}
 
 
-/* Bloxzord Game v2.0 — player identity on the block and full brand update */
+/* KPC GAME v2.0 — player identity on the block and full brand update */
 html,body{width:100%;height:100%;min-height:0;overflow:hidden}
 body{overflow:hidden}
 .shell{
@@ -375,7 +375,7 @@ body{overflow:hidden}
 }
 
 
-/* v3.1.1 — explicit CIAN / ÁMBAR phase-switch instruction */
+/* v3.1.1 — explicit CYAN / AMBER phase-switch instruction */
 .hud-description strong{
   color:#78f5ee;font-family:monospace;font-weight:1000;letter-spacing:.08em;
   text-shadow:0 0 8px #55e7e455
@@ -388,119 +388,119 @@ body{overflow:hidden}
 </head>
 <body>
 <div class="shell">
-  <header class="topbar"><div class="brand"><div class="brandlogo">B</div><div><h1>Bloxzord <span>Game</span></h1><p>3D PUZZLE · 5 ZONAS · 25 NIVELES</p></div></div><div class="topactions"><button class="small-btn" id="back-portfolio-btn">← PORTFOLIO</button><button class="small-btn" id="music-btn">♫ MÚSICA: OFF</button><button class="small-btn" id="sfx-btn">◈ EFECTOS: OFF</button><button class="small-btn" id="help-btn" aria-controls="dialog" aria-expanded="false">? CONTROLES</button><button class="small-btn" id="rank-toggle-btn" aria-controls="rank-panel" aria-expanded="false">🏆 RANKING</button><button class="small-btn primary" id="fullscreen-btn" aria-pressed="false">⛶ PANTALLA COMPLETA</button></div></header>
+  <header class="topbar"><div class="brand"><div class="brandlogo">K</div><div><h1>KPC <span>GAME</span></h1><p>3D PUZZLE · 5 ZONES · 25 LEVELS</p></div></div><div class="topactions"><button class="small-btn" id="back-portfolio-btn">← PORTFOLIO</button><button class="small-btn" id="music-btn">♫ MUSIC: OFF</button><button class="small-btn" id="sfx-btn">◈ SFX: OFF</button><button class="small-btn" id="help-btn" aria-controls="dialog" aria-expanded="false">? CONTROLS</button><button class="small-btn" id="rank-toggle-btn" aria-controls="rank-panel" aria-expanded="false">🏆 RANKING</button><button class="small-btn primary" id="fullscreen-btn" aria-pressed="false">⛶ FULLSCREEN</button></div></header>
 
   <div id="session-metadata" hidden aria-hidden="true">
     <span id="world-name">NEON FORGE</span>
     <span id="world-level">01</span>
     <span id="operator-name">—</span>
-    <span id="difficulty-name">FÁCIL</span>
+    <span id="difficulty-name">EASY</span>
   </div>
 <main class="layout">
   <section class="viewport-box">
     <div class="viewport-head">
-      <span><span class="pulse-dot"></span> TABLERO / NIVEL <span id="level-top">01</span></span>
-      <span class="viewport-head-meta">VISTA 3D · CÁMARA 55° <strong id="game-status">SYSTEM READY</strong></span>
+      <span><span class="pulse-dot"></span> BOARD / LEVEL <span id="level-top">01</span></span>
+      <span class="viewport-head-meta">3D VIEW · CAMERA 55° <strong id="game-status">SYSTEM READY</strong></span>
     </div>
     <div class="viewport" id="viewport">
-      <canvas id="game" role="img" aria-label="Bloxzord Game: puzle 3D con cámara oblicua y control directo del bloque" tabindex="0"></canvas>
+      <canvas id="game" role="img" aria-label="KPC GAME: 3D puzzle with an oblique camera and direct block control" tabindex="0"></canvas>
 
-      <section class="canvas-legend hud-panel" aria-label="Estado y mecánicas del juego">
+      <section class="canvas-legend hud-panel" aria-label="Game status and mechanics">
         <div class="hud-heading">
           <div class="hud-brand">
-            <strong>Bloxzord Game</strong>
+            <strong>KPC GAME</strong>
             <span id="canvas-world">NEON FORGE</span>
           </div>
           <span class="hud-signal"><i></i> <b id="hud-network-state">LOCAL</b></span>
         </div>
-        <div id="canvas-status" class="hud-status">LISTO PARA JUGAR</div>
+        <div id="canvas-status" class="hud-status">READY TO PLAY</div>
         <div class="hud-divider"></div>
         <div class="phase-caption hud-phase-caption">
-          <span>FRECUENCIA ACTIVA</span>
-          <span id="phase-label" class="phase-value">CIAN</span>
+          <span>ACTIVE FREQUENCY</span>
+          <span id="phase-label" class="phase-value">CYAN</span>
         </div>
-        <button id="phase-btn" class="phase-button hud-phase-button">↻ CAMBIAR POLARIDAD <kbd>Q</kbd></button>
-        <p class="description hud-description"><strong>PULSA Q</strong> para alternar entre <b>CIAN ⇄ ÁMBAR</b>. Hazlo desde una baldosa segura: solo los puentes del color activo pueden sostener el bloque.</p>
-        <div class="mechanic-panel"><span id="mechanic-label">REGLA DEL MUNDO</span><p id="mechanic-description">Domina el vuelco, las polaridades y los núcleos.</p></div>
+        <button id="phase-btn" class="phase-button hud-phase-button">↻ SWITCH POLARITY <kbd>Q</kbd></button>
+        <p class="description hud-description"><strong>PRESS Q</strong> to toggle between <b>CYAN ⇄ AMBER</b>. Do it from a safe tile: only bridges of the active colour can support the block.</p>
+        <div class="mechanic-panel"><span id="mechanic-label">WORLD RULE</span><p id="mechanic-description">Master rolling, polarities and cores.</p></div>
         <div class="hud-rules">
-          <span class="danger-tag">▲ AZUL = SIEMPRE MORTAL</span>
-          <span class="orange-tag">▲ NARANJA = MORTAL DE PIE</span>
+          <span class="danger-tag">▲ BLUE = ALWAYS DEADLY</span>
+          <span class="orange-tag">▲ ORANGE = DEADLY WHEN STANDING</span>
         </div>
       </section>
 
       <div class="toast" id="toast" role="status" aria-live="polite"></div>
       <div class="dialog" id="intro-dialog">
         <div class="modal">
-          <div class="mark">B</div>
-          <h2>Bloxzord Game</h2>
-          <p>25 niveles en cinco zonas. Domina nuevas mecánicas, recoge los núcleos y compite por los mejores récords.</p>
+          <div class="mark">K</div>
+          <h2>KPC GAME</h2>
+          <p>25 levels across five zones. Master new mechanics, collect the cores and compete for the best records.</p>
           <form id="name-form">
-            <label for="nickname">ESCRIBE TU NOMBRE</label>
-            <input id="nickname" name="nickname" maxlength="18" autocomplete="nickname" placeholder="Tu nombre" required>
-            <button class="main-cta" type="submit">EMPEZAR A JUGAR ↵</button>
+            <label for="nickname">ENTER YOUR NAME</label>
+            <input id="nickname" name="nickname" maxlength="18" autocomplete="nickname" placeholder="Your name" required>
+            <button class="main-cta" type="submit">START PLAYING ↵</button>
           </form>
-          <p class="sub">PULSA ENTER PARA EMPEZAR</p>
+          <p class="sub">PRESS ENTER TO START</p>
         </div>
       </div>
       <div class="dialog" id="dialog" hidden><div class="modal" id="dialog-content"></div></div>
     </div>
 
-    <div class="viewport-bottom level-dock" aria-label="Progreso y acciones del nivel">
+    <div class="viewport-bottom level-dock" aria-label="Level progress and actions">
       <div class="dock-stage">
-        <span class="dock-label">NIVEL / PROGRESO</span>
+        <span class="dock-label">LEVEL / PROGRESS</span>
         <div class="dock-stage-line">
           <div class="stage-big" id="stage-display">01 <small>/ 10</small></div>
           <div class="progress"><div id="progress"></div></div>
         </div>
       </div>
       <div class="dock-stats">
-        <div><small>MOVIMIENTOS</small><strong id="moves">00</strong></div>
-        <div><small>MEJOR MARCA</small><strong id="best">—</strong></div>
+        <div><small>MOVES</small><strong id="moves">00</strong></div>
+        <div><small>BEST SCORE</small><strong id="best">—</strong></div>
       </div>
       <div class="dock-cores">
-        <span class="dock-label">NÚCLEOS</span>
+        <span class="dock-label">CORES</span>
         <div class="core-row" id="cores"></div>
       </div>
-      <p class="description dock-note" id="level-description">Recupera todos los núcleos y alcanza el portal en vertical.</p>
+      <p class="description dock-note" id="level-description">Recover every core and reach the portal standing upright.</p>
       <div class="buttons-grid dock-actions">
-        <button class="flat-btn" id="undo-btn">↶ DESHACER · Z</button>
-        <button class="flat-btn" id="hint-btn">✦ PISTA · H</button>
-        <button class="flat-btn" id="reset-btn">↺ REINICIAR · R</button>
-        <button class="flat-btn" id="levels-btn">▦ NIVELES · L</button>
+        <button class="flat-btn" id="undo-btn">↶ UNDO · Z</button>
+        <button class="flat-btn" id="hint-btn">✦ HINT · H</button>
+        <button class="flat-btn" id="reset-btn">↺ RESTART · R</button>
+        <button class="flat-btn" id="levels-btn">▦ LEVELS · L</button>
       </div>
     </div>
   </section>
 
-  <aside class="rank-panel" id="rank-panel" aria-label="Clasificaciones locales">
+  <aside class="rank-panel" id="rank-panel" aria-label="Local leaderboards">
     <div class="rank-heading">
-      <div><span class="rank-kicker">RÉCORDS LOCALES</span><h2>TOP 10</h2></div>
+      <div><span class="rank-kicker">LOCAL RECORDS</span><h2>TOP 10</h2></div>
       <span class="rank-local" id="rank-status"><i></i> LOCAL</span>
-      <button class="rank-close" id="rank-close" aria-label="Cerrar clasificación">×</button>
+      <button class="rank-close" id="rank-close" aria-label="Close leaderboard">×</button>
     </div>
     <div class="rank-tabs">
-      <button class="rank-tab active" data-rank-mode="level">POR NIVEL</button>
-      <button class="rank-tab" data-rank-mode="campaign">CAMPAÑA</button>
+      <button class="rank-tab active" data-rank-mode="level">BY LEVEL</button>
+      <button class="rank-tab" data-rank-mode="campaign">CAMPAIGN</button>
     </div>
     <div class="rank-context">
-      <div class="rank-context-copy"><strong id="rank-title">NIVEL 01 / 25</strong><span id="rank-caption">MENOS MOVIMIENTOS = MEJOR POSICIÓN</span></div>
-      <select id="rank-level-select" class="rank-level-select" aria-label="Elegir nivel para consultar récords">
-        <option value="1">NIVEL 01</option><option value="2">NIVEL 02</option><option value="3">NIVEL 03</option><option value="4">NIVEL 04</option><option value="5">NIVEL 05</option><option value="6">NIVEL 06</option><option value="7">NIVEL 07</option><option value="8">NIVEL 08</option><option value="9">NIVEL 09</option><option value="10">NIVEL 10</option><option value="11">NIVEL 11</option><option value="12">NIVEL 12</option><option value="13">NIVEL 13</option><option value="14">NIVEL 14</option><option value="15">NIVEL 15</option><option value="16">NIVEL 16</option><option value="17">NIVEL 17</option><option value="18">NIVEL 18</option><option value="19">NIVEL 19</option><option value="20">NIVEL 20</option><option value="21">NIVEL 21</option><option value="22">NIVEL 22</option><option value="23">NIVEL 23</option><option value="24">NIVEL 24</option><option value="25">NIVEL 25</option>
+      <div class="rank-context-copy"><strong id="rank-title">LEVEL 01 / 25</strong><span id="rank-caption">FEWER MOVES = HIGHER RANK</span></div>
+      <select id="rank-level-select" class="rank-level-select" aria-label="Choose a level to view its records">
+        <option value="1">LEVEL 01</option><option value="2">LEVEL 02</option><option value="3">LEVEL 03</option><option value="4">LEVEL 04</option><option value="5">LEVEL 05</option><option value="6">LEVEL 06</option><option value="7">LEVEL 07</option><option value="8">LEVEL 08</option><option value="9">LEVEL 09</option><option value="10">LEVEL 10</option><option value="11">LEVEL 11</option><option value="12">LEVEL 12</option><option value="13">LEVEL 13</option><option value="14">LEVEL 14</option><option value="15">LEVEL 15</option><option value="16">LEVEL 16</option><option value="17">LEVEL 17</option><option value="18">LEVEL 18</option><option value="19">LEVEL 19</option><option value="20">LEVEL 20</option><option value="21">LEVEL 21</option><option value="22">LEVEL 22</option><option value="23">LEVEL 23</option><option value="24">LEVEL 24</option><option value="25">LEVEL 25</option>
       </select>
-      <button id="rank-refresh" class="rank-refresh" title="Actualizar clasificación">↻</button>
+      <button id="rank-refresh" class="rank-refresh" title="Refresh leaderboard">↻</button>
     </div>
     <ol class="rank-list" id="rank-list">
-      <li class="rank-empty">Completa un nivel para guardar tu primer récord local.</li>
+      <li class="rank-empty">Complete a level to save your first local record.</li>
     </ol>
     <div class="rank-footer">
-      <span id="rank-player-state">JUGADOR: —</span>
-      <span id="campaign-counter">CAMPAÑA 0 / 25</span>
+      <span id="rank-player-state">PLAYER: —</span>
+      <span id="campaign-counter">CAMPAIGN 0 / 25</span>
     </div>
-    <button id="new-campaign-btn" class="new-campaign-btn">↻ NUEVA CAMPAÑA · 25 NIVELES</button>
-    <p class="rank-note" id="rank-note">Los récords se guardan solo en este navegador y dispositivo.</p>
+    <button id="new-campaign-btn" class="new-campaign-btn">↻ NEW CAMPAIGN · 25 LEVELS</button>
+    <p class="rank-note" id="rank-note">Records are saved only in this browser and on this device.</p>
   </aside>
-</main><footer class="footer"><span>Bloxzord Game © 2026 · PUZLES 3D</span><span>5 ZONAS · 25 NIVELES · RANKING LOCAL</span></footer>
+</main><footer class="footer"><span>KPC GAME © 2026 · 3D PUZZLES</span><span>5 ZONES · 25 LEVELS · LOCAL RANKING</span></footer>
 </div>
-<script id="level-data" type="application/json">[{"title":"Primer contacto","start":[2,7,"s"],"goal":[10,5,"s"],"cores":[[8,7]],"tiles":{"3,7":"n","4,6":"m","9,5":"n","8,6":"n","10,3":"g","6,5":"n","5,6":"n","3,6":"n","9,7":"m","8,5":"m","9,4":"n","10,5":"n","2,7":"n","7,6":"n","4,7":"n","9,3":"n","8,7":"n","10,4":"n","9,6":"n","6,6":"n","7,5":"n","10,6":"g","6,4":"d","2,8":"g","4,5":"n","7,4":"n","9,8":"n","5,7":"o"},"width":15,"height":11,"par":12,"world":"NEON FORGE","theme":"forge","difficulty":"FÁCIL","mechanic":"BASE","mechanicDescription":"Domina el vuelco, las polaridades, los núcleos y las dos baldosas trampa.","campaignZone":1},{"title":"Pasarela dividida","start":[2,4,"s"],"goal":[14,1,"s"],"cores":[[13,2]],"tiles":{"12,1":"n","4,3":"n","14,1":"n","5,1":"n","11,2":"n","2,2":"n","13,2":"n","7,1":"n","4,2":"n","12,3":"n","3,3":"n","9,1":"n","11,1":"n","2,4":"n","13,1":"n","6,1":"n","12,2":"g","3,2":"n","4,1":"g","8,1":"n","11,3":"m","10,1":"m","2,3":"m","13,3":"g","5,3":"d","9,0":"n","14,3":"o","8,2":"n","1,4":"n"},"width":15,"height":11,"par":16,"world":"NEON FORGE","theme":"forge","difficulty":"FÁCIL","mechanic":"BASE","mechanicDescription":"Domina el vuelco, las polaridades, los núcleos y las dos baldosas trampa.","campaignZone":1},{"title":"Cruce de frecuencia","start":[2,5,"s"],"goal":[12,8,"s"],"cores":[[7,10]],"tiles":{"4,9":"g","3,7":"n","12,10":"n","14,10":"n","5,10":"g","2,5":"n","13,8":"g","7,10":"n","14,9":"n","4,8":"n","3,6":"n","5,9":"n","9,10":"n","11,10":"m","2,7":"n","13,10":"n","6,10":"n","12,8":"n","4,10":"n","3,8":"n","14,8":"n","5,8":"a","8,10":"n","10,10":"n","13,9":"n","2,6":"m","4,7":"n","1,5":"n","12,9":"n","12,7":"d","11,8":"m","4,6":"g","10,9":"n","2,8":"o","8,9":"n"},"width":15,"height":11,"par":15,"world":"NEON FORGE","theme":"forge","difficulty":"NORMAL","mechanic":"BASE","mechanicDescription":"Domina el vuelco, las polaridades, los núcleos y las dos baldosas trampa.","campaignZone":1},{"title":"Puente de presión","start":[2,5,"s"],"goal":[13,2,"s"],"cores":[[4,1],[9,2]],"tiles":{"4,0":"n","3,1":"n","14,1":"o","9,2":"n","8,0":"n","11,2":"n","10,0":"n","2,2":"n","13,2":"n","2,5":"n","4,2":"m","3,0":"a","14,0":"g","5,0":"n","9,1":"n","10,2":"o","2,4":"n","13,1":"o","7,0":"n","12,2":"m","3,2":"n","14,2":"n","4,1":"n","9,0":"g","10,1":"g","13,0":"n","2,3":"g","6,0":"n","3,4":"n","1,4":"n","3,3":"n","2,1":"n","5,1":"d","11,0":"n","4,3":"n","5,2":"o"},"width":15,"height":11,"par":17,"world":"NEON FORGE","theme":"forge","difficulty":"DIFÍCIL","mechanic":"BASE","mechanicDescription":"Domina el vuelco, las polaridades, los núcleos y las dos baldosas trampa.","campaignZone":1},{"title":"Forja final","start":[2,6,"s"],"goal":[10,4,"s"],"cores":[[1,7],[11,5]],"tiles":{"3,7":"n","5,7":"n","9,5":"g","10,6":"g","8,6":"m","11,5":"n","1,6":"o","6,5":"n","5,6":"o","4,8":"a","9,7":"d","8,5":"n","11,4":"n","9,4":"n","0,7":"n","10,5":"b","2,7":"n","4,7":"m","3,8":"n","5,5":"n","5,8":"o","8,7":"n","10,4":"n","9,6":"o","0,6":"n","1,7":"g","2,6":"n","7,5":"n","7,6":"n","9,8":"n","0,8":"m","10,3":"n","7,7":"n","8,4":"n","6,6":"n","4,6":"n"},"width":15,"height":11,"par":19,"world":"NEON FORGE","theme":"forge","difficulty":"MUY DIFÍCIL","mechanic":"BASE","mechanicDescription":"Domina el vuelco, las polaridades, los núcleos y las dos baldosas trampa.","campaignZone":1},{"title":"Primer deslizamiento","start":[2,5,"s"],"goal":[13,0],"cores":[[3,3],[8,1]],"tiles":{"12,2":"n","3,5":"n","3,2":"n","4,3":"n","5,2":"n","8,0":"b","9,1":"n","0,4":"g","10,0":"n","11,1":"m","2,4":"i","13,1":"n","7,2":"o","3,6":"g","5,3":"n","3,3":"n","8,1":"n","2,5":"m","11,2":"n","0,5":"n","10,1":"o","1,4":"n","13,2":"n","6,2":"n","7,3":"n","4,2":"o","3,4":"a","12,1":"n","9,0":"n","10,2":"n","1,5":"n","2,6":"o","13,0":"g","6,3":"n","7,1":"n","9,2":"d","12,0":"n","1,6":"n","4,4":"n","0,6":"n","5,4":"n","4,1":"n","7,0":"m","3,1":"m","2,2":"n","14,1":"n","6,4":"m"},"width":15,"height":7,"par":18,"world":"CRYO VAULT","theme":"cryo","difficulty":"NORMAL","mechanic":"ICE","mechanicDescription":"Al aterrizar en hielo, el bloque se desliza una casilla más en la dirección del movimiento.","campaignZone":2},{"title":"Freno imposible","start":[1,12,"s"],"goal":[5,1],"cores":[[5,10],[6,5]],"tiles":{"6,2":"n","3,11":"n","3,9":"o","1,10":"n","7,6":"n","7,4":"n","5,12":"n","5,1":"m","5,8":"n","6,7":"n","2,8":"n","7,2":"m","5,10":"m","2,10":"d","4,11":"n","1,11":"n","4,9":"n","6,5":"n","6,3":"n","3,12":"g","6,1":"o","6,8":"n","7,7":"b","3,8":"n","5,11":"a","2,11":"g","5,9":"n","7,5":"n","2,9":"n","6,6":"m","7,3":"n","6,4":"n","7,1":"n","4,12":"o","1,12":"n","7,8":"o","4,8":"o","2,12":"i","7,0":"n","4,10":"n","0,10":"n","2,7":"n"},"width":8,"height":13,"par":15,"world":"CRYO VAULT","theme":"cryo","difficulty":"DIFÍCIL","mechanic":"ICE","mechanicDescription":"Al aterrizar en hielo, el bloque se desliza una casilla más en la dirección del movimiento.","campaignZone":2},{"title":"Cámara congelada","start":[2,3,"s"],"goal":[13,2],"cores":[[3,2],[10,1]],"tiles":{"12,1":"n","3,1":"a","5,4":"g","9,2":"n","0,2":"i","10,0":"n","13,2":"g","1,3":"n","6,2":"n","12,0":"n","4,2":"n","5,3":"n","8,2":"n","9,1":"b","0,1":"g","11,1":"o","1,2":"g","2,1":"n","13,1":"n","6,4":"a","3,2":"n","4,1":"o","5,2":"i","9,0":"g","11,0":"n","1,1":"o","0,3":"o","10,1":"n","13,0":"n","2,3":"n","7,2":"m","6,3":"n","7,3":"d","0,0":"n","3,0":"n","2,4":"n","8,1":"o","13,3":"n","10,2":"n","4,3":"n","12,2":"n"},"width":14,"height":5,"par":15,"world":"CRYO VAULT","theme":"cryo","difficulty":"DIFÍCIL","mechanic":"ICE","mechanicDescription":"Al aterrizar en hielo, el bloque se desliza una casilla más en la dirección del movimiento.","campaignZone":2},{"title":"Riel de escarcha","start":[3,10,"s"],"goal":[4,0],"cores":[[2,8],[1,12],[5,6]],"tiles":{"4,0":"n","4,9":"n","3,8":"n","1,9":"g","2,12":"n","2,10":"i","0,11":"o","3,11":"o","4,5":"n","5,6":"n","2,8":"g","0,9":"n","5,8":"g","3,9":"i","5,4":"n","4,1":"m","4,3":"n","1,12":"n","4,10":"m","2,11":"a","1,10":"n","2,9":"a","5,9":"n","5,7":"b","4,4":"o","0,12":"n","4,2":"o","1,11":"n","0,10":"o","4,11":"n","3,10":"n","5,5":"m","6,9":"m","5,3":"d","3,1":"n","3,0":"g","1,8":"n","6,4":"n"},"width":7,"height":13,"par":19,"world":"CRYO VAULT","theme":"cryo","difficulty":"MUY DIFÍCIL","mechanic":"ICE","mechanicDescription":"Al aterrizar en hielo, el bloque se desliza una casilla más en la dirección del movimiento.","campaignZone":2},{"title":"Deslizamiento letal","start":[12,3,"s"],"goal":[0,6],"cores":[[13,4],[5,2],[1,4]],"tiles":{"2,6":"n","0,6":"m","11,3":"n","11,0":"n","9,0":"n","6,1":"o","5,2":"n","14,5":"n","4,1":"b","13,4":"i","3,2":"n","12,5":"n","1,5":"n","7,0":"o","2,4":"o","11,1":"a","5,0":"a","14,3":"n","6,2":"n","3,3":"n","1,6":"n","12,3":"i","13,5":"m","8,0":"n","2,5":"g","10,0":"g","11,2":"n","5,1":"n","6,0":"n","3,1":"m","14,4":"i","3,4":"n","4,0":"o","13,3":"n","12,4":"o","1,4":"n","10,1":"n","12,1":"m","2,3":"n","0,7":"n","0,5":"n","13,6":"n","11,4":"d","2,2":"g","12,2":"n","4,2":"n","7,1":"n","12,0":"o","3,6":"d"},"width":15,"height":8,"par":27,"world":"CRYO VAULT","theme":"cryo","difficulty":"EXTREMO","mechanic":"ICE","mechanicDescription":"Al aterrizar en hielo, el bloque se desliza una casilla más en la dirección del movimiento.","campaignZone":2},{"title":"Cinta de arranque","start":[1,0,"s"],"goal":[3,8],"cores":[[1,6]],"tiles":{"1,1":"cd","2,2":"m","3,7":"n","2,6":"n","5,8":"g","3,4":"n","2,3":"n","2,1":"n","1,7":"m","3,6":"m","4,7":"n","3,8":"n","1,0":"n","2,5":"n","1,2":"n","5,7":"n","1,6":"n","4,8":"n","2,7":"n","2,4":"n","3,5":"n","2,8":"g","4,4":"d","0,0":"g","3,2":"n","4,5":"n","0,7":"n","1,3":"o"},"width":6,"height":9,"par":13,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"DIFÍCIL","mechanic":"BELT","mechanicDescription":"Al aterrizar en una cinta transportadora, esta desplaza el bloque una casilla en la dirección de su flecha.","campaignZone":3},{"title":"Flujo inverso","start":[0,1,"s"],"goal":[3,11],"cores":[[5,6]],"tiles":{"4,3":"g","2,2":"n","5,11":"n","5,13":"n","5,4":"g","0,1":"n","3,12":"g","5,6":"n","4,13":"n","3,3":"n","1,2":"n","4,4":"n","5,8":"n","5,10":"m","2,1":"n","5,12":"n","5,5":"n","3,11":"n","5,3":"n","3,2":"n","3,13":"n","3,4":"a","5,7":"n","5,9":"n","4,12":"n","1,1":"cd","2,3":"n","0,0":"n","4,11":"n","2,11":"d","3,10":"m","1,3":"g","4,9":"n","3,1":"o","4,7":"n"},"width":6,"height":14,"par":14,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"DIFÍCIL","mechanic":"BELT","mechanicDescription":"Al aterrizar en una cinta transportadora, esta desplaza el bloque una casilla en la dirección de su flecha.","campaignZone":3},{"title":"Transportador doble","start":[2,9,"s"],"goal":[4,1],"cores":[[1,10],[3,0]],"tiles":{"1,8":"n","1,6":"n","3,2":"g","2,1":"g","2,3":"m","3,0":"n","2,10":"o","3,5":"n","2,6":"o","0,7":"a","1,2":"d","3,3":"n","4,0":"n","4,2":"n","1,11":"n","3,1":"b","1,9":"cu","1,7":"m","0,8":"n","3,6":"n","0,6":"o","1,3":"n","4,1":"n","2,2":"o","2,11":"cu","1,10":"g","2,9":"n","3,4":"n","2,4":"n","0,2":"n","0,11":"m","5,1":"n","1,4":"n","4,3":"n","2,5":"n","2,7":"n"},"width":6,"height":12,"par":18,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"MUY DIFÍCIL","mechanic":"BELT","mechanicDescription":"Al aterrizar en una cinta transportadora, esta desplaza el bloque una casilla en la dirección de su flecha.","campaignZone":3},{"title":"Carril de carga","start":[6,12,"s"],"goal":[2,1],"cores":[[2,10],[1,5]],"tiles":{"1,2":"n","4,11":"n","4,9":"o","6,10":"n","0,6":"n","0,4":"n","2,12":"n","2,1":"m","2,8":"n","1,7":"n","5,8":"n","0,2":"m","2,10":"m","5,10":"d","3,11":"cu","6,11":"n","3,9":"n","1,5":"n","1,3":"n","4,12":"g","1,1":"o","1,8":"n","0,7":"b","4,8":"n","2,11":"a","5,11":"g","2,9":"n","0,5":"n","5,9":"n","1,6":"m","0,3":"n","1,4":"n","0,1":"n","3,12":"o","6,12":"n","0,8":"o","3,8":"o","5,12":"cu","0,0":"n","3,10":"n","7,10":"n","5,7":"n"},"width":8,"height":13,"par":17,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"MUY DIFÍCIL","mechanic":"BELT","mechanicDescription":"Al aterrizar en una cinta transportadora, esta desplaza el bloque una casilla en la dirección de su flecha.","campaignZone":3},{"title":"Nudo de gravedad","start":[3,2,"s"],"goal":[2,12],"cores":[[4,4],[5,0],[1,6]],"tiles":{"2,12":"n","2,3":"n","3,4":"n","5,3":"g","4,0":"n","4,2":"cl","6,1":"o","3,1":"o","2,7":"n","1,6":"n","4,4":"g","6,3":"n","1,4":"g","3,3":"cl","1,8":"n","2,11":"m","2,9":"n","5,0":"n","2,2":"m","4,1":"a","5,2":"cl","4,3":"a","1,3":"n","1,5":"b","2,8":"o","6,0":"n","2,10":"o","5,1":"n","6,2":"o","2,1":"n","3,2":"n","1,7":"m","0,3":"m","1,9":"d","3,11":"n","3,12":"g","5,4":"n","0,8":"n"},"width":7,"height":13,"par":18,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"EXTREMO","mechanic":"BELT","mechanicDescription":"Al aterrizar en una cinta transportadora, esta desplaza el bloque una casilla en la dirección de su flecha.","campaignZone":3},{"title":"Conmutador","start":[1,0,"s"],"goal":[13,3],"cores":[[12,2]],"tiles":{"11,3":"n","3,1":"n","13,3":"n","4,3":"n","10,2":"n","1,2":"n","12,2":"n","6,3":"n","3,2":"n","11,1":"n","2,1":"n","8,3":"n","10,3":"n","1,0":"n","12,3":"n","5,3":"n","11,2":"g","2,2":"n","3,3":"g","7,3":"n","10,1":"m","9,3":"m","1,1":"v","12,1":"g","4,1":"d","8,4":"n","13,1":"o","7,2":"n","0,0":"n"},"width":14,"height":5,"par":16,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"DIFÍCIL","mechanic":"INVERTER","mechanicDescription":"Al entrar en una placa inversora, la polaridad cambia automáticamente de CIAN a ÁMBAR o viceversa.","campaignZone":4},{"title":"Fase cruzada","start":[1,5,"s"],"goal":[12,2],"cores":[[3,1],[8,2]],"tiles":{"3,0":"n","2,1":"n","13,1":"o","8,2":"n","7,0":"n","10,2":"n","9,0":"n","1,2":"n","12,2":"n","1,5":"n","3,2":"m","2,0":"a","13,0":"g","4,0":"n","8,1":"n","9,2":"o","1,4":"v","12,1":"o","6,0":"n","11,2":"m","2,2":"n","13,2":"n","3,1":"n","8,0":"g","9,1":"g","12,0":"n","1,3":"g","5,0":"n","2,4":"n","0,4":"n","2,3":"n","1,1":"n","4,1":"d","10,0":"n","3,3":"n","4,2":"o"},"width":14,"height":6,"par":18,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"MUY DIFÍCIL","mechanic":"INVERTER","mechanicDescription":"Al entrar en una placa inversora, la polaridad cambia automáticamente de CIAN a ÁMBAR o viceversa.","campaignZone":4},{"title":"Circuito gemelo","start":[12,5,"s"],"goal":[1,0],"cores":[[11,3],[6,1]],"tiles":{"2,2":"n","11,5":"n","11,2":"n","10,3":"n","9,2":"n","6,0":"b","5,1":"n","14,4":"g","4,0":"n","3,1":"m","12,4":"n","1,1":"n","7,2":"o","11,6":"g","9,3":"n","11,3":"n","6,1":"n","12,5":"m","3,2":"n","14,5":"v","4,1":"o","13,4":"n","1,2":"n","8,2":"n","7,3":"n","10,2":"o","11,4":"a","2,1":"n","5,0":"n","4,2":"n","13,5":"v","12,6":"o","1,0":"g","8,3":"n","7,1":"n","5,2":"d","2,0":"n","13,6":"n","10,4":"n","14,6":"n","9,4":"n","10,1":"n","7,0":"m","11,1":"m","12,2":"n","0,1":"n","8,4":"m"},"width":15,"height":7,"par":21,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"MUY DIFÍCIL","mechanic":"INVERTER","mechanicDescription":"Al entrar en una placa inversora, la polaridad cambia automáticamente de CIAN a ÁMBAR o viceversa.","campaignZone":4},{"title":"Retorno polar","start":[11,3,"s"],"goal":[0,2],"cores":[[10,2],[3,1]],"tiles":{"1,1":"n","10,1":"a","8,4":"g","4,2":"n","13,2":"v","3,0":"n","0,2":"g","12,3":"v","7,2":"n","1,0":"n","9,2":"n","8,3":"n","5,2":"n","4,1":"b","13,1":"g","2,1":"o","12,2":"g","11,1":"n","0,1":"n","7,4":"a","10,2":"n","9,1":"o","8,2":"n","4,0":"g","2,0":"n","12,1":"o","13,3":"o","3,1":"n","0,0":"n","11,3":"n","6,2":"m","7,3":"n","6,3":"d","13,0":"n","10,0":"n","11,4":"n","5,1":"o","0,3":"n","3,2":"n","9,3":"n","1,2":"n"},"width":14,"height":5,"par":19,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"EXTREMO","mechanic":"INVERTER","mechanicDescription":"Al entrar en una placa inversora, la polaridad cambia automáticamente de CIAN a ÁMBAR o viceversa.","campaignZone":4},{"title":"Sobrecarga de fase","start":[2,3,"s"],"goal":[14,6],"cores":[[1,4],[9,2],[13,4]],"tiles":{"12,6":"n","14,6":"m","3,3":"n","3,0":"n","5,0":"n","8,1":"o","9,2":"n","0,5":"n","10,1":"b","1,4":"v","11,2":"n","2,5":"v","13,5":"n","7,0":"o","12,4":"o","3,1":"a","9,0":"a","0,3":"n","8,2":"n","11,3":"n","13,6":"n","2,3":"m","1,5":"v","6,0":"n","12,5":"g","4,0":"g","3,2":"n","9,1":"n","8,0":"n","11,1":"m","0,4":"n","11,4":"n","10,0":"o","1,3":"n","2,4":"o","13,4":"n","4,1":"n","2,1":"m","12,3":"n","14,7":"n","14,5":"n","1,6":"n","3,4":"d","12,2":"g","2,2":"n","10,2":"n","7,1":"n","2,0":"o","11,6":"d"},"width":15,"height":8,"par":29,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"EXTREMO","mechanic":"INVERTER","mechanicDescription":"Al entrar en una placa inversora, la polaridad cambia automáticamente de CIAN a ÁMBAR o viceversa.","campaignZone":4},{"title":"Umbral gemelo","start":[5,12,"s"],"goal":[0,1],"cores":[[3,11],[1,6]],"tiles":{"2,2":"p","5,11":"n","2,11":"n","3,10":"n","2,9":"n","0,6":"b","1,5":"n","4,14":"g","0,4":"n","1,3":"m","4,12":"p","1,1":"n","2,7":"o","6,11":"g","3,9":"n","3,11":"n","1,6":"n","5,12":"m","2,3":"n","5,14":"n","1,4":"o","4,13":"n","2,1":"n","2,8":"n","3,7":"n","2,10":"o","4,11":"a","1,2":"n","0,5":"n","2,4":"n","5,13":"n","6,12":"o","0,1":"g","3,8":"n","1,7":"n","2,5":"d","0,2":"n","6,13":"n","4,10":"n","6,14":"n","4,9":"n","1,10":"n","0,7":"m","1,11":"m","2,12":"n","1,0":"n","4,8":"m"},"width":7,"height":15,"par":22,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"MUY DIFÍCIL","portals":[[4,12],[2,2]],"mechanic":"PORTAL","mechanicDescription":"Los portales emparejados teletransportan al bloque al caer de pie sobre su entrada.","campaignZone":5},{"title":"Salto ciego","start":[0,6,"s"],"goal":[11,2],"cores":[[2,2],[7,1]],"tiles":{"10,1":"p","1,4":"n","3,4":"o","2,6":"n","6,0":"n","8,0":"n","0,2":"n","11,2":"m","4,2":"n","5,1":"n","4,5":"n","10,0":"m","2,2":"m","2,5":"d","1,3":"p","1,6":"n","3,3":"n","7,1":"n","9,1":"n","0,4":"g","11,1":"o","4,1":"n","5,0":"b","4,4":"n","1,2":"a","1,5":"g","3,2":"n","7,0":"n","3,5":"n","6,1":"m","9,0":"n","8,1":"n","11,0":"n","0,3":"o","0,6":"n","4,0":"o","4,3":"o","0,5":"i","12,0":"n","2,3":"n","2,7":"n","5,5":"n"},"width":13,"height":8,"par":15,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"MUY DIFÍCIL","portals":[[1,3],[10,1]],"mechanic":"PORTAL","mechanicDescription":"Los portales emparejados teletransportan al bloque al caer de pie sobre su entrada.","campaignZone":5},{"title":"Portal encadenado","start":[3,11,"s"],"goal":[2,0],"cores":[[2,10],[1,3]],"tiles":{"1,1":"p","1,10":"a","4,8":"g","2,4":"n","2,13":"i","0,3":"n","2,0":"g","3,12":"cl","2,7":"n","0,1":"n","2,9":"n","3,8":"n","2,5":"n","1,4":"b","1,13":"g","1,2":"o","2,12":"g","1,11":"p","1,0":"n","4,7":"a","2,10":"n","1,9":"o","2,8":"n","0,4":"g","0,2":"n","1,12":"o","3,13":"o","1,3":"n","0,0":"n","3,11":"n","2,6":"m","3,7":"n","3,6":"d","0,13":"n","0,10":"n","4,11":"n","1,5":"o","3,0":"n","2,3":"n","3,9":"n","2,1":"n"},"width":5,"height":14,"par":20,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"EXTREMO","portals":[[1,11],[1,1]],"mechanic":"PORTAL","mechanicDescription":"Los portales emparejados teletransportan al bloque al caer de pie sobre su entrada.","campaignZone":5},{"title":"Laberinto dimensional","start":[10,3,"s"],"goal":[0,2],"cores":[[8,4],[12,5],[6,1]],"tiles":{"0,2":"n","9,2":"p","8,3":"n","9,5":"g","12,4":"n","10,4":"p","11,6":"o","11,3":"o","5,2":"n","6,1":"n","8,4":"g","9,6":"n","8,1":"g","9,3":"i","4,1":"n","1,2":"m","3,2":"n","12,5":"n","10,2":"m","11,4":"a","10,5":"cl","9,4":"a","9,1":"n","7,1":"b","4,2":"o","12,6":"n","2,2":"o","11,5":"n","10,6":"o","11,2":"n","10,3":"n","5,1":"m","9,0":"m","3,1":"d","1,3":"n","0,3":"g","8,5":"v","4,0":"n"},"width":13,"height":7,"par":20,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"EXTREMO","portals":[[10,4],[9,2]],"mechanic":"PORTAL","mechanicDescription":"Los portales emparejados teletransportan al bloque al caer de pie sobre su entrada.","campaignZone":5},{"title":"Ruptura final","start":[3,2,"s"],"goal":[6,14],"cores":[[4,1],[2,9],[4,13]],"tiles":{"6,12":"p","6,14":"m","3,3":"n","0,3":"n","0,5":"n","1,8":"o","2,9":"n","5,0":"n","1,10":"b","4,1":"n","2,11":"n","5,2":"n","5,13":"n","0,7":"o","4,12":"o","1,3":"a","0,9":"a","3,0":"v","2,8":"n","3,11":"n","6,13":"n","3,2":"p","5,1":"m","0,6":"n","5,12":"g","0,4":"g","2,3":"n","1,9":"n","0,8":"n","1,11":"m","4,0":"i","4,11":"n","0,10":"o","3,1":"cr","4,2":"o","4,13":"n","1,4":"n","1,2":"m","3,12":"n","7,14":"n","5,14":"n","6,1":"n","4,3":"d","2,12":"g","2,2":"n","2,10":"n","1,7":"n","0,2":"o","6,11":"d"},"width":8,"height":15,"par":19,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"MAESTRO","portals":[[3,2],[6,12]],"mechanic":"PORTAL","mechanicDescription":"Los portales emparejados teletransportan al bloque al caer de pie sobre su entrada.","campaignZone":5}]</script>
+<script id="level-data" type="application/json">[{"title":"First Contact","start":[2,7,"s"],"goal":[10,5,"s"],"cores":[[8,7]],"tiles":{"3,7":"n","4,6":"m","9,5":"n","8,6":"n","10,3":"g","6,5":"n","5,6":"n","3,6":"n","9,7":"m","8,5":"m","9,4":"n","10,5":"n","2,7":"n","7,6":"n","4,7":"n","9,3":"n","8,7":"n","10,4":"n","9,6":"n","6,6":"n","7,5":"n","10,6":"g","6,4":"d","2,8":"g","4,5":"n","7,4":"n","9,8":"n","5,7":"o"},"width":15,"height":11,"par":12,"world":"NEON FORGE","theme":"forge","difficulty":"EASY","mechanic":"BASE","mechanicDescription":"Master rolling, polarities, cores and the two trap tiles.","campaignZone":1},{"title":"Split Walkway","start":[2,4,"s"],"goal":[14,1,"s"],"cores":[[13,2]],"tiles":{"12,1":"n","4,3":"n","14,1":"n","5,1":"n","11,2":"n","2,2":"n","13,2":"n","7,1":"n","4,2":"n","12,3":"n","3,3":"n","9,1":"n","11,1":"n","2,4":"n","13,1":"n","6,1":"n","12,2":"g","3,2":"n","4,1":"g","8,1":"n","11,3":"m","10,1":"m","2,3":"m","13,3":"g","5,3":"d","9,0":"n","14,3":"o","8,2":"n","1,4":"n"},"width":15,"height":11,"par":16,"world":"NEON FORGE","theme":"forge","difficulty":"EASY","mechanic":"BASE","mechanicDescription":"Master rolling, polarities, cores and the two trap tiles.","campaignZone":1},{"title":"Frequency Crossing","start":[2,5,"s"],"goal":[12,8,"s"],"cores":[[7,10]],"tiles":{"4,9":"g","3,7":"n","12,10":"n","14,10":"n","5,10":"g","2,5":"n","13,8":"g","7,10":"n","14,9":"n","4,8":"n","3,6":"n","5,9":"n","9,10":"n","11,10":"m","2,7":"n","13,10":"n","6,10":"n","12,8":"n","4,10":"n","3,8":"n","14,8":"n","5,8":"a","8,10":"n","10,10":"n","13,9":"n","2,6":"m","4,7":"n","1,5":"n","12,9":"n","12,7":"d","11,8":"m","4,6":"g","10,9":"n","2,8":"o","8,9":"n"},"width":15,"height":11,"par":15,"world":"NEON FORGE","theme":"forge","difficulty":"NORMAL","mechanic":"BASE","mechanicDescription":"Master rolling, polarities, cores and the two trap tiles.","campaignZone":1},{"title":"Pressure Bridge","start":[2,5,"s"],"goal":[13,2,"s"],"cores":[[4,1],[9,2]],"tiles":{"4,0":"n","3,1":"n","14,1":"o","9,2":"n","8,0":"n","11,2":"n","10,0":"n","2,2":"n","13,2":"n","2,5":"n","4,2":"m","3,0":"a","14,0":"g","5,0":"n","9,1":"n","10,2":"o","2,4":"n","13,1":"o","7,0":"n","12,2":"m","3,2":"n","14,2":"n","4,1":"n","9,0":"g","10,1":"g","13,0":"n","2,3":"g","6,0":"n","3,4":"n","1,4":"n","3,3":"n","2,1":"n","5,1":"d","11,0":"n","4,3":"n","5,2":"o"},"width":15,"height":11,"par":17,"world":"NEON FORGE","theme":"forge","difficulty":"HARD","mechanic":"BASE","mechanicDescription":"Master rolling, polarities, cores and the two trap tiles.","campaignZone":1},{"title":"Final Forge","start":[2,6,"s"],"goal":[10,4,"s"],"cores":[[1,7],[11,5]],"tiles":{"3,7":"n","5,7":"n","9,5":"g","10,6":"g","8,6":"m","11,5":"n","1,6":"o","6,5":"n","5,6":"o","4,8":"a","9,7":"d","8,5":"n","11,4":"n","9,4":"n","0,7":"n","10,5":"b","2,7":"n","4,7":"m","3,8":"n","5,5":"n","5,8":"o","8,7":"n","10,4":"n","9,6":"o","0,6":"n","1,7":"g","2,6":"n","7,5":"n","7,6":"n","9,8":"n","0,8":"m","10,3":"n","7,7":"n","8,4":"n","6,6":"n","4,6":"n"},"width":15,"height":11,"par":19,"world":"NEON FORGE","theme":"forge","difficulty":"VERY HARD","mechanic":"BASE","mechanicDescription":"Master rolling, polarities, cores and the two trap tiles.","campaignZone":1},{"title":"First Slide","start":[2,5,"s"],"goal":[13,0],"cores":[[3,3],[8,1]],"tiles":{"12,2":"n","3,5":"n","3,2":"n","4,3":"n","5,2":"n","8,0":"b","9,1":"n","0,4":"g","10,0":"n","11,1":"m","2,4":"i","13,1":"n","7,2":"o","3,6":"g","5,3":"n","3,3":"n","8,1":"n","2,5":"m","11,2":"n","0,5":"n","10,1":"o","1,4":"n","13,2":"n","6,2":"n","7,3":"n","4,2":"o","3,4":"a","12,1":"n","9,0":"n","10,2":"n","1,5":"n","2,6":"o","13,0":"g","6,3":"n","7,1":"n","9,2":"d","12,0":"n","1,6":"n","4,4":"n","0,6":"n","5,4":"n","4,1":"n","7,0":"m","3,1":"m","2,2":"n","14,1":"n","6,4":"m"},"width":15,"height":7,"par":18,"world":"CRYO VAULT","theme":"cryo","difficulty":"NORMAL","mechanic":"ICE","mechanicDescription":"When it lands on ice, the block slides one more square in the direction of the move.","campaignZone":2},{"title":"Impossible Brake","start":[1,12,"s"],"goal":[5,1],"cores":[[5,10],[6,5]],"tiles":{"6,2":"n","3,11":"n","3,9":"o","1,10":"n","7,6":"n","7,4":"n","5,12":"n","5,1":"m","5,8":"n","6,7":"n","2,8":"n","7,2":"m","5,10":"m","2,10":"d","4,11":"n","1,11":"n","4,9":"n","6,5":"n","6,3":"n","3,12":"g","6,1":"o","6,8":"n","7,7":"b","3,8":"n","5,11":"a","2,11":"g","5,9":"n","7,5":"n","2,9":"n","6,6":"m","7,3":"n","6,4":"n","7,1":"n","4,12":"o","1,12":"n","7,8":"o","4,8":"o","2,12":"i","7,0":"n","4,10":"n","0,10":"n","2,7":"n"},"width":8,"height":13,"par":15,"world":"CRYO VAULT","theme":"cryo","difficulty":"HARD","mechanic":"ICE","mechanicDescription":"When it lands on ice, the block slides one more square in the direction of the move.","campaignZone":2},{"title":"Frozen Chamber","start":[2,3,"s"],"goal":[13,2],"cores":[[3,2],[10,1]],"tiles":{"12,1":"n","3,1":"a","5,4":"g","9,2":"n","0,2":"i","10,0":"n","13,2":"g","1,3":"n","6,2":"n","12,0":"n","4,2":"n","5,3":"n","8,2":"n","9,1":"b","0,1":"g","11,1":"o","1,2":"g","2,1":"n","13,1":"n","6,4":"a","3,2":"n","4,1":"o","5,2":"i","9,0":"g","11,0":"n","1,1":"o","0,3":"o","10,1":"n","13,0":"n","2,3":"n","7,2":"m","6,3":"n","7,3":"d","0,0":"n","3,0":"n","2,4":"n","8,1":"o","13,3":"n","10,2":"n","4,3":"n","12,2":"n"},"width":14,"height":5,"par":15,"world":"CRYO VAULT","theme":"cryo","difficulty":"HARD","mechanic":"ICE","mechanicDescription":"When it lands on ice, the block slides one more square in the direction of the move.","campaignZone":2},{"title":"Frost Rail","start":[3,10,"s"],"goal":[4,0],"cores":[[2,8],[1,12],[5,6]],"tiles":{"4,0":"n","4,9":"n","3,8":"n","1,9":"g","2,12":"n","2,10":"i","0,11":"o","3,11":"o","4,5":"n","5,6":"n","2,8":"g","0,9":"n","5,8":"g","3,9":"i","5,4":"n","4,1":"m","4,3":"n","1,12":"n","4,10":"m","2,11":"a","1,10":"n","2,9":"a","5,9":"n","5,7":"b","4,4":"o","0,12":"n","4,2":"o","1,11":"n","0,10":"o","4,11":"n","3,10":"n","5,5":"m","6,9":"m","5,3":"d","3,1":"n","3,0":"g","1,8":"n","6,4":"n"},"width":7,"height":13,"par":19,"world":"CRYO VAULT","theme":"cryo","difficulty":"VERY HARD","mechanic":"ICE","mechanicDescription":"When it lands on ice, the block slides one more square in the direction of the move.","campaignZone":2},{"title":"Lethal Slide","start":[12,3,"s"],"goal":[0,6],"cores":[[13,4],[5,2],[1,4]],"tiles":{"2,6":"n","0,6":"m","11,3":"n","11,0":"n","9,0":"n","6,1":"o","5,2":"n","14,5":"n","4,1":"b","13,4":"i","3,2":"n","12,5":"n","1,5":"n","7,0":"o","2,4":"o","11,1":"a","5,0":"a","14,3":"n","6,2":"n","3,3":"n","1,6":"n","12,3":"i","13,5":"m","8,0":"n","2,5":"g","10,0":"g","11,2":"n","5,1":"n","6,0":"n","3,1":"m","14,4":"i","3,4":"n","4,0":"o","13,3":"n","12,4":"o","1,4":"n","10,1":"n","12,1":"m","2,3":"n","0,7":"n","0,5":"n","13,6":"n","11,4":"d","2,2":"g","12,2":"n","4,2":"n","7,1":"n","12,0":"o","3,6":"d"},"width":15,"height":8,"par":27,"world":"CRYO VAULT","theme":"cryo","difficulty":"EXTREME","mechanic":"ICE","mechanicDescription":"When it lands on ice, the block slides one more square in the direction of the move.","campaignZone":2},{"title":"Starter Belt","start":[1,0,"s"],"goal":[3,8],"cores":[[1,6]],"tiles":{"1,1":"cd","2,2":"m","3,7":"n","2,6":"n","5,8":"g","3,4":"n","2,3":"n","2,1":"n","1,7":"m","3,6":"m","4,7":"n","3,8":"n","1,0":"n","2,5":"n","1,2":"n","5,7":"n","1,6":"n","4,8":"n","2,7":"n","2,4":"n","3,5":"n","2,8":"g","4,4":"d","0,0":"g","3,2":"n","4,5":"n","0,7":"n","1,3":"o"},"width":6,"height":9,"par":13,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"HARD","mechanic":"BELT","mechanicDescription":"When it lands on a conveyor belt, the belt moves the block one square in the direction of its arrow.","campaignZone":3},{"title":"Reverse Flow","start":[0,1,"s"],"goal":[3,11],"cores":[[5,6]],"tiles":{"4,3":"g","2,2":"n","5,11":"n","5,13":"n","5,4":"g","0,1":"n","3,12":"g","5,6":"n","4,13":"n","3,3":"n","1,2":"n","4,4":"n","5,8":"n","5,10":"m","2,1":"n","5,12":"n","5,5":"n","3,11":"n","5,3":"n","3,2":"n","3,13":"n","3,4":"a","5,7":"n","5,9":"n","4,12":"n","1,1":"cd","2,3":"n","0,0":"n","4,11":"n","2,11":"d","3,10":"m","1,3":"g","4,9":"n","3,1":"o","4,7":"n"},"width":6,"height":14,"par":14,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"HARD","mechanic":"BELT","mechanicDescription":"When it lands on a conveyor belt, the belt moves the block one square in the direction of its arrow.","campaignZone":3},{"title":"Double Conveyor","start":[2,9,"s"],"goal":[4,1],"cores":[[1,10],[3,0]],"tiles":{"1,8":"n","1,6":"n","3,2":"g","2,1":"g","2,3":"m","3,0":"n","2,10":"o","3,5":"n","2,6":"o","0,7":"a","1,2":"d","3,3":"n","4,0":"n","4,2":"n","1,11":"n","3,1":"b","1,9":"cu","1,7":"m","0,8":"n","3,6":"n","0,6":"o","1,3":"n","4,1":"n","2,2":"o","2,11":"cu","1,10":"g","2,9":"n","3,4":"n","2,4":"n","0,2":"n","0,11":"m","5,1":"n","1,4":"n","4,3":"n","2,5":"n","2,7":"n"},"width":6,"height":12,"par":18,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"VERY HARD","mechanic":"BELT","mechanicDescription":"When it lands on a conveyor belt, the belt moves the block one square in the direction of its arrow.","campaignZone":3},{"title":"Cargo Lane","start":[6,12,"s"],"goal":[2,1],"cores":[[2,10],[1,5]],"tiles":{"1,2":"n","4,11":"n","4,9":"o","6,10":"n","0,6":"n","0,4":"n","2,12":"n","2,1":"m","2,8":"n","1,7":"n","5,8":"n","0,2":"m","2,10":"m","5,10":"d","3,11":"cu","6,11":"n","3,9":"n","1,5":"n","1,3":"n","4,12":"g","1,1":"o","1,8":"n","0,7":"b","4,8":"n","2,11":"a","5,11":"g","2,9":"n","0,5":"n","5,9":"n","1,6":"m","0,3":"n","1,4":"n","0,1":"n","3,12":"o","6,12":"n","0,8":"o","3,8":"o","5,12":"cu","0,0":"n","3,10":"n","7,10":"n","5,7":"n"},"width":8,"height":13,"par":17,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"VERY HARD","mechanic":"BELT","mechanicDescription":"When it lands on a conveyor belt, the belt moves the block one square in the direction of its arrow.","campaignZone":3},{"title":"Gravity Knot","start":[3,2,"s"],"goal":[2,12],"cores":[[4,4],[5,0],[1,6]],"tiles":{"2,12":"n","2,3":"n","3,4":"n","5,3":"g","4,0":"n","4,2":"cl","6,1":"o","3,1":"o","2,7":"n","1,6":"n","4,4":"g","6,3":"n","1,4":"g","3,3":"cl","1,8":"n","2,11":"m","2,9":"n","5,0":"n","2,2":"m","4,1":"a","5,2":"cl","4,3":"a","1,3":"n","1,5":"b","2,8":"o","6,0":"n","2,10":"o","5,1":"n","6,2":"o","2,1":"n","3,2":"n","1,7":"m","0,3":"m","1,9":"d","3,11":"n","3,12":"g","5,4":"n","0,8":"n"},"width":7,"height":13,"par":18,"world":"GRAVITY FOUNDRY","theme":"gravity","difficulty":"EXTREME","mechanic":"BELT","mechanicDescription":"When it lands on a conveyor belt, the belt moves the block one square in the direction of its arrow.","campaignZone":3},{"title":"Switchboard","start":[1,0,"s"],"goal":[13,3],"cores":[[12,2]],"tiles":{"11,3":"n","3,1":"n","13,3":"n","4,3":"n","10,2":"n","1,2":"n","12,2":"n","6,3":"n","3,2":"n","11,1":"n","2,1":"n","8,3":"n","10,3":"n","1,0":"n","12,3":"n","5,3":"n","11,2":"g","2,2":"n","3,3":"g","7,3":"n","10,1":"m","9,3":"m","1,1":"v","12,1":"g","4,1":"d","8,4":"n","13,1":"o","7,2":"n","0,0":"n"},"width":14,"height":5,"par":16,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"HARD","mechanic":"INVERTER","mechanicDescription":"Entering an inverter plate switches polarity automatically from CYAN to AMBER or vice versa.","campaignZone":4},{"title":"Crossed Phase","start":[1,5,"s"],"goal":[12,2],"cores":[[3,1],[8,2]],"tiles":{"3,0":"n","2,1":"n","13,1":"o","8,2":"n","7,0":"n","10,2":"n","9,0":"n","1,2":"n","12,2":"n","1,5":"n","3,2":"m","2,0":"a","13,0":"g","4,0":"n","8,1":"n","9,2":"o","1,4":"v","12,1":"o","6,0":"n","11,2":"m","2,2":"n","13,2":"n","3,1":"n","8,0":"g","9,1":"g","12,0":"n","1,3":"g","5,0":"n","2,4":"n","0,4":"n","2,3":"n","1,1":"n","4,1":"d","10,0":"n","3,3":"n","4,2":"o"},"width":14,"height":6,"par":18,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"VERY HARD","mechanic":"INVERTER","mechanicDescription":"Entering an inverter plate switches polarity automatically from CYAN to AMBER or vice versa.","campaignZone":4},{"title":"Twin Circuit","start":[12,5,"s"],"goal":[1,0],"cores":[[11,3],[6,1]],"tiles":{"2,2":"n","11,5":"n","11,2":"n","10,3":"n","9,2":"n","6,0":"b","5,1":"n","14,4":"g","4,0":"n","3,1":"m","12,4":"n","1,1":"n","7,2":"o","11,6":"g","9,3":"n","11,3":"n","6,1":"n","12,5":"m","3,2":"n","14,5":"v","4,1":"o","13,4":"n","1,2":"n","8,2":"n","7,3":"n","10,2":"o","11,4":"a","2,1":"n","5,0":"n","4,2":"n","13,5":"v","12,6":"o","1,0":"g","8,3":"n","7,1":"n","5,2":"d","2,0":"n","13,6":"n","10,4":"n","14,6":"n","9,4":"n","10,1":"n","7,0":"m","11,1":"m","12,2":"n","0,1":"n","8,4":"m"},"width":15,"height":7,"par":21,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"VERY HARD","mechanic":"INVERTER","mechanicDescription":"Entering an inverter plate switches polarity automatically from CYAN to AMBER or vice versa.","campaignZone":4},{"title":"Polar Return","start":[11,3,"s"],"goal":[0,2],"cores":[[10,2],[3,1]],"tiles":{"1,1":"n","10,1":"a","8,4":"g","4,2":"n","13,2":"v","3,0":"n","0,2":"g","12,3":"v","7,2":"n","1,0":"n","9,2":"n","8,3":"n","5,2":"n","4,1":"b","13,1":"g","2,1":"o","12,2":"g","11,1":"n","0,1":"n","7,4":"a","10,2":"n","9,1":"o","8,2":"n","4,0":"g","2,0":"n","12,1":"o","13,3":"o","3,1":"n","0,0":"n","11,3":"n","6,2":"m","7,3":"n","6,3":"d","13,0":"n","10,0":"n","11,4":"n","5,1":"o","0,3":"n","3,2":"n","9,3":"n","1,2":"n"},"width":14,"height":5,"par":19,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"EXTREME","mechanic":"INVERTER","mechanicDescription":"Entering an inverter plate switches polarity automatically from CYAN to AMBER or vice versa.","campaignZone":4},{"title":"Phase Overload","start":[2,3,"s"],"goal":[14,6],"cores":[[1,4],[9,2],[13,4]],"tiles":{"12,6":"n","14,6":"m","3,3":"n","3,0":"n","5,0":"n","8,1":"o","9,2":"n","0,5":"n","10,1":"b","1,4":"v","11,2":"n","2,5":"v","13,5":"n","7,0":"o","12,4":"o","3,1":"a","9,0":"a","0,3":"n","8,2":"n","11,3":"n","13,6":"n","2,3":"m","1,5":"v","6,0":"n","12,5":"g","4,0":"g","3,2":"n","9,1":"n","8,0":"n","11,1":"m","0,4":"n","11,4":"n","10,0":"o","1,3":"n","2,4":"o","13,4":"n","4,1":"n","2,1":"m","12,3":"n","14,7":"n","14,5":"n","1,6":"n","3,4":"d","12,2":"g","2,2":"n","10,2":"n","7,1":"n","2,0":"o","11,6":"d"},"width":15,"height":8,"par":29,"world":"CIRCUIT LAB","theme":"circuit","difficulty":"EXTREME","mechanic":"INVERTER","mechanicDescription":"Entering an inverter plate switches polarity automatically from CYAN to AMBER or vice versa.","campaignZone":4},{"title":"Twin Threshold","start":[5,12,"s"],"goal":[0,1],"cores":[[3,11],[1,6]],"tiles":{"2,2":"p","5,11":"n","2,11":"n","3,10":"n","2,9":"n","0,6":"b","1,5":"n","4,14":"g","0,4":"n","1,3":"m","4,12":"p","1,1":"n","2,7":"o","6,11":"g","3,9":"n","3,11":"n","1,6":"n","5,12":"m","2,3":"n","5,14":"n","1,4":"o","4,13":"n","2,1":"n","2,8":"n","3,7":"n","2,10":"o","4,11":"a","1,2":"n","0,5":"n","2,4":"n","5,13":"n","6,12":"o","0,1":"g","3,8":"n","1,7":"n","2,5":"d","0,2":"n","6,13":"n","4,10":"n","6,14":"n","4,9":"n","1,10":"n","0,7":"m","1,11":"m","2,12":"n","1,0":"n","4,8":"m"},"width":7,"height":15,"par":22,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"VERY HARD","portals":[[4,12],[2,2]],"mechanic":"PORTAL","mechanicDescription":"Paired portals teleport the block when it lands standing on the entrance.","campaignZone":5},{"title":"Blind Jump","start":[0,6,"s"],"goal":[11,2],"cores":[[2,2],[7,1]],"tiles":{"10,1":"p","1,4":"n","3,4":"o","2,6":"n","6,0":"n","8,0":"n","0,2":"n","11,2":"m","4,2":"n","5,1":"n","4,5":"n","10,0":"m","2,2":"m","2,5":"d","1,3":"p","1,6":"n","3,3":"n","7,1":"n","9,1":"n","0,4":"g","11,1":"o","4,1":"n","5,0":"b","4,4":"n","1,2":"a","1,5":"g","3,2":"n","7,0":"n","3,5":"n","6,1":"m","9,0":"n","8,1":"n","11,0":"n","0,3":"o","0,6":"n","4,0":"o","4,3":"o","0,5":"i","12,0":"n","2,3":"n","2,7":"n","5,5":"n"},"width":13,"height":8,"par":15,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"VERY HARD","portals":[[1,3],[10,1]],"mechanic":"PORTAL","mechanicDescription":"Paired portals teleport the block when it lands standing on the entrance.","campaignZone":5},{"title":"Chained Portal","start":[3,11,"s"],"goal":[2,0],"cores":[[2,10],[1,3]],"tiles":{"1,1":"p","1,10":"a","4,8":"g","2,4":"n","2,13":"i","0,3":"n","2,0":"g","3,12":"cl","2,7":"n","0,1":"n","2,9":"n","3,8":"n","2,5":"n","1,4":"b","1,13":"g","1,2":"o","2,12":"g","1,11":"p","1,0":"n","4,7":"a","2,10":"n","1,9":"o","2,8":"n","0,4":"g","0,2":"n","1,12":"o","3,13":"o","1,3":"n","0,0":"n","3,11":"n","2,6":"m","3,7":"n","3,6":"d","0,13":"n","0,10":"n","4,11":"n","1,5":"o","3,0":"n","2,3":"n","3,9":"n","2,1":"n"},"width":5,"height":14,"par":20,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"EXTREME","portals":[[1,11],[1,1]],"mechanic":"PORTAL","mechanicDescription":"Paired portals teleport the block when it lands standing on the entrance.","campaignZone":5},{"title":"Dimensional Maze","start":[10,3,"s"],"goal":[0,2],"cores":[[8,4],[12,5],[6,1]],"tiles":{"0,2":"n","9,2":"p","8,3":"n","9,5":"g","12,4":"n","10,4":"p","11,6":"o","11,3":"o","5,2":"n","6,1":"n","8,4":"g","9,6":"n","8,1":"g","9,3":"i","4,1":"n","1,2":"m","3,2":"n","12,5":"n","10,2":"m","11,4":"a","10,5":"cl","9,4":"a","9,1":"n","7,1":"b","4,2":"o","12,6":"n","2,2":"o","11,5":"n","10,6":"o","11,2":"n","10,3":"n","5,1":"m","9,0":"m","3,1":"d","1,3":"n","0,3":"g","8,5":"v","4,0":"n"},"width":13,"height":7,"par":20,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"EXTREME","portals":[[10,4],[9,2]],"mechanic":"PORTAL","mechanicDescription":"Paired portals teleport the block when it lands standing on the entrance.","campaignZone":5},{"title":"Final Rupture","start":[3,2,"s"],"goal":[6,14],"cores":[[4,1],[2,9],[4,13]],"tiles":{"6,12":"p","6,14":"m","3,3":"n","0,3":"n","0,5":"n","1,8":"o","2,9":"n","5,0":"n","1,10":"b","4,1":"n","2,11":"n","5,2":"n","5,13":"n","0,7":"o","4,12":"o","1,3":"a","0,9":"a","3,0":"v","2,8":"n","3,11":"n","6,13":"n","3,2":"p","5,1":"m","0,6":"n","5,12":"g","0,4":"g","2,3":"n","1,9":"n","0,8":"n","1,11":"m","4,0":"i","4,11":"n","0,10":"o","3,1":"cr","4,2":"o","4,13":"n","1,4":"n","1,2":"m","3,12":"n","7,14":"n","5,14":"n","6,1":"n","4,3":"d","2,12":"g","2,2":"n","2,10":"n","1,7":"n","0,2":"o","6,11":"d"},"width":8,"height":15,"par":19,"world":"OBSIDIAN RIFT","theme":"rift","difficulty":"MASTER","portals":[[3,2],[6,12]],"mechanic":"PORTAL","mechanicDescription":"Paired portals teleport the block when it lands standing on the entrance.","campaignZone":5}]</script>
 <script>
 'use strict';
 (()=>{
@@ -514,7 +514,7 @@ const THEMES={
  obsidian:{name:'OBSIDIAN RIFT',bg0:'#1c1027',bg1:'#04050d',grid:'#613966',rail:'#f15bce',rail2:'#7560ff',hot:'#ffad55',core:'#6bf5f0',tileA:'#bfb8cb',tileB:'#5b506e',side:'#43364f',side2:'#17111f',glass:'#dc8aff',blockTop:'#bb6b9c',blockSide:'#231828'}
 };
 const $=id=>document.getElementById(id),canvas=$('game'),mainCtx=canvas.getContext('2d',{alpha:false}),sceneCanvas=document.createElement('canvas');let ctx=mainCtx,sceneCtx=sceneCanvas.getContext('2d',{alpha:false}),cacheDirty=true,cachedLevel=-1,cachedPhase='',cachedMask=-1,cachedWidth=0,cachedHeight=0;
-let level=0,player='JUGADOR',unlocked=1,best={},state=null,history=[],moves=0,anim=null,fallAnim=null,mode='intro',sfxEnabled=false,musicEnabled=false,audioCtx=null,musicNodes=null,musicTimer=0,musicStep=0,toastTimer=0,drawFrame=0,viewportW=1000,viewportH=600,scale=1,ox=0,oy=0,time=0,lastFrame=0,boardTiles=[];
+let level=0,player='PLAYER',unlocked=1,best={},state=null,history=[],moves=0,anim=null,fallAnim=null,mode='intro',sfxEnabled=false,musicEnabled=false,audioCtx=null,musicNodes=null,musicTimer=0,musicStep=0,toastTimer=0,drawFrame=0,viewportW=1000,viewportH=600,scale=1,ox=0,oy=0,time=0,lastFrame=0,boardTiles=[];
 let campaignRun={nextLevel:0,totalMoves:0,totalTimeMs:0,perLevelMoves:[],active:true};
 let tutorialSeen={},pendingTutorialKey=null,rankMode='level',levelStartedAt=Date.now();
 let localRecords={levels:{},campaign:[]};
@@ -522,7 +522,7 @@ const RANK_STORE='bloxzord-local-rank-v1';
 try{localRecords=JSON.parse(localStorage.getItem(RANK_STORE)||'{"levels":{},"campaign":[]}');if(!localRecords.levels)localRecords.levels={};if(!Array.isArray(localRecords.campaign))localRecords.campaign=[];}catch(e){localRecords={levels:{},campaign:[]};}
 
 const TILE_W=64,TILE_H=64,TILE_Z=0;
-// Cámara oblicua inspirada en la referencia: 55° sobre el tablero, con un leve giro lateral.
+// Oblique camera based on the reference: 55° above the board with a slight lateral turn.
 const CAMERA_ELEVATION=55*Math.PI/180,CAMERA_AZIMUTH=22*Math.PI/180,
       DEPTH_FACTOR=Math.sin(CAMERA_ELEVATION),HEIGHT_FACTOR=Math.cos(CAMERA_ELEVATION),
       TILE_THICKNESS=.42,CAM_COS=Math.cos(CAMERA_AZIMUTH),CAM_SIN=Math.sin(CAMERA_AZIMUTH);
@@ -530,7 +530,7 @@ const theme=()=>THEMES[LEVELS[level].theme]||THEMES.forge;
 function prepareBoard(){boardTiles=Object.entries(LEVELS[level].tiles).map(([key,type])=>{let [x,y]=key.split(',').map(Number);return {x,y,type}}).sort((a,b)=>((a.x*CAM_SIN+a.y*CAM_COS)-(b.x*CAM_SIN+b.y*CAM_COS)));cacheDirty=true;}
 const STORE='kpc-shift-protocol-v1';
 try{const saved=JSON.parse(localStorage.getItem(STORE)||'{}');player=saved.player||player;unlocked=Math.min(LEVELS.length,Math.max(1,saved.unlocked||1));best=saved.best||{};level=Math.max(0,Math.min(unlocked-1,saved.level||0));campaignRun=saved.campaignRun||campaignRun;tutorialSeen=saved.tutorialSeen||{};if(!Number.isFinite(campaignRun.totalTimeMs))campaignRun.totalTimeMs=0}catch(e){}
-$('nickname').value=(player==='JUGADOR'||player==='OPERADOR')?'':player;
+$('nickname').value=(player==='PLAYER'||player==='OPERATOR')?'':player;
 function save(){try{localStorage.setItem(STORE,JSON.stringify({player,unlocked,best,level,campaignRun,tutorialSeen}))}catch(e){}}
 function cells(s){return s.o==='s'?[[s.x,s.y]]:s.o==='x'?[[s.x,s.y],[s.x+1,s.y]]:[[s.x,s.y],[s.x,s.y+1]]}
 function moveState(s,d){let {x,y,o}=s;
@@ -597,7 +597,7 @@ function startMusic(){const ac=ensureAudio();if(!ac||musicNodes)return;const mas
 function stopMusic(){if(!musicNodes)return;clearInterval(musicTimer);musicTimer=0;const old=musicNodes;musicNodes=null;try{old.master.gain.setTargetAtTime(.0001,audioCtx.currentTime,.22);setTimeout(()=>{try{old.oscs.forEach(o=>o.stop());old.lfo.stop();old.filter.disconnect();old.master.disconnect()}catch(e){}},900)}catch(e){}}
 
 function restore(){state={x:LEVELS[level].start[0],y:LEVELS[level].start[1],o:'s',p:'a',mask:0};history=[];moves=0;anim=null;fallAnim=null;levelStartedAt=Date.now();drawUI()}
-function loadLevel(index){level=Math.max(0,Math.min(LEVELS.length-1,index));mode='play';anim=null;prepareBoard();restore();resize();save();hideDialog();$('intro-dialog').hidden=true;$('rank-level-select').value=String(level+1);notify(LEVELS[level].world+' · NIVEL '+String(level+1).padStart(2,'0'));playSfx('start');drawUI();refreshLeaderboard();if(!showLevelTutorial(level))canvas.focus({preventScroll:true})}
+function loadLevel(index){level=Math.max(0,Math.min(LEVELS.length-1,index));mode='play';anim=null;prepareBoard();restore();resize();save();hideDialog();$('intro-dialog').hidden=true;$('rank-level-select').value=String(level+1);notify(LEVELS[level].world+' · LEVEL '+String(level+1).padStart(2,'0'));playSfx('start');drawUI();refreshLeaderboard();if(!showLevelTutorial(level))canvas.focus({preventScroll:true})}
 function drawUI(){
  let l=LEVELS[level];
  $('operator-name').textContent=player.toUpperCase();
@@ -610,20 +610,20 @@ function drawUI(){
  $('progress').style.width=(100*(level+1)/LEVELS.length)+'%';
  $('moves').textContent=String(moves).padStart(2,'0');
  $('best').textContent=best[level]??'—';
- $('phase-label').textContent=state.p==='a'?'CIAN':'ÁMBAR';
+ $('phase-label').textContent=state.p==='a'?'CYAN':'AMBER';
  $('phase-label').classList.toggle('amber',state.p==='b');
  $('phase-btn').classList.toggle('amber',state.p==='b');
  $('cores').innerHTML=l.cores.map((c,i)=>'<span class="core '+(state.mask&(1<<i)?'active':'')+'">◆</span>').join('');
- $('level-description').textContent='Dificultad '+l.difficulty.toLowerCase()+' · '+l.mechanicDescription+' Óptimo: '+l.par+' movimientos.';
- $('canvas-status').textContent='POLARIDAD '+(state.p==='a'?'CIAN':'ÁMBAR')+' / '+((state.mask.toString(2).match(/1/g)||[]).length)+' DE '+l.cores.length+' NÚCLEOS';
- $('mechanic-label').textContent=l.mechanic==='BASE'?'REGLAS DE NEON FORGE':l.mechanic==='ICE'?'NUEVA MECÁNICA · HIELO':l.mechanic==='BELT'?'NUEVA MECÁNICA · CINTAS':l.mechanic==='INVERTER'?'NUEVA MECÁNICA · INVERSOR':'NUEVA MECÁNICA · PORTALES';
+ $('level-description').textContent='Difficulty: '+l.difficulty.toLowerCase()+' · '+l.mechanicDescription+' Optimal: '+l.par+' moves.';
+ $('canvas-status').textContent='POLARITY '+(state.p==='a'?'CYAN':'AMBER')+' / '+((state.mask.toString(2).match(/1/g)||[]).length)+' OF '+l.cores.length+' CORES';
+ $('mechanic-label').textContent=l.mechanic==='BASE'?'NEON FORGE RULES':l.mechanic==='ICE'?'NEW MECHANIC · ICE':l.mechanic==='BELT'?'NEW MECHANIC · BELTS':l.mechanic==='INVERTER'?'NEW MECHANIC · INVERTER':'NEW MECHANIC · PORTALS';
  $('mechanic-description').textContent=l.mechanicDescription;
- $('game-status').textContent=mode==='play'?'EN JUEGO':mode==='tutorial'?'TUTORIAL':mode==='fall'?'CAÍDA':mode==='win'?'NIVEL COMPLETADO':mode==='lose'?'HAS PERDIDO':'EN ESPERA';
+ $('game-status').textContent=mode==='play'?'PLAYING':mode==='tutorial'?'TUTORIAL':mode==='fall'?'FALLING':mode==='win'?'LEVEL COMPLETE':mode==='lose'?'YOU LOST':'STANDBY';
  $('undo-btn').disabled=!history.length||mode!=='play';
- $('campaign-counter').textContent='CAMPAÑA '+Math.min(campaignRun.nextLevel,25)+' / 25';
- $('rank-player-state').textContent='JUGADOR: '+(player||'—').toUpperCase();
- $('rank-title').textContent=rankMode==='level'?'NIVEL '+String(($('rank-level-select')?.value)||level+1).padStart(2,'0')+' / 25':'CAMPAÑA COMPLETA';
- $('rank-caption').textContent=rankMode==='level'?'MEJOR RÉCORD DE ESTE NIVEL':'SUMA DE LOS 25 NIVELES';
+ $('campaign-counter').textContent='CAMPAIGN '+Math.min(campaignRun.nextLevel,25)+' / 25';
+ $('rank-player-state').textContent='PLAYER: '+(player||'—').toUpperCase();
+ $('rank-title').textContent=rankMode==='level'?'LEVEL '+String(($('rank-level-select')?.value)||level+1).padStart(2,'0')+' / 25':'FULL CAMPAIGN';
+ $('rank-caption').textContent=rankMode==='level'?'BEST RECORD FOR THIS LEVEL':'TOTAL OF ALL 25 LEVELS';
 }
 
 function hazardLanding(s,a,l){
@@ -642,14 +642,14 @@ function hazardLanding(s,a,l){
 function loseOnHazard(before,a,l,hit){
  const attempted=moveState(before,a),hazard=hit.cell,hazardType=hit.type;
  mode='fall';fallAnim={from:before,direction:a,hazard,hazardType,start:performance.now(),duration:780};
- notify(hazardType==='d'?'BALDOSA AZUL · CONTACTO LETAL':'BALDOSA NARANJA · SOLO SOPORTA EL BLOQUE TUMBADO');playSfx('fall');drawUI();
+ notify(hazardType==='d'?'BLUE TILE · DEADLY ON CONTACT':'ORANGE TILE · ONLY HOLDS A LYING BLOCK');playSfx('fall');drawUI();
  setTimeout(()=>{
   if(mode!=='fall')return;
   mode='lose';drawUI();
   const explanation=hazardType==='d'
-   ?'La baldosa azul se rompe al contacto, sin importar la orientación del bloque.'
-   :'La baldosa naranja solo es segura cuando el bloque está tumbado. Al caer de pie, se activa y pierdes el intento.';
-  showDialog('<div class="mark danger-mark">!</div><h2>HAS PERDIDO</h2><p>'+explanation+'</p><button class="main-cta" id="retry-stage">REINTENTAR NIVEL</button><button class="secondary-cta" id="choose-stage">SELECCIONAR NIVEL</button>');
+   ?'The blue tile breaks on contact, whatever the orientation of the block.'
+   :'The orange tile is only safe when the block is lying down. Land on it standing up and it triggers, ending your attempt.';
+  showDialog('<div class="mark danger-mark">!</div><h2>YOU LOST</h2><p>'+explanation+'</p><button class="main-cta" id="retry-stage">RETRY LEVEL</button><button class="secondary-cta" id="choose-stage">SELECT LEVEL</button>');
   $('retry-stage').onclick=()=>loadLevel(level);
   $('choose-stage').onclick=()=>{mode='play';showLevels()};
  },800);
@@ -661,8 +661,8 @@ function act(a){
    const hit=hazardLanding(before,a,l);
    if(hit){loseOnHazard(before,a,l,hit);return}
    playSfx('error');
-   if(a==='Q'){notify('NO PUEDES CAMBIAR DE FASE SOBRE ESE PUENTE')}
-   else{mode='fall';fallAnim={from:before,direction:a,start:performance.now(),duration:720};notify('CAÍDA · REINICIANDO NIVEL');playSfx('fall');drawUI();setTimeout(()=>{if(mode==='fall'){mode='play';restore()}},760)}
+   if(a==='Q'){notify('YOU CAN’T SWITCH PHASE ON THAT BRIDGE')}
+   else{mode='fall';fallAnim={from:before,direction:a,start:performance.now(),duration:720};notify('FALL · RESTARTING LEVEL');playSfx('fall');drawUI();setTimeout(()=>{if(mode==='fall'){mode='play';restore()}},760)}
    return;
  }
  if(a==='Q'&&after.p===before.p)return;
@@ -673,12 +673,12 @@ function act(a){
  }
  const newCore=after.mask!==before.mask;
  playSfx(newCore?'core':a==='Q'?'phase':'move');
- if(transition.effects.includes('phase'))notify('FRECUENCIA '+(after.p==='a'?'CIAN':'ÁMBAR')+' ACTIVADA');
- if(transition.effects.includes('ice'))notify('CRYO: DESLIZAMIENTO AUTOMÁTICO');
- if(transition.effects.includes('belt'))notify('CINTA: TRANSPORTE AUTOMÁTICO');
- if(transition.effects.includes('inverter'))notify('INVERSOR: POLARIDAD CAMBIADA');
- if(transition.effects.includes('portal')){notify('PORTAL DIMENSIONAL ACTIVADO');playSfx('phase')}
- if(newCore)notify('NÚCLEO DE DATOS RECUPERADO');
+ if(transition.effects.includes('phase'))notify('FREQUENCY '+(after.p==='a'?'CYAN':'AMBER')+' ACTIVE');
+ if(transition.effects.includes('ice'))notify('CRYO: AUTOMATIC SLIDE');
+ if(transition.effects.includes('belt'))notify('BELT: AUTOMATIC TRANSPORT');
+ if(transition.effects.includes('inverter'))notify('INVERTER: POLARITY SWITCHED');
+ if(transition.effects.includes('portal')){notify('DIMENSIONAL PORTAL ACTIVATED');playSfx('phase')}
+ if(newCore)notify('DATA CORE RECOVERED');
  drawUI();
  if(finished(state,l)){mode='winning';setTimeout(()=>{if(mode==='winning'){mode='win';anim=null;onVictory()}},370)}
 }
@@ -701,86 +701,86 @@ function onVictory(){
  }
  save();playSfx('win');drawUI();
  const last=level===LEVELS.length-1;
- const totalLine=campaignFinished?'<p class="campaign-result">CAMPAÑA COMPLETADA · '+campaignRun.totalMoves+' MOVIMIENTOS TOTALES</p>':'';
- const note=campaignFinished?'Has superado los 25 niveles en orden. Tu resultado se ha guardado en la clasificación local de campaña.':
-   last?'Has completado el nivel 25. Para registrar un total de campaña debes superar los niveles 01–25 en orden.':
-   'Has superado '+LEVELS[level].title+'. Tu mejor resultado individual se ha guardado en el ranking local de este nivel.';
- showDialog('<div class="mark">'+(last?'★':'✓')+'</div><h2>'+(last?'ZONA COMPLETADA':'NIVEL SUPERADO')+'</h2><p class="result-score">'+moves+' MOVIMIENTOS</p>'+totalLine+'<p>'+note+'</p><button class="main-cta" id="next-stage">'+(last?'NUEVA CAMPAÑA':'SIGUIENTE NIVEL →')+'</button><button class="secondary-cta" id="replay-stage">REPETIR NIVEL</button>');
+ const totalLine=campaignFinished?'<p class="campaign-result">CAMPAIGN COMPLETE · '+campaignRun.totalMoves+' TOTAL MOVES</p>':'';
+ const note=campaignFinished?'You cleared all 25 levels in order. Your result has been saved to the local campaign leaderboard.':
+   last?'You completed level 25. To record a campaign total you must clear levels 01–25 in order.':
+   'You cleared '+LEVELS[level].title+'. Your best individual result has been saved to this level’s local ranking.';
+ showDialog('<div class="mark">'+(last?'★':'✓')+'</div><h2>'+(last?'ZONE COMPLETE':'LEVEL CLEARED')+'</h2><p class="result-score">'+moves+' MOVES</p>'+totalLine+'<p>'+note+'</p><button class="main-cta" id="next-stage">'+(last?'NEW CAMPAIGN':'NEXT LEVEL →')+'</button><button class="secondary-cta" id="replay-stage">REPLAY LEVEL</button>');
  $('next-stage').onclick=()=>{if(last)startNewCampaign();else loadLevel(level+1)};
  $('replay-stage').onclick=()=>loadLevel(level);
  refreshLeaderboard();
 }
 
 function startNewCampaign(){
- if(!confirm('¿Empezar una campaña nueva desde el nivel 01? Tus récords individuales y la clasificación no se borrarán.'))return;
+ if(!confirm('Start a new campaign from level 01? Your individual records and the leaderboard will not be deleted.'))return;
  campaignRun={nextLevel:0,totalMoves:0,totalTimeMs:0,perLevelMoves:[],active:true};
- save();loadLevel(0);notify('NUEVA CAMPAÑA · 25 NIVELES');
+ save();loadLevel(0);notify('NEW CAMPAIGN · 25 LEVELS');
 }
 
-function undo(){if(mode!=='play'||anim||!history.length)return;let h=history.pop();state={...h.state};moves=h.moves;drawUI();playSfx('undo');notify('ÚLTIMO MOVIMIENTO DESHECHO')}
-function hint(){if(mode!=='play')return;let sol=solve(state,LEVELS[level]);if(!sol){notify('SIN RUTA DESDE ESTA POSICIÓN. USA Z O REINICIA.');return}if(!sol.length){notify('YA ESTÁS EN LA META');return}let labels={up:'↑ ARRIBA',down:'↓ ABAJO',left:'← IZQUIERDA',right:'→ DERECHA',Q:'Q / CAMBIAR POLARIDAD'};notify('SIGUIENTE MOVIMIENTO: '+labels[sol[0]]+' ('+sol.length+' PASOS RESTANTES)')}
+function undo(){if(mode!=='play'||anim||!history.length)return;let h=history.pop();state={...h.state};moves=h.moves;drawUI();playSfx('undo');notify('LAST MOVE UNDONE')}
+function hint(){if(mode!=='play')return;let sol=solve(state,LEVELS[level]);if(!sol){notify('NO ROUTE FROM THIS POSITION. USE Z OR RESTART.');return}if(!sol.length){notify('YOU’RE ALREADY AT THE GOAL');return}let labels={up:'↑ UP',down:'↓ DOWN',left:'← LEFT',right:'→ RIGHT',Q:'Q / SWITCH POLARITY'};notify('NEXT MOVE: '+labels[sol[0]]+' ('+sol.length+' STEPS LEFT)')}
 
 const TUTORIALS={
  basics:{
-  eyebrow:'BRIEFING DE INICIO · REGLAS BÁSICAS',
-  title:'ANTES DE MOVERTE',
-  subtitle:'Aprende a leer el tablero. La orientación del bloque y la frecuencia activa son la clave.',
+  eyebrow:'OPENING BRIEFING · BASIC RULES',
+  title:'BEFORE YOU MOVE',
+  subtitle:'Learn to read the board. The block’s orientation and the active frequency are the key.',
   icon:'B',
   cards:[
-   {swatch:'silver',name:'METAL / PLATA',tag:'SEGURO',copy:'Baldosa normal. Puedes pasar y apoyar el bloque sin efectos especiales.'},
-   {swatch:'glass',name:'CRISTAL',tag:'SEGURO',copy:'Plataforma translúcida. Soporta el bloque como una baldosa normal.'},
-   {swatch:'cyan',name:'CIAN',tag:'FRECUENCIA CIAN',copy:'Este puente solo te sostiene con frecuencia CIAN. Pulsa Q desde una baldosa segura para cambiar a ÁMBAR; vuelve a pulsarla para regresar a CIAN.'},
-   {swatch:'amber',name:'ÁMBAR',tag:'FRECUENCIA ÁMBAR',copy:'Este puente solo te sostiene con frecuencia ÁMBAR. Pulsa Q desde una baldosa segura para cambiar a CIAN; vuelve a pulsarla para regresar a ÁMBAR.'},
-   {swatch:'blue',name:'AZUL',tag:'PELIGRO · SIEMPRE',copy:'Trampa mortal al tocarla. No importa si el bloque está tumbado o de pie.'},
-   {swatch:'orange',name:'NARANJA',tag:'PELIGRO · DE PIE',copy:'Te hace perder si aterrizas de pie. Puedes cruzarla cuando el bloque está tumbado.'},
-   {swatch:'core',name:'NÚCLEO ROSA',tag:'RECOGER',copy:'Recoge todos los núcleos del nivel para desbloquear la salida.'},
-   {swatch:'goal',name:'PORTAL DE SALIDA',tag:'META',copy:'Llega a la salida con el bloque de pie y después de recoger todos los núcleos.'}
+   {swatch:'silver',name:'METAL / SILVER',tag:'SAFE',copy:'A normal tile. You can cross it and rest the block on it with no special effects.'},
+   {swatch:'glass',name:'GLASS',tag:'SAFE',copy:'A translucent platform. It supports the block like a normal tile.'},
+   {swatch:'cyan',name:'CYAN',tag:'CYAN FREQUENCY',copy:'This bridge only holds you on the CYAN frequency. Press Q from a safe tile to switch to AMBER; press it again to return to CYAN.'},
+   {swatch:'amber',name:'AMBER',tag:'AMBER FREQUENCY',copy:'This bridge only holds you on the AMBER frequency. Press Q from a safe tile to switch to CYAN; press it again to return to AMBER.'},
+   {swatch:'blue',name:'BLUE',tag:'DANGER · ALWAYS',copy:'A deadly trap on contact. It doesn’t matter whether the block is lying down or standing.'},
+   {swatch:'orange',name:'ORANGE',tag:'DANGER · STANDING',copy:'You lose if you land on it standing up. You can cross it while the block is lying down.'},
+   {swatch:'core',name:'PINK CORE',tag:'COLLECT',copy:'Collect every core in the level to unlock the exit.'},
+   {swatch:'goal',name:'EXIT PORTAL',tag:'GOAL',copy:'Reach the exit with the block standing, after collecting every core.'}
   ],
-  footer:'Consejo: piensa dónde terminará el bloque después de cada vuelco, no solo dónde empieza.'
+  footer:'Tip: think about where the block will end up after each roll, not just where it starts.'
  },
  ice:{
-  eyebrow:'NUEVA ZONA · CRYO VAULT',
-  title:'EL HIELO NO FRENA',
-  subtitle:'Acabas de encontrar una nueva baldosa. Aprende su comportamiento antes de avanzar.',
+  eyebrow:'NEW ZONE · CRYO VAULT',
+  title:'ICE DOESN’T BRAKE',
+  subtitle:'You have just found a new tile. Learn how it behaves before moving on.',
   icon:'❄',
   cards:[
-   {swatch:'ice',name:'HIELO / CIAN CLARO',tag:'DESLIZAMIENTO',copy:'Al aterrizar sobre hielo, el bloque se desliza una casilla adicional en la misma dirección del movimiento.'},
-   {swatch:'silver',name:'PLANIFICA EL FINAL',tag:'OJO CON EL BORDE',copy:'Calcula la casilla donde terminará el deslizamiento. Si después del impulso no hay suelo válido, caerás.'}
+   {swatch:'ice',name:'ICE / LIGHT CYAN',tag:'SLIDE',copy:'When it lands on ice, the block slides one extra square in the same direction as the move.'},
+   {swatch:'silver',name:'PLAN THE ENDPOINT',tag:'WATCH THE EDGE',copy:'Work out the square where the slide will end. If there is no valid floor after the push, you will fall.'}
   ],
-  footer:'El impulso ocurre automáticamente. No necesitas pulsar otra tecla.'
+  footer:'The push happens automatically. You don’t need to press another key.'
  },
  belt:{
-  eyebrow:'NUEVA ZONA · GRAVITY FOUNDRY',
-  title:'LAS CINTAS MANDAN',
-  subtitle:'Las plataformas transportadoras pueden cambiar el destino de un movimiento.',
+  eyebrow:'NEW ZONE · GRAVITY FOUNDRY',
+  title:'THE BELTS ARE IN CHARGE',
+  subtitle:'Conveyor platforms can change where a move ends up.',
   icon:'⇢',
   cards:[
-   {swatch:'belt',name:'CINTA TRANSPORTADORA',tag:'EMPUJE AUTOMÁTICO',copy:'Al aterrizar sobre una cinta, esta desplaza el bloque una casilla extra siguiendo la flecha de la baldosa.'},
-   {swatch:'silver',name:'LEE LA DIRECCIÓN',tag:'SIGUE LA FLECHA',copy:'La dirección de la cinta puede ser distinta a la dirección de tu vuelco. Anticipa dónde te dejará.'}
+   {swatch:'belt',name:'CONVEYOR BELT',tag:'AUTOMATIC PUSH',copy:'When the block lands on a belt, the belt moves it one extra square in the direction of the tile’s arrow.'},
+   {swatch:'silver',name:'READ THE DIRECTION',tag:'FOLLOW THE ARROW',copy:'The belt’s direction can differ from the direction of your roll. Anticipate where it will leave you.'}
   ],
-  footer:'El transporte forma parte del mismo movimiento y también cuenta para las trampas y los bordes.'
+  footer:'The transport is part of the same move and also counts for traps and edges.'
  },
  inverter:{
-  eyebrow:'NUEVA ZONA · CIRCUIT LAB',
-  title:'LA FRECUENCIA SE INVIERTE',
-  subtitle:'Ya no siempre tendrás que cambiar la polaridad manualmente.',
+  eyebrow:'NEW ZONE · CIRCUIT LAB',
+  title:'THE FREQUENCY FLIPS',
+  subtitle:'You won’t always have to switch polarity manually any more.',
   icon:'⇄',
   cards:[
-   {swatch:'inverter',name:'INVERSOR VIOLETA',tag:'CAMBIA LA FASE',copy:'Al entrar en esta baldosa, la frecuencia cambia automáticamente: CIAN pasa a ÁMBAR y ÁMBAR pasa a CIAN.'},
-   {swatch:'cyan',name:'PIENSA EN LA SIGUIENTE BALDOSA',tag:'PLANIFICA LA CADENA',copy:'El cambio puede activar un puente y desactivar otro. Mira la frecuencia que tendrás después de cruzar el inversor.'}
+   {swatch:'inverter',name:'VIOLET INVERTER',tag:'SWITCHES PHASE',copy:'Entering this tile switches the frequency automatically: CYAN becomes AMBER and AMBER becomes CYAN.'},
+   {swatch:'cyan',name:'THINK ABOUT THE NEXT TILE',tag:'PLAN THE CHAIN',copy:'The switch can enable one bridge and disable another. Check which frequency you’ll have after crossing the inverter.'}
   ],
-  footer:'El cambio automático ocurre al entrar en la placa, no al salir de ella.'
+  footer:'The automatic switch happens when you enter the plate, not when you leave it.'
  },
  portal:{
-  eyebrow:'NUEVA ZONA · OBSIDIAN RIFT',
-  title:'DOS PORTALES, UN SALTO',
-  subtitle:'Has llegado a una zona donde el tablero no siempre termina donde parece.',
+  eyebrow:'NEW ZONE · OBSIDIAN RIFT',
+  title:'TWO PORTALS, ONE JUMP',
+  subtitle:'You have reached a zone where the board doesn’t always end where it seems to.',
   icon:'◎',
   cards:[
-   {swatch:'portal',name:'PORTAL MAGENTA',tag:'TELETRANSPORTE',copy:'Aterriza de pie sobre uno de los portales para aparecer en el otro portal emparejado.'},
-   {swatch:'silver',name:'SOLO DE PIE',tag:'CONDICIÓN DE ENTRADA',copy:'Si pasas tumbado por encima de un portal, no se activa. Debes caer de pie sobre su baldosa.'}
+   {swatch:'portal',name:'MAGENTA PORTAL',tag:'TELEPORT',copy:'Land standing on one of the portals to appear at its paired portal.'},
+   {swatch:'silver',name:'STANDING ONLY',tag:'ENTRY CONDITION',copy:'If you roll across a portal lying down, it won’t activate. You must land standing on its tile.'}
   ],
-  footer:'El teletransporte puede colocarte en otra parte del tablero. Comprueba qué hay alrededor de la salida.'
+  footer:'Teleporting can place you somewhere else on the board. Check what surrounds the exit.'
  }
 };
 function tutorialForLevel(index){
@@ -803,12 +803,12 @@ function showLevelTutorial(index){
  $('dialog-content').classList.add('tutorial-shell');
  const cards=t.cards.map(tutorialCardHTML).join('');
  showDialog('<section class="tutorial-content">'+
-   '<div class="tutorial-eyebrow"><span><i></i> '+t.eyebrow+'</span><span>GUÍA '+(index===0?'01':'ZONA '+Math.floor(index/5+1))+'</span></div>'+
+   '<div class="tutorial-eyebrow"><span><i></i> '+t.eyebrow+'</span><span>GUIDE '+(index===0?'01':'ZONE '+Math.floor(index/5+1))+'</span></div>'+
    '<div class="tutorial-title-row"><div class="tutorial-main-icon">'+t.icon+'</div><div><h2>'+t.title+'</h2><p>'+t.subtitle+'</p></div></div>'+
    '<div class="tutorial-card-grid">'+cards+'</div>'+
-   '<div class="tutorial-tip"><span>TIP DEL SISTEMA</span><p>'+t.footer+'</p></div>'+
-   '<button class="main-cta tutorial-continue" id="tutorial-continue">ENTENDIDO · CONTINUAR →</button>'+
-   '<p class="tutorial-once">ESTE AVISO SOLO APARECERÁ UNA VEZ</p>'+
+   '<div class="tutorial-tip"><span>SYSTEM TIP</span><p>'+t.footer+'</p></div>'+
+   '<button class="main-cta tutorial-continue" id="tutorial-continue">GOT IT · CONTINUE →</button>'+
+   '<p class="tutorial-once">THIS NOTICE ONLY APPEARS ONCE</p>'+
   '</section>');
  $('tutorial-continue').onclick=closeLevelTutorial;
  drawUI();
@@ -827,17 +827,17 @@ function closeLevelTutorial(){
 
 function showDialog(inner){$('dialog-content').innerHTML=inner;$('dialog').hidden=false;if($('help-btn'))$('help-btn').setAttribute('aria-expanded',mode==='help'?'true':'false')}
 function hideDialog(){$('dialog').hidden=true;$('dialog-content').classList.remove('tutorial-shell');if($('help-btn'))$('help-btn').setAttribute('aria-expanded','false')}
-function showLevels(){if(mode==='intro')return;const old=mode;mode='select';let groups=[...new Set(LEVELS.map(l=>l.world))].map(world=>'<div class="level-world"><h3>'+world+'</h3><div class="level-grid">'+LEVELS.map((l,i)=>l.world===world?'<button '+(i>=unlocked?'class="locked" disabled title="Bloqueado"':i===level?'class="current"':'')+' data-level="'+i+'">'+String(i+1).padStart(2,'0')+'</button>':'').join('')+'</div></div>').join('');showDialog('<div class="mark">▦</div><h2>SELECCIÓN DE NIVEL</h2><p>Elige uno de los 25 niveles repartidos en cinco zonas. Tu progreso se guarda automáticamente.</p>'+groups+'<button class="secondary-cta" id="close-levels">CERRAR / ESC</button>');document.querySelectorAll('[data-level]').forEach(el=>el.onclick=()=>loadLevel(Number(el.dataset.level)));$('close-levels').onclick=()=>{mode=old==='win'?'win':'play';hideDialog();drawUI()}}
+function showLevels(){if(mode==='intro')return;const old=mode;mode='select';let groups=[...new Set(LEVELS.map(l=>l.world))].map(world=>'<div class="level-world"><h3>'+world+'</h3><div class="level-grid">'+LEVELS.map((l,i)=>l.world===world?'<button '+(i>=unlocked?'class="locked" disabled title="Locked"':i===level?'class="current"':'')+' data-level="'+i+'">'+String(i+1).padStart(2,'0')+'</button>':'').join('')+'</div></div>').join('');showDialog('<div class="mark">▦</div><h2>LEVEL SELECT</h2><p>Choose one of the 25 levels across five zones. Your progress is saved automatically.</p>'+groups+'<button class="secondary-cta" id="close-levels">CLOSE / ESC</button>');document.querySelectorAll('[data-level]').forEach(el=>el.onclick=()=>loadLevel(Number(el.dataset.level)));$('close-levels').onclick=()=>{mode=old==='win'?'win':'play';hideDialog();drawUI()}}
 function help(){
  if(mode==='intro')return;
  if(mode==='help'){mode='play';hideDialog();drawUI();return}
  const old=mode;mode='help';
- showDialog('<section class="help-modal"><button class="modal-close" id="close-help-x" aria-label="Cerrar controles">×</button><div class="mark">?</div><h2>CONTROLES DEL SISTEMA</h2><p class="help-intro">Guía rápida de Bloxzord Game. Puedes cerrar este panel con la X o pulsando ESC.</p><div class="help-list"><div class="help-row"><kbd>WASD</kbd><span>o flechas para mover el bloque en pantalla.</span></div><div class="help-row"><kbd>Q</kbd><span>Intercambia la frecuencia cian y ámbar.</span></div><div class="help-row"><kbd>Z</kbd><span>Deshace el último movimiento.</span></div><div class="help-row"><kbd>H</kbd><span>Muestra una pista para el nivel actual.</span></div><div class="help-row"><kbd>R</kbd><span>Reinicia el nivel.</span></div><div class="help-row"><kbd>L</kbd><span>Abre el selector de niveles.</span></div><div class="help-row"><kbd>◆</kbd><span>Recoge todos los núcleos y alcanza el portal de pie.</span></div><div class="help-row"><kbd>AZUL</kbd><span>Trampa mortal en cualquier orientación.</span></div><div class="help-row"><kbd>NARANJA</kbd><span>Trampa mortal solo cuando caes de pie; tumbado puedes pasar.</span></div><div class="help-row"><kbd>HIELO</kbd><span>Desliza una casilla adicional en la dirección del vuelco.</span></div><div class="help-row"><kbd>CINTA</kbd><span>Te transporta una casilla según la flecha de la baldosa.</span></div><div class="help-row"><kbd>INVERSOR</kbd><span>Cambia automáticamente la polaridad al entrar.</span></div><div class="help-row"><kbd>PORTAL</kbd><span>Teletransporta al bloque cuando aterriza de pie.</span></div><div class="help-row"><kbd>SWIPE</kbd><span>También puedes deslizar directamente sobre el tablero.</span></div></div><button class="main-cta" id="close-help">CERRAR CONTROLES</button></section>');
+ showDialog('<section class="help-modal"><button class="modal-close" id="close-help-x" aria-label="Close controls">×</button><div class="mark">?</div><h2>SYSTEM CONTROLS</h2><p class="help-intro">Quick guide to KPC GAME. Close this panel with the X or by pressing ESC.</p><div class="help-list"><div class="help-row"><kbd>WASD</kbd><span>or the arrow keys to move the block on screen.</span></div><div class="help-row"><kbd>Q</kbd><span>Switches between the cyan and amber frequencies.</span></div><div class="help-row"><kbd>Z</kbd><span>Undoes the last move.</span></div><div class="help-row"><kbd>H</kbd><span>Shows a hint for the current level.</span></div><div class="help-row"><kbd>R</kbd><span>Restarts the level.</span></div><div class="help-row"><kbd>L</kbd><span>Opens the level selector.</span></div><div class="help-row"><kbd>◆</kbd><span>Collect every core and reach the portal standing up.</span></div><div class="help-row"><kbd>BLUE</kbd><span>Deadly trap in any orientation.</span></div><div class="help-row"><kbd>ORANGE</kbd><span>Deadly only when you land standing; lying down you can pass.</span></div><div class="help-row"><kbd>ICE</kbd><span>Slides one extra square in the direction of the roll.</span></div><div class="help-row"><kbd>BELT</kbd><span>Carries you one square along the tile’s arrow.</span></div><div class="help-row"><kbd>INVERTER</kbd><span>Switches polarity automatically when you enter.</span></div><div class="help-row"><kbd>PORTAL</kbd><span>Teleports the block when it lands standing.</span></div><div class="help-row"><kbd>SWIPE</kbd><span>You can also swipe directly on the board.</span></div></div><button class="main-cta" id="close-help">CLOSE CONTROLS</button></section>');
  const close=()=>{mode=old==='win'?'win':'play';hideDialog();drawUI()};
  $('close-help').onclick=close;
  $('close-help-x').onclick=close;
 }
-function escapeDialog(){if(mode==='help'||mode==='select'){mode='play';hideDialog();drawUI()}else if(mode==='play'){mode='pause';showDialog('<div class="mark">Ⅱ</div><h2>PAUSA</h2><p>El juego está en pausa.</p><button class="main-cta" id="resume">REANUDAR / ESC</button><button class="secondary-cta" id="pause-levels">SELECCIONAR NIVEL</button>');$('resume').onclick=()=>{mode='play';hideDialog();drawUI()};$('pause-levels').onclick=showLevels;drawUI()}else if(mode==='pause'){mode='play';hideDialog();drawUI()}}
+function escapeDialog(){if(mode==='help'||mode==='select'){mode='play';hideDialog();drawUI()}else if(mode==='play'){mode='pause';showDialog('<div class="mark">Ⅱ</div><h2>PAUSED</h2><p>The game is paused.</p><button class="main-cta" id="resume">RESUME / ESC</button><button class="secondary-cta" id="pause-levels">SELECT LEVEL</button>');$('resume').onclick=()=>{mode='play';hideDialog();drawUI()};$('pause-levels').onclick=showLevels;drawUI()}else if(mode==='pause'){mode='play';hideDialog();drawUI()}}
 
 function escapeRankText(value){
  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -873,25 +873,25 @@ function addLocalRecord(bucket,record){
  saveLocalRecords();return true;
 }
 function renderRankRows(rows,modeName){
- if(!rows||!rows.length){rankEmpty('Todavía no hay récords guardados. ¡Completa un nivel para aparecer aquí!');return}
+ if(!rows||!rows.length){rankEmpty('No records saved yet. Complete a level to appear here!');return}
  $('rank-list').innerHTML=rows.map((row,i)=>{
    const score=modeName==='level'?row.moves:row.total_moves;
    const elapsed=row.elapsed_ms||0;
    const own=String(row.player_name).toLowerCase()===player.toLowerCase();
-   return '<li class="rank-row '+(own?'own':'')+'"><span class="rank-position">'+String(i+1).padStart(2,'0')+'</span><span class="rank-player" title="'+escapeRankText(row.player_name)+'">'+escapeRankText(row.player_name)+'</span><strong>'+Number(score).toLocaleString('es-ES')+'</strong><small title="Tiempo empleado">'+rankTime(elapsed)+'</small></li>';
+   return '<li class="rank-row '+(own?'own':'')+'"><span class="rank-position">'+String(i+1).padStart(2,'0')+'</span><span class="rank-player" title="'+escapeRankText(row.player_name)+'">'+escapeRankText(row.player_name)+'</span><strong>'+Number(score).toLocaleString('en-GB')+'</strong><small title="Time taken">'+rankTime(elapsed)+'</small></li>';
  }).join('');
 }
 function refreshLeaderboard(){
  const rankLevel=rankMode==='level'?Math.max(1,Math.min(25,Number($('rank-level-select')?.value||level+1))):null;
- $('rank-title').textContent=rankMode==='level'?'NIVEL '+String(rankLevel).padStart(2,'0')+' / 25':'CAMPAÑA COMPLETA';
- $('rank-caption').textContent='MENOS MOVIMIENTOS · DESEMPATE POR TIEMPO';
+ $('rank-title').textContent=rankMode==='level'?'LEVEL '+String(rankLevel).padStart(2,'0')+' / 25':'FULL CAMPAIGN';
+ $('rank-caption').textContent='FEWER MOVES · TIME BREAKS TIES';
  document.querySelectorAll('[data-rank-mode]').forEach(b=>b.classList.toggle('active',b.dataset.rankMode===rankMode));
  setRankStatus('LOCAL',true);
  const rows=rankMode==='level'?(localRecords.levels[String(rankLevel)]||[]):localRecords.campaign;
  renderRankRows(rows,rankMode);
  $('rank-note').textContent=rankMode==='level'
-   ?'TOP 10 guardado en este navegador para el nivel '+String(rankLevel).padStart(2,'0')+'. Se conserva tu mejor marca por nombre.'
-   :'TOP 10 de campañas completas guardado en este navegador. Solo cuentan los 25 niveles superados en orden.';
+   ?'TOP 10 saved in this browser for level '+String(rankLevel).padStart(2,'0')+'. Your best score is kept per name.'
+   :'TOP 10 full campaigns saved in this browser. Only all 25 levels cleared in order count.';
 }
 function submitLevelRecord(levelNumber,moveCount,elapsedMs){
  const key=String(levelNumber);
@@ -915,13 +915,13 @@ function toggleRankPanel(force){
 }
 
 $('back-portfolio-btn').onclick=()=>{try{if(window.parent!==window&&window.parent.parent?.openPortfolioPage){window.parent.parent.openPortfolioPage('projects');return}}catch(e){}location.href='./index.html#/projects'};
-$('name-form').onsubmit=e=>{e.preventDefault();player=$('nickname').value.trim().slice(0,18)||'JUGADOR';save();loadLevel(level)};
-$('phase-btn').onclick=()=>act('Q');$('undo-btn').onclick=undo;$('hint-btn').onclick=hint;$('reset-btn').onclick=()=>{if(mode==='play'){restore();notify('NIVEL REINICIADO')}};$('levels-btn').onclick=showLevels;$('help-btn').onclick=help;$('rank-toggle-btn').onclick=()=>toggleRankPanel();$('rank-close').onclick=()=>toggleRankPanel(false);$('rank-refresh').onclick=refreshLeaderboard;$('new-campaign-btn').onclick=startNewCampaign;document.querySelectorAll('[data-rank-mode]').forEach(b=>b.onclick=()=>{rankMode=b.dataset.rankMode;refreshLeaderboard()});$('rank-level-select').onchange=()=>refreshLeaderboard();
-$('music-btn').onclick=()=>{musicEnabled=!musicEnabled;$('music-btn').textContent='♫ MÚSICA: '+(musicEnabled?'ON':'OFF');if(musicEnabled)startMusic();else stopMusic()};$('sfx-btn').onclick=()=>{sfxEnabled=!sfxEnabled;$('sfx-btn').textContent='◈ EFECTOS: '+(sfxEnabled?'ON':'OFF');if(sfxEnabled)playSfx('start')};
-$('fullscreen-btn').onclick=()=>{const root=document.querySelector('.shell');if(document.fullscreenElement===root){document.exitFullscreen().catch(()=>{})}else if(!document.fullscreenElement){root.requestFullscreen().catch(()=>notify('PANTALLA COMPLETA NO DISPONIBLE'))}else{document.exitFullscreen().catch(()=>{})}};
+$('name-form').onsubmit=e=>{e.preventDefault();player=$('nickname').value.trim().slice(0,18)||'PLAYER';save();loadLevel(level)};
+$('phase-btn').onclick=()=>act('Q');$('undo-btn').onclick=undo;$('hint-btn').onclick=hint;$('reset-btn').onclick=()=>{if(mode==='play'){restore();notify('LEVEL RESTARTED')}};$('levels-btn').onclick=showLevels;$('help-btn').onclick=help;$('rank-toggle-btn').onclick=()=>toggleRankPanel();$('rank-close').onclick=()=>toggleRankPanel(false);$('rank-refresh').onclick=refreshLeaderboard;$('new-campaign-btn').onclick=startNewCampaign;document.querySelectorAll('[data-rank-mode]').forEach(b=>b.onclick=()=>{rankMode=b.dataset.rankMode;refreshLeaderboard()});$('rank-level-select').onchange=()=>refreshLeaderboard();
+$('music-btn').onclick=()=>{musicEnabled=!musicEnabled;$('music-btn').textContent='♫ MUSIC: '+(musicEnabled?'ON':'OFF');if(musicEnabled)startMusic();else stopMusic()};$('sfx-btn').onclick=()=>{sfxEnabled=!sfxEnabled;$('sfx-btn').textContent='◈ SFX: '+(sfxEnabled?'ON':'OFF');if(sfxEnabled)playSfx('start')};
+$('fullscreen-btn').onclick=()=>{const root=document.querySelector('.shell');if(document.fullscreenElement===root){document.exitFullscreen().catch(()=>{})}else if(!document.fullscreenElement){root.requestFullscreen().catch(()=>notify('FULLSCREEN NOT AVAILABLE'))}else{document.exitFullscreen().catch(()=>{})}};
 document.querySelectorAll('[data-move]').forEach(btn=>btn.addEventListener('click',()=>act(btn.dataset.move)));
 const keymap={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'up',s:'down',a:'left',d:'right',q:'Q'};
-document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'){if(e.key==='Escape')e.target.blur();return}if(e.key in keymap){e.preventDefault();act(keymap[e.key]);return}let k=e.key.toLowerCase();if(k==='r'){e.preventDefault();if(mode==='play'){restore();notify('NIVEL REINICIADO')}}else if(k==='z'){e.preventDefault();undo()}else if(k==='h'){e.preventDefault();hint()}else if(k==='l'){e.preventDefault();showLevels()}else if(k==='escape'){if(mode==='help'||mode==='select'){e.preventDefault();escapeDialog()}else if(!document.fullscreenElement){e.preventDefault();escapeDialog()}}else if(e.key==='Enter'&&mode==='win'){e.preventDefault();loadLevel(level===LEVELS.length-1?0:level+1)}});
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'){if(e.key==='Escape')e.target.blur();return}if(e.key in keymap){e.preventDefault();act(keymap[e.key]);return}let k=e.key.toLowerCase();if(k==='r'){e.preventDefault();if(mode==='play'){restore();notify('LEVEL RESTARTED')}}else if(k==='z'){e.preventDefault();undo()}else if(k==='h'){e.preventDefault();hint()}else if(k==='l'){e.preventDefault();showLevels()}else if(k==='escape'){if(mode==='help'||mode==='select'){e.preventDefault();escapeDialog()}else if(!document.fullscreenElement){e.preventDefault();escapeDialog()}}else if(e.key==='Enter'&&mode==='win'){e.preventDefault();loadLevel(level===LEVELS.length-1?0:level+1)}});
 // Touch swipe controls on the board.
 let touchStart=null;canvas.addEventListener('pointerdown',e=>{touchStart={x:e.clientX,y:e.clientY}});canvas.addEventListener('pointerup',e=>{if(!touchStart)return;let dx=e.clientX-touchStart.x,dy=e.clientY-touchStart.y;touchStart=null;if(Math.hypot(dx,dy)<25)return; // The oblique 3D camera keeps board directions close to screen swipes.
  const d=Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up');act(d)});
@@ -951,7 +951,7 @@ function syncFullscreenLayout(){
  const shell=document.querySelector('.shell'),active=document.fullscreenElement===shell;
  shell.classList.toggle('is-fullscreen',active);
  document.documentElement.classList.toggle('game-fullscreen',active);
- $('fullscreen-btn').textContent=active?'⛶ SALIR DE PANTALLA COMPLETA':'⛶ PANTALLA COMPLETA';
+ $('fullscreen-btn').textContent=active?'⛶ EXIT FULLSCREEN':'⛶ FULLSCREEN';
  $('fullscreen-btn').setAttribute('aria-pressed',active?'true':'false');
  if(!active&&mode==='help'){mode='play';hideDialog();drawUI()}
  requestAnimationFrame(()=>resize());
@@ -1157,7 +1157,7 @@ function blockMesh(v){
      ctx.strokeStyle='#ffbd8b70';ctx.lineWidth=.8*scale;
      ctx.beginPath();ctx.moveTo(cx,minY+(maxY-minY)*.22);ctx.lineTo(cx,maxY-(maxY-minY)*.22);ctx.moveTo(minX+(maxX-minX)*.22,cy);ctx.lineTo(maxX-(maxX-minX)*.22,cy);ctx.stroke();
      ctx.fillStyle='#fff2df';ctx.textAlign='center';ctx.textBaseline='middle';
-     const blockName=String(player||'JUGADOR').trim()||'JUGADOR';
+     const blockName=String(player||'PLAYER').trim()||'PLAYER';
      const baseNameFont=Math.max(5,9*scale);
      ctx.font='bold '+baseNameFont+'px monospace';
      const nameMaxWidth=Math.max(8,(maxX-minX)*.64);
