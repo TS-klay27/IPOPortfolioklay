@@ -35,7 +35,7 @@ const APPS = {
   certificates: { title: 'Certificates', icon: 'i-award',  w: 1120, h: 780 },
   projects:     { title: 'Projects',     icon: 'i-code',   w: 1080, h: 760 },
   arcade:       { title: 'KPC GAME',     icon: 'i-game',   w: 1180, h: 800, path: 'KMP://ARCADE' },
-  '7hhep':      { title: '7HHEP.EXE',    icon: 'i-layers', w: 1100, h: 800, path: 'KMP://7HHEP.EXE' },
+  '7hhep':      { title: '7HHEP.EXE',    icon: 'i-layers', w: 1200, h: 820, path: 'KMP://7HHEP.EXE', bare: true },   // bare: full-bleed app, no page footer
   contact:      { title: 'Contact',      icon: 'i-mail',   w: 980,  h: 640 },
 };
 const ORDER = ['about', 'resume', 'certificates', 'projects', '7hhep', 'contact'];   // KPC GAME lives inside Projects
@@ -536,15 +536,29 @@ const OS = (() => {
     el.innerHTML = `<header class="win-bar"><svg class="i"><use href="#${app.icon}"/></svg><h2 class="win-title" id="wt-${k}">${app.title}</h2><span class="win-path">${app.path || 'KMP://' + k.toUpperCase()}</span><div class="win-ctl"><button type="button" data-act="min" aria-label="Minimize ${app.title}"><svg class="i"><use href="#i-min"/></svg></button><button type="button" data-act="max" aria-label="Maximize ${app.title}"><svg class="i"><use href="#i-max"/></svg></button><button type="button" data-act="close" aria-label="Close ${app.title}"><svg class="i"><use href="#i-close"/></svg></button></div></header><div class="win-body" tabindex="-1"><i class="win-progress"></i></div>`;
     const body = el.querySelector('.win-body');
     body.append(tpl.content.cloneNode(true));
-    if (k !== 'arcade') body.insertAdjacentHTML('beforeend', `<div class="pg"><footer class="pg-foot"><div><b>KLUIVERT<span>.</span></b><div style="margin-top:8px">© 2026 Kluivert Manuel Peralta Carrera</div></div><div style="text-align:right">Personal Portfolio<br>Systems <em>•</em> Networks <em>•</em> Technology</div></footer></div>`);
+    if (k !== 'arcade' && !app.bare) body.insertAdjacentHTML('beforeend', `<div class="pg"><footer class="pg-foot"><div><b>KLUIVERT<span>.</span></b><div style="margin-top:8px">© 2026 Kluivert Manuel Peralta Carrera</div></div><div style="text-align:right">Personal Portfolio<br>Systems <em>•</em> Networks <em>•</em> Technology</div></footer></div>`);
     const area = winsEl.getBoundingClientRect();
     const w = Math.min(app.w, area.width - 40), h = Math.min(app.h, area.height - 40), off = (cascade++ % 6) * 28;
     el.style.width = w + 'px'; el.style.height = h + 'px';
     el.style.left = clamp((area.width - w) / 2 + off - 60, 10, Math.max(10, area.width - w - 10)) + 'px';
     el.style.top = clamp((area.height - h) / 2 + off - 40, 10, Math.max(10, area.height - h - 10)) + 'px';
+    if (isSmall() || area.width < 400) el.dataset.fit = '1';   // opened full-screen: take the normal size when the screen grows
     winsEl.append(el); wins.set(k, { el });
     wire(el, k); hydrate(k, body);
   }
+  // Keep windows usable when the screen size changes (e.g. a phone rotated, or a browser window widened).
+  function fitWindows() {
+    if (isSmall()) return; const area = winsEl.getBoundingClientRect(); if (area.width < 400) return;
+    wins.forEach(({ el }, k) => {
+      if (el.classList.contains('max')) return;
+      let w = el.offsetWidth, h = el.offsetHeight, l = el.offsetLeft, t = el.offsetTop;
+      if (el.dataset.fit) { w = Math.min(APPS[k].w, area.width - 40); h = Math.min(APPS[k].h, area.height - 40); l = (area.width - w) / 2; t = (area.height - h) / 2; delete el.dataset.fit; }
+      else { w = Math.min(w, area.width - 20); h = Math.min(h, area.height - 20); }
+      el.style.width = w + 'px'; el.style.height = h + 'px';
+      el.style.left = clamp(l, 10, Math.max(10, area.width - w - 10)) + 'px'; el.style.top = clamp(t, 10, Math.max(10, area.height - h - 10)) + 'px';
+    });
+  }
+  let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitWindows, 150); });
   function openApp(k) {
     if (!APPS[k]) return;
     if (!wins.has(k)) create(k);

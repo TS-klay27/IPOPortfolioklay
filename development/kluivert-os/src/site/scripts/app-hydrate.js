@@ -43,43 +43,79 @@
     }
     if (k === '7hhep') {
       // Every listener lives on nodes inside this window, so closing the window releases them all.
-      const root = $('.hx', body);
-      // Habit navigation — ARIA tabs (click / touch, ←/→, Home/End)
-      const tabs = $$('[role="tab"]', root), panels = tabs.map(t => $('#' + t.getAttribute('aria-controls'), root)), bar = tabs[0].parentElement;
-      const show = (i, focus) => {
-        tabs.forEach((t, j) => { const on = j === i; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; panels[j].hidden = !on; });
-        if (focus) tabs[i].focus({ preventScroll: true });
-        if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: tabs[i].offsetLeft - 4, behavior: reduced() ? 'auto' : 'smooth' });
-        const top = panels[i].getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop - bar.offsetHeight - 8;
-        if (body.scrollTop > top) body.scrollTo({ top, behavior: 'auto' });
+      const shell = $('.hx-shell', body), root = $('.hx', shell), main = $('.hx-main', root);   // the scene library lives in shell, outside .hx
+      // --- Scene details: drawn once with a fixed seed (same picture every time, no assets to download) ---
+      let seed = 7; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
+      const NS = 'http://www.w3.org/2000/svg';
+      const add = (parent, tag, attrs) => { const e = document.createElementNS(NS, tag); for (const a in attrs) e.setAttribute(a, attrs[a]); parent.append(e); return e; };
+      const starField = (g, n, maxY) => { for (let i = 0; i < n; i++) add(g, 'circle', { cx: (rnd() * 1200).toFixed(1), cy: (rnd() * maxY).toFixed(1), r: (rnd() * 1.2 + .3).toFixed(2), class: i % 6 ? '' : 'tw', style: `animation-delay:${(rnd() * 3.6).toFixed(2)}s` }); };
+      starField($('.hx-stars', shell), 80, 300);
+      starField($('.hx-cstars', shell), 50, 320);
+      starField($('.hx-dstars', shell), 24, 200);
+      const city = $('.hx-city', shell);
+      for (let x = -20; x < 1220;) { const w = 34 + rnd() * 56, h = 50 + rnd() * 150; add(city, 'rect', { x: x.toFixed(1), y: (500 - h).toFixed(1), width: w.toFixed(1), height: (h + 110).toFixed(1), fill: 'url(#hxg-farcity)', opacity: '.6' }); x += w + 2 + rnd() * 14; }
+      for (let x = -30; x < 1230;) {
+        const w = 46 + rnd() * 70, h = 70 + rnd() * 200, y = 600 - h;
+        add(city, 'rect', { x: x.toFixed(1), y: y.toFixed(1), width: w.toFixed(1), height: h.toFixed(1), fill: '#06151a' });
+        for (let wy = y + 12; wy < 590; wy += 16) for (let wx = x + 7; wx < x + w - 8; wx += 12) if (rnd() < .16) add(city, 'rect', { x: wx.toFixed(1), y: wy.toFixed(1), width: '5', height: '7', fill: rnd() < .55 ? '#f1c98a' : '#7fe9e3', opacity: (.35 + rnd() * .5).toFixed(2) });
+        x += w + 4 + rnd() * 10;
+      }
+      const peb = $('.hx-peb', shell);
+      for (let row = 0; row < 5; row++) for (let i = 0; i < 9; i++) {
+        const rx = 26 + rnd() * 22, cx = i * 70 + (row % 2) * 34 + rnd() * 10 - 10, cy = 300 - row * 34 - rnd() * 8;
+        add(peb, 'ellipse', { cx: cx.toFixed(1), cy: cy.toFixed(1), rx: rx.toFixed(1), ry: (rx * .62).toFixed(1), fill: 'url(#hxg-peb)' });
+        add(peb, 'ellipse', { cx: (cx - rx * .25).toFixed(1), cy: (cy - rx * .25).toFixed(1), rx: (rx * .35).toFixed(1), ry: (rx * .12).toFixed(1), fill: '#effffb', opacity: '.16' });
+      }
+      $$('.hx-fx', root).forEach(fx => { for (let i = 0; i < 14; i++) { const s = document.createElement('span'); s.style.cssText = `--x:${(rnd() * 100).toFixed(1)}%;--s:${(1.5 + rnd() * 2.5).toFixed(1)}px;--t:${(7 + rnd() * 8).toFixed(1)}s;--dl:${(-rnd() * 12).toFixed(1)}s;--dx:${(rnd() * 80 - 40).toFixed(0)}px`; fx.append(s); } });
+
+      // --- Chapters and session progress (kept in memory only; nothing is stored) ---
+      const tabs = $$('[role="tab"]', root), views = tabs.map(t => $('#' + t.getAttribute('aria-controls'), root)), nav = tabs[0].parentElement;
+      const seen = new Set();
+      const paint = cur => {
+        $$('[data-explored-count]', root).forEach(e => { e.textContent = seen.size + ' / 3'; });
+        $$('.hx-jbar i', root).forEach(i => { const n = +i.dataset.j; i.classList.toggle('seen', seen.has(n)); i.classList.toggle('cur', n === cur); });
+        tabs.forEach((t, n) => t.classList.toggle('seen', seen.has(n)));
+        $$('.hx-chap', root).forEach(c => c.classList.toggle('seen', seen.has(+c.dataset.go)));
+      };
+      const show = (v, focus) => {
+        tabs.forEach((t, j) => { const on = j === v; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; views[j].hidden = !on; });
+        root.dataset.view = v; if (v > 0) seen.add(v); paint(v);
+        main.scrollTop = 0;
+        if (focus) tabs[v].focus({ preventScroll: true });
       };
       tabs.forEach((t, i) => t.addEventListener('click', () => show(i)));
-      bar.addEventListener('keydown', e => {
+      nav.addEventListener('keydown', e => {
         const i = tabs.indexOf(document.activeElement); if (i < 0) return;
-        const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key]; if (n === undefined) return;
+        const n = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key]; if (n === undefined) return;
         e.preventDefault(); show((n + tabs.length) % tabs.length, true);
       });
-      // Habit 01 — IDEA → INITIATIVE → ACTION → LEARNING
-      const cycle = $('.hx-cycle', root), steps = $$('.hx-step', cycle), stages = steps.map(s => $('#' + s.getAttribute('aria-controls'), cycle));
-      const count = $('[data-step-count]', cycle), next = $('[data-step-next]', cycle); let cur = 0;
-      const step = i => {
-        cur = i; cycle.style.setProperty('--step', i);
-        steps.forEach((s, j) => { s.setAttribute('aria-pressed', String(j === i)); s.parentElement.classList.toggle('done', j < i); stages[j].hidden = j !== i; });
-        count.textContent = `STAGE ${i + 1} / ${steps.length}`;
-        next.firstChild.textContent = i === steps.length - 1 ? 'Start again' : 'Next stage';
-      };
-      steps.forEach((s, i) => s.addEventListener('click', () => step(i)));
-      next.addEventListener('click', () => step((cur + 1) % steps.length));
-      // Habit 03 — Rocks, Pebbles & Sand (expand / collapse; the jar highlights the open layers)
-      const jar = $('.hx-jar', root), cats = $$('.hx-cat', root);
-      cats.forEach(c => {
-        const b = $('h3 button', c), region = $('#' + b.getAttribute('aria-controls'), c);
-        b.addEventListener('click', () => {
-          const open = b.getAttribute('aria-expanded') !== 'true';
-          b.setAttribute('aria-expanded', String(open)); c.classList.toggle('open', open); region.inert = !open;
-          jar.classList.toggle('hl-' + c.dataset.cat, open); jar.classList.toggle('any', cats.some(x => x.classList.contains('open')));
-        });
+      root.addEventListener('click', e => {
+        const go = e.target.closest('[data-go]'); if (go) { show(+go.dataset.go); return; }
+        if (e.target.closest('[data-goto="mission"]')) { show(2); const m = $('#hx-mission', root); main.scrollTop = m.getBoundingClientRect().top - main.getBoundingClientRect().top - 24; }
       });
+
+      // --- Habit 01: IDEA → INITIATIVE → ACTION → LEARNING ---
+      const cyc = $('.hx-cyc', root), stg = $$('.hx-stg', cyc), stages = stg.map(s => $('#' + s.getAttribute('aria-controls'), cyc));
+      const count = $('[data-step-count] b', cyc), next = $('[data-step-next]', cyc); let cur = 0;
+      const step = (i, reveal) => {
+        cur = (i + stg.length) % stg.length; cyc.style.setProperty('--step', cur);
+        stg.forEach((s, j) => { s.setAttribute('aria-pressed', String(j === cur)); s.parentElement.classList.toggle('done', j < cur); stages[j].hidden = j !== cur; });
+        count.textContent = cur + 1;
+        next.firstChild.textContent = cur === stg.length - 1 ? 'Start again' : 'Next stage';
+        if (reveal) { const r = stages[cur].getBoundingClientRect(), b = main.getBoundingClientRect(); if (r.bottom > b.bottom - 8) main.scrollBy({ top: r.bottom - b.bottom + 24, behavior: reduced() ? 'auto' : 'smooth' }); }
+      };
+      stg.forEach((s, i) => s.addEventListener('click', () => step(i, true)));
+      next.addEventListener('click', () => step(cur + 1, true));
+      $('[data-step-prev]', cyc).addEventListener('click', () => step(cur - 1, true));
+
+      // --- Habit 03: Rocks, Pebbles & Sand ---
+      $$('.hx-lv', root).forEach(lv => {
+        const b = $('.hx-lv-btn', lv), label = $('span', b), closed = label.textContent, items = $('#' + b.getAttribute('aria-controls'), lv);
+        const toggle = () => { const open = b.getAttribute('aria-expanded') !== 'true'; b.setAttribute('aria-expanded', String(open)); lv.classList.toggle('open', open); items.inert = !open; label.textContent = open ? label.dataset.openLabel : closed; };
+        b.addEventListener('click', toggle);
+        $('.hx-lv-art', lv).addEventListener('click', toggle);
+      });
+      paint(0);
     }
     if (k === 'arcade') {
       const st = $('[data-arc-stage]', body);

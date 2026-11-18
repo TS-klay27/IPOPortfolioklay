@@ -59,7 +59,9 @@ Durante la compilación, `build.js`:
 
 ### 7HHEP.EXE
 - Se registra como las demás apps: entrada `'7hhep'` en `APPS` (`runtime.js`), plantilla `tpl-7hhep` (`30-app-templates.html`), comportamiento en el bloque `k === '7hhep'` de `app-hydrate.js` y estilos `.hx-*` en `20-content.css`.
-- Para cambiar la declaración de misión se edita **solo** `src/content/mission.json`; la app y el PDF se actualizan juntos al compilar.
+- Para cambiar la declaración de misión se edita **solo** `src/content/mission.json`; la app y el PDF se actualizan juntos al compilar. Las frases de `highlights` se resaltan en la app (el texto no cambia; el PDF queda sin resaltar) y la compilación falla si alguna no aparece en el texto.
+- Las escenas (montaña, escritorio, ciudad, cairn, rocas, guijarros, arena) son SVG vectorial dentro de la plantilla (`<symbol id="hx-art-…">`); estrellas, edificios y guijarros se dibujan al abrir la app con una semilla fija. No hay imágenes externas ni dependencias.
+- El progreso «My Journey» solo vive en memoria mientras la ventana está abierta: no se guarda nada en el navegador.
 
 ## Verificar
 

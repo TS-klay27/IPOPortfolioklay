@@ -95,14 +95,24 @@ if (!pdfCheck.ok) throw Error('mission PDF check failed: ' + pdfCheck.problems.j
 fs.mkdirSync(path.join(OUT, 'pdfs'), { recursive: true });
 fs.writeFileSync(path.join(OUT, 'pdfs', MISSION_PDF), missionPdf);
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// Key sentences highlighted in the app (the text itself is unchanged; the PDF stays plain).
+let highlighted = 0;
+const markUp = p => (mission.highlights || []).reduce((html, h) => {
+  const parts = html.split(esc(h));
+  if (parts.length > 2) throw Error('highlight appears more than once in a paragraph: ' + h);
+  if (parts.length === 2) highlighted++;
+  return parts.join(`<mark>${esc(h)}</mark>`);
+}, esc(p));
 const missionTokens = {
   MISSION_HEADLINE: mission.headline.map(l => `<span>${esc(l)}</span>`).join(''),
-  MISSION_PARAGRAPHS: mission.paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n'),
+  MISSION_PARAGRAPHS: mission.paragraphs.map(p => `<p>${markUp(p)}</p>`).join('\n'),
   MISSION_PRINCIPLE: esc(mission.principle),
-  MISSION_VALUES: mission.values.map(([name, icon], i) => `<li class="card spot hx-val"><span class="ico-shell"><svg class="i"><use href="#${icon}"/></svg></span><span class="n">${String(i + 1).padStart(2, '0')}</span><strong>${esc(name)}</strong></li>`).join(''),
+  MISSION_VALUES: mission.values.map(([name, icon], i) => `<li style="--i:${i}"><span class="hx-vi"><svg class="i"><use href="#${icon}"/></svg></span>${esc(name)}</li>`).join(''),
   MISSION_PDF: MISSION_PDF,
+  MISSION_PDF_LABEL: MISSION_PDF.split('_').join('_<wbr>'),         // file name with line-break opportunities
   MISSION_PDF_KB: String(Math.max(1, Math.round(missionPdf.length / 1024))),
 };
+if (highlighted !== (mission.highlights || []).length) throw Error(`only ${highlighted} of ${mission.highlights.length} mission highlights were found in the text`);
 
 // ---------- 3. inline images and fill content placeholders ----------
 const A = f => path.join(SRC, 'assets', f);
