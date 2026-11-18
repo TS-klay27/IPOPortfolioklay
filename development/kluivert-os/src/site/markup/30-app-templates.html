@@ -173,10 +173,10 @@
       <p>The AI assistant I'm developing — a project where I keep programming, testing new possibilities and improving as I learn new skills.</p>
     </article>
     <article class="card hov spot proj tone-b rv">
-      <header><span class="ico-shell"><svg class="i"><use href="#i-layers"/></svg></span><span class="status st-soon">Coming soon</span></header>
-      <h3>7HHEP</h3>
-      <p>A new project in preparation. More details will be shared soon.</p>
-      <button class="btn" type="button" data-route="7hhep">Open 7HHEP</button>
+      <header><span class="ico-shell"><svg class="i"><use href="#i-layers"/></svg></span><span class="status st-live">Live</span></header>
+      <h3>7HHEP.EXE</h3>
+      <p>The 7 Habits: a personal development app inside KLUIVERT OS. Three habits, three principles, one personal journey.</p>
+      <button class="btn" type="button" data-route="7hhep">Open 7HHEP.EXE</button>
     </article>
   </div>
   <p class="disclaimer">More projects will be added as their descriptions, previews and repositories are prepared.</p>
@@ -184,7 +184,102 @@
 </template>
 
 <template id="tpl-7hhep">
-<div class="pg"><section class="soon rv"><div><span class="num">05 / PROJECT</span><h1>7HHEP</h1><p>Coming soon</p><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span><div class="scan"></div></div></section></div>
+<div class="pg hx">
+  <div class="pg-head rv"><div><div class="eyebrow">05 / 7HHEP.EXE · PERSONAL DEVELOPMENT SYSTEM</div><h1>THE 7 HABITS<span>.</span></h1></div><p class="pg-note">Three habits. Three principles. One personal journey.</p></div>
+
+  <div class="hx-tabs" role="tablist" aria-label="Habits">
+    <button class="hx-tab" type="button" role="tab" id="hx-t1" aria-controls="hx-p1" aria-selected="true"><span class="n">01</span><span class="t"><small>HABIT 01</small>Be Proactive</span></button>
+    <button class="hx-tab" type="button" role="tab" id="hx-t2" aria-controls="hx-p2" aria-selected="false" tabindex="-1"><span class="n">02</span><span class="t"><small>HABIT 02</small>Begin with the End in Mind</span></button>
+    <button class="hx-tab" type="button" role="tab" id="hx-t3" aria-controls="hx-p3" aria-selected="false" tabindex="-1"><span class="n">03</span><span class="t"><small>HABIT 03</small>First Things First</span></button>
+  </div>
+
+  <!-- ===== HABIT 01 ===== -->
+  <section class="hx-panel" role="tabpanel" id="hx-p1" aria-labelledby="hx-t1" tabindex="0">
+    <header class="hx-ph"><div class="eyebrow">HABIT 01 / 03</div><h2 class="hx-h"><span>01 —</span> BE PROACTIVE</h2></header>
+    <figure class="card hx-quote">
+      <figcaption class="hx-label">MY PERSONAL EXAMPLE</figcaption>
+      <blockquote>
+        <p>One example of proactivity in my life is the way I approach my personal projects. When I have an idea, I don't always wait for someone to tell me how to make it happen. I try to research, experiment with different tools and find ways to bring that idea to life.</p>
+        <p>Sometimes things don't work as expected, but instead of giving up, I try different approaches and learn from my mistakes. I believe being proactive means taking responsibility for my own progress and making things happen instead of just waiting for opportunities.</p>
+      </blockquote>
+    </figure>
+    <section class="card hx-cycle" aria-labelledby="hx-cycle-t" style="--step:0">
+      <div class="hx-row"><div><span class="hx-label">THE PROACTIVE CYCLE</span><h3 id="hx-cycle-t">From an idea to what I learn</h3></div><span class="chip" data-step-count>STAGE 1 / 4</span></div>
+      <ol class="hx-steps">
+        <li><button class="hx-step" type="button" aria-pressed="true" aria-controls="hx-s1" data-step="0"><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span><span class="k">STAGE 01</span><strong>IDEA</strong></button></li>
+        <li><button class="hx-step" type="button" aria-pressed="false" aria-controls="hx-s2" data-step="1"><span class="ico-shell"><svg class="i"><use href="#i-power"/></svg></span><span class="k">STAGE 02</span><strong>INITIATIVE</strong></button></li>
+        <li><button class="hx-step" type="button" aria-pressed="false" aria-controls="hx-s3" data-step="2"><span class="ico-shell"><svg class="i"><use href="#i-tool"/></svg></span><span class="k">STAGE 03</span><strong>ACTION</strong></button></li>
+        <li><button class="hx-step" type="button" aria-pressed="false" aria-controls="hx-s4" data-step="3"><span class="ico-shell"><svg class="i"><use href="#i-cycle"/></svg></span><span class="k">STAGE 04</span><strong>LEARNING</strong></button></li>
+      </ol>
+      <div class="hx-loop" aria-hidden="true"><span><svg class="i"><use href="#i-cycle"/></svg>LEARNING FEEDS THE NEXT IDEA</span></div>
+      <div class="hx-stages" aria-live="polite">
+        <div class="hx-stage" id="hx-s1"><span class="big" aria-hidden="true">01</span><div><span class="hx-label">IDEA</span><h4>It starts with an idea.</h4><p>When I have an idea for a personal project, I see it as something worth bringing to life — not just something to think about.</p></div></div>
+        <div class="hx-stage" id="hx-s2" hidden><span class="big" aria-hidden="true">02</span><div><span class="hx-label">INITIATIVE</span><h4>I don't wait to be told how.</h4><p>Instead of waiting for someone to tell me how to make it happen, I research on my own and look for the tools that can make the idea possible.</p></div></div>
+        <div class="hx-stage" id="hx-s3" hidden><span class="big" aria-hidden="true">03</span><div><span class="hx-label">ACTION</span><h4>I experiment and build.</h4><p>I try different tools and approaches and start building. Sometimes things don't work as expected — that is part of the process.</p></div></div>
+        <div class="hx-stage" id="hx-s4" hidden><span class="big" aria-hidden="true">04</span><div><span class="hx-label">LEARNING</span><h4>Mistakes become lessons.</h4><p>Instead of giving up, I try different approaches and learn from my mistakes. What I learn feeds the next idea — and the cycle starts again.</p></div></div>
+      </div>
+      <div class="hx-cyc-foot"><div class="hx-meter" aria-hidden="true"><i></i></div><button class="btn" type="button" data-step-next>Next stage<svg class="i"><use href="#i-next"/></svg></button></div>
+    </section>
+    <div class="card root"><small>WHAT PROACTIVITY MEANS TO ME</small><h3>Taking responsibility for my own progress.<br><span>Making things happen instead of just waiting for opportunities.</span></h3></div>
+  </section>
+
+  <!-- ===== HABIT 02 ===== -->
+  <section class="hx-panel" role="tabpanel" id="hx-p2" aria-labelledby="hx-t2" tabindex="0" hidden>
+    <header class="hx-ph"><div class="eyebrow">HABIT 02 / 03</div><h2 class="hx-h"><span>02 —</span> BEGIN WITH THE END IN MIND</h2></header>
+    <div class="hx-manifesto"><p class="hx-headline">%%MISSION_HEADLINE%%</p></div>
+    <article class="card hx-mission" aria-labelledby="hx-mission-t">
+      <header><div><span class="hx-label">MY PERSONAL MISSION STATEMENT</span><h3 id="hx-mission-t">The person I want to become</h3></div><span class="ico-shell"><svg class="i"><use href="#i-file"/></svg></span></header>
+      <div class="hx-mtext">
+%%MISSION_PARAGRAPHS%%
+      </div>
+      <footer><a class="btn primary glare" href="pdfs/%%MISSION_PDF%%" download="%%MISSION_PDF%%"><svg class="i"><use href="#i-down"/></svg>Download personal mission PDF</a><span class="hx-meta">PDF · 1 PAGE · %%MISSION_PDF_KB%% KB<br>Supplementary copy of the statement above</span></footer>
+    </article>
+    <section class="hx-values" aria-labelledby="hx-values-t">
+      <div class="hx-sub"><span class="hx-label">CREATIVE VISION &amp; PERSONAL VALUES</span><h3 id="hx-values-t">What my mission stands on</h3></div>
+      <ul class="hx-vals">%%MISSION_VALUES%%</ul>
+    </section>
+    <blockquote class="hx-principle"><span class="hx-label">MY GUIDING PRINCIPLE</span><p>%%MISSION_PRINCIPLE%%</p></blockquote>
+  </section>
+
+  <!-- ===== HABIT 03 ===== -->
+  <section class="hx-panel" role="tabpanel" id="hx-p3" aria-labelledby="hx-t3" tabindex="0" hidden>
+    <header class="hx-ph"><div class="eyebrow">HABIT 03 / 03</div><h2 class="hx-h"><span>03 —</span> FIRST THINGS FIRST</h2></header>
+    <p class="hx-intro">Rocks, pebbles &amp; sand: my most important priorities go in first. If smaller activities fill the space first, there is no room left for what matters most.</p>
+    <div class="hx-rps">
+      <div class="hx-jar" aria-hidden="true">
+        <div class="hx-glass">
+          <div class="lay sand"></div>
+          <div class="lay pebbles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="lay rocks"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <ol class="hx-order"><li><b>1</b>Rocks first</li><li><b>2</b>Then pebbles</li><li><b>3</b>Sand last</li></ol>
+      </div>
+      <div class="hx-cats">
+        <section class="card hx-cat" data-cat="rocks">
+          <h3><button type="button" id="hx-cb-rocks" aria-expanded="false" aria-controls="hx-cr-rocks"><span class="hx-viz" aria-hidden="true"><i></i><i></i><i></i></span><span class="hx-ct"><small>01 · HIGHEST PRIORITY</small><strong>ROCKS</strong><em>My biggest priorities</em></span><span class="hx-cnt">5 ITEMS</span><span class="hx-pm" aria-hidden="true"></span></button></h3>
+          <div class="hx-cat-body" id="hx-cr-rocks" role="region" aria-labelledby="hx-cb-rocks" inert><div class="hx-cat-in"><div>
+            <p>The foundations of my life. They go in first — if I don't make space for them, everything else will fill it.</p>
+            <ul class="hx-items"><li>Studies.</li><li>Family.</li><li>Personal Growth.</li><li>Health.</li><li>Personal Projects.</li></ul>
+          </div></div></div>
+        </section>
+        <section class="card hx-cat" data-cat="pebbles">
+          <h3><button type="button" id="hx-cb-pebbles" aria-expanded="false" aria-controls="hx-cr-pebbles"><span class="hx-viz" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="hx-ct"><small>02 · SUPPORTING</small><strong>PEBBLES</strong><em>Important activities</em></span><span class="hx-cnt">4 ITEMS</span><span class="hx-pm" aria-hidden="true"></span></button></h3>
+          <div class="hx-cat-body" id="hx-cr-pebbles" role="region" aria-labelledby="hx-cb-pebbles" inert><div class="hx-cat-in"><div>
+            <p>Important activities that support my development. They fit around my biggest priorities.</p>
+            <ul class="hx-items"><li>Learning new technologies and programming languages.</li><li>Music production and creative writing.</li><li>Improving my English.</li><li>Exploring new ideas and hobbies.</li></ul>
+          </div></div></div>
+        </section>
+        <section class="card hx-cat" data-cat="sand">
+          <h3><button type="button" id="hx-cb-sand" aria-expanded="false" aria-controls="hx-cr-sand"><span class="hx-viz" aria-hidden="true"></span><span class="hx-ct"><small>03 · LOWEST PRIORITY</small><strong>SAND</strong><em>Less important activities</em></span><span class="hx-cnt">4 ITEMS</span><span class="hx-pm" aria-hidden="true"></span></button></h3>
+          <div class="hx-cat-body" id="hx-cr-sand" role="region" aria-labelledby="hx-cb-sand" inert><div class="hx-cat-in"><div>
+            <p>Distractions and lower-priority activities. If they go in first, they take up the time that my priorities need.</p>
+            <ul class="hx-items"><li>Spending too much time scrolling through social media.</li><li>Unnecessary screen time.</li><li>Procrastinating on important tasks.</li><li>Getting distracted by things that can wait.</li></ul>
+          </div></div></div>
+        </section>
+      </div>
+    </div>
+  </section>
+</div>
 </template>
 
 <template id="tpl-contact">

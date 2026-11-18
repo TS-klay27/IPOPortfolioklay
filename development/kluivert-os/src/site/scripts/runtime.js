@@ -35,7 +35,7 @@ const APPS = {
   certificates: { title: 'Certificates', icon: 'i-award',  w: 1120, h: 780 },
   projects:     { title: 'Projects',     icon: 'i-code',   w: 1080, h: 760 },
   arcade:       { title: 'KPC GAME',     icon: 'i-game',   w: 1180, h: 800, path: 'KMP://ARCADE' },
-  '7hhep':      { title: '7HHEP',        icon: 'i-layers', w: 760,  h: 560 },
+  '7hhep':      { title: '7HHEP.EXE',    icon: 'i-layers', w: 1100, h: 800, path: 'KMP://7HHEP.EXE' },
   contact:      { title: 'Contact',      icon: 'i-mail',   w: 980,  h: 640 },
 };
 const ORDER = ['about', 'resume', 'certificates', 'projects', '7hhep', 'contact'];   // KPC GAME lives inside Projects

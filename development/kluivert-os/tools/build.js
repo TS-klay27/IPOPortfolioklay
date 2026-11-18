@@ -3,7 +3,8 @@
   KLUIVERT OS — reproducible build of the portfolio (Node.js only, no npm dependencies).
 
   Usage (from development/kluivert-os):  node tools/build.js [--out <dir>] [--check]
-    --out <dir>   where to write index.html and kpc-game.html (default: repository root, two levels up)
+    --out <dir>   where to write index.html, kpc-game.html and pdfs/Kluivert_Personal_Mission_Statement.pdf
+                  (default: repository root, two levels up)
     --check       build into a temp folder and compare with the files already in the output dir;
                   exits with code 1 if anything differs (nothing is written)
 
@@ -15,6 +16,8 @@
     site/scripts/runtime.js    application runtime, contains the placeholder %%HYDRATE%%
     site/scripts/app-hydrate.js per-app behaviour injected at %%HYDRATE%%
     assets/                    images inlined as data: URIs (%%IMG_…%% placeholders)
+    content/mission.json       7HHEP.EXE mission statement: filled into the app (%%MISSION_…%%) and
+                               rendered to pdfs/Kluivert_Personal_Mission_Statement.pdf (tools/pdf/mission-pdf.js)
     game/kpc-game.es.html      original game; tools/translate-game.js produces the English build
 
   SAFETY: code is never passed as a *string* replacement to String.prototype.replace
@@ -81,19 +84,40 @@ ${runtime}
 </html>
 `;
 
-// ---------- 2. inline images ----------
+// ---------- 2. 7HHEP.EXE mission statement: one source → app text + PDF ----------
+const { buildMissionPdf } = require('./pdf/mission-pdf.js');
+const { checkMissionPdf } = require('./verify/check-mission-pdf.js');
+const MISSION_PDF = 'Kluivert_Personal_Mission_Statement.pdf';
+const mission = JSON.parse(read('content/mission.json'));
+const missionPdf = buildMissionPdf(mission);
+const pdfCheck = checkMissionPdf(missionPdf, mission);
+if (!pdfCheck.ok) throw Error('mission PDF check failed: ' + pdfCheck.problems.join('; '));
+fs.mkdirSync(path.join(OUT, 'pdfs'), { recursive: true });
+fs.writeFileSync(path.join(OUT, 'pdfs', MISSION_PDF), missionPdf);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const missionTokens = {
+  MISSION_HEADLINE: mission.headline.map(l => `<span>${esc(l)}</span>`).join(''),
+  MISSION_PARAGRAPHS: mission.paragraphs.map(p => `<p>${esc(p)}</p>`).join('\n'),
+  MISSION_PRINCIPLE: esc(mission.principle),
+  MISSION_VALUES: mission.values.map(([name, icon], i) => `<li class="card spot hx-val"><span class="ico-shell"><svg class="i"><use href="#${icon}"/></svg></span><span class="n">${String(i + 1).padStart(2, '0')}</span><strong>${esc(name)}</strong></li>`).join(''),
+  MISSION_PDF: MISSION_PDF,
+  MISSION_PDF_KB: String(Math.max(1, Math.round(missionPdf.length / 1024))),
+};
+
+// ---------- 3. inline images and fill content placeholders ----------
 const A = f => path.join(SRC, 'assets', f);
 const uri = (f, mime) => `data:${mime};base64,` + fs.readFileSync(A(f)).toString('base64');
 const images = { IMG_PORTRAIT: uri('portrait.jpg', 'image/jpeg'), IMG_CV1: uri('resume-1.jpg', 'image/jpeg'), IMG_CV2: uri('resume-2.jpg', 'image/jpeg'), IMG_CV3: uri('resume-3.jpg', 'image/jpeg') };
 for (let i = 1; i <= 11; i++) images['IMG_CERT' + i] = uri(`certificates-${i}.webp`, 'image/webp');
-html = html.replace(/%%([A-Z0-9_]+)%%/g, (m, k) => { if (!(k in images)) throw Error('unknown placeholder ' + k); return images[k]; });
+const tokens = { ...images, ...missionTokens };
+html = html.replace(/%%([A-Z0-9_]+)%%/g, (m, k) => { if (!(k in tokens)) throw Error('unknown placeholder ' + k); return tokens[k]; });
 if (/%%[A-Z0-9_]+%%/.test(html)) throw Error('unresolved placeholder left in output');
 fs.writeFileSync(path.join(OUT, 'index.html'), html);
 
-// ---------- 3. KPC GAME (English) ----------
+// ---------- 4. KPC GAME (English) ----------
 execFileSync(process.execPath, [path.join(__dirname, 'translate-game.js'), path.join(SRC, 'game/kpc-game.es.html'), path.join(OUT, 'kpc-game.html')], { stdio: 'pipe' });
 
-// ---------- 4. syntax check of every inline script ----------
+// ---------- 5. syntax check of every inline script ----------
 const vm = require('vm');
 for (const f of ['index.html', 'kpc-game.html']) {
   const t = fs.readFileSync(path.join(OUT, f), 'utf8');
@@ -103,7 +127,7 @@ for (const f of ['index.html', 'kpc-game.html']) {
 const kb = f => (fs.statSync(path.join(OUT, f)).size / 1024).toFixed(0) + ' KB';
 if (CHECK) {
   let same = true;
-  for (const f of ['index.html', 'kpc-game.html']) {
+  for (const f of ['index.html', 'kpc-game.html', 'pdfs/' + MISSION_PDF]) {
     const a = fs.readFileSync(path.join(OUT, f)), b = fs.existsSync(path.join(OUT_FINAL, f)) ? fs.readFileSync(path.join(OUT_FINAL, f)) : null;
     const eq = b && a.equals(b); same = same && eq;
     console.log(`${f}: ${eq ? 'identical' : 'DIFFERS'} to ${path.join(OUT_FINAL, f)}`);
@@ -111,4 +135,4 @@ if (CHECK) {
   fs.rmSync(OUT, { recursive: true, force: true });
   process.exit(same ? 0 : 1);
 }
-console.log(`built index.html (${kb('index.html')}) and kpc-game.html (${kb('kpc-game.html')}) in ${OUT}`);
+console.log(`built index.html (${kb('index.html')}), kpc-game.html (${kb('kpc-game.html')}) and pdfs/${MISSION_PDF} (${kb('pdfs/' + MISSION_PDF)}) in ${OUT}`);

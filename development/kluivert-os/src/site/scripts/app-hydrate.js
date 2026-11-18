@@ -41,6 +41,46 @@
         $('#cert-count', body).textContent = shown + (shown === 1 ? ' DOCUMENT' : ' DOCUMENTS');
       });
     }
+    if (k === '7hhep') {
+      // Every listener lives on nodes inside this window, so closing the window releases them all.
+      const root = $('.hx', body);
+      // Habit navigation — ARIA tabs (click / touch, ←/→, Home/End)
+      const tabs = $$('[role="tab"]', root), panels = tabs.map(t => $('#' + t.getAttribute('aria-controls'), root)), bar = tabs[0].parentElement;
+      const show = (i, focus) => {
+        tabs.forEach((t, j) => { const on = j === i; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; panels[j].hidden = !on; });
+        if (focus) tabs[i].focus({ preventScroll: true });
+        if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: tabs[i].offsetLeft - 4, behavior: reduced() ? 'auto' : 'smooth' });
+        const top = panels[i].getBoundingClientRect().top - body.getBoundingClientRect().top + body.scrollTop - bar.offsetHeight - 8;
+        if (body.scrollTop > top) body.scrollTo({ top, behavior: 'auto' });
+      };
+      tabs.forEach((t, i) => t.addEventListener('click', () => show(i)));
+      bar.addEventListener('keydown', e => {
+        const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+        const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key]; if (n === undefined) return;
+        e.preventDefault(); show((n + tabs.length) % tabs.length, true);
+      });
+      // Habit 01 — IDEA → INITIATIVE → ACTION → LEARNING
+      const cycle = $('.hx-cycle', root), steps = $$('.hx-step', cycle), stages = steps.map(s => $('#' + s.getAttribute('aria-controls'), cycle));
+      const count = $('[data-step-count]', cycle), next = $('[data-step-next]', cycle); let cur = 0;
+      const step = i => {
+        cur = i; cycle.style.setProperty('--step', i);
+        steps.forEach((s, j) => { s.setAttribute('aria-pressed', String(j === i)); s.parentElement.classList.toggle('done', j < i); stages[j].hidden = j !== i; });
+        count.textContent = `STAGE ${i + 1} / ${steps.length}`;
+        next.firstChild.textContent = i === steps.length - 1 ? 'Start again' : 'Next stage';
+      };
+      steps.forEach((s, i) => s.addEventListener('click', () => step(i)));
+      next.addEventListener('click', () => step((cur + 1) % steps.length));
+      // Habit 03 — Rocks, Pebbles & Sand (expand / collapse; the jar highlights the open layers)
+      const jar = $('.hx-jar', root), cats = $$('.hx-cat', root);
+      cats.forEach(c => {
+        const b = $('h3 button', c), region = $('#' + b.getAttribute('aria-controls'), c);
+        b.addEventListener('click', () => {
+          const open = b.getAttribute('aria-expanded') !== 'true';
+          b.setAttribute('aria-expanded', String(open)); c.classList.toggle('open', open); region.inert = !open;
+          jar.classList.toggle('hl-' + c.dataset.cat, open); jar.classList.toggle('any', cats.some(x => x.classList.contains('open')));
+        });
+      });
+    }
     if (k === 'arcade') {
       const st = $('[data-arc-stage]', body);
       $('[data-arc="play"]', body).addEventListener('click', () => {

@@ -1,0 +1,28 @@
+{
+  "_comment": "Single source for Habit 02 in 7HHEP.EXE. tools/build.js inserts this text into the app (index.html) and generates pdfs/Kluivert_Personal_Mission_Statement.pdf from it, so both always match.",
+  "title": "Personal Mission Statement",
+  "habit": "Habit 02 — Begin with the End in Mind",
+  "author": "Kluivert Manuel Peralta Carrera",
+  "headline": [
+    "CREATE WITH PURPOSE.",
+    "KEEP LEARNING.",
+    "BUILD A FUTURE THAT REFLECTS WHO I AM."
+  ],
+  "paragraphs": [
+    "I want to become a creative, independent and determined person who turns ideas into something meaningful. I want to keep exploring, learning and developing my skills instead of being afraid to try something new or make mistakes.",
+    "Technology gives me a way to solve problems, experiment and bring my ideas to life. Creativity allows me to look beyond what already exists and find my own way of doing things. I want to use both to build projects that represent my interests, values and personality.",
+    "I also want to stay connected to my roots, appreciate my family and the people who support me, and take care of my well-being while working towards my goals.",
+    "I know that progress takes patience, consistency and effort, so I will try to focus on what matters instead of comparing my path with other people's."
+  ],
+  "principle": "My ideas deserve action, and my future deserves intention.",
+  "values": [
+    ["Creativity", "i-spark"],
+    ["Independence", "i-compass"],
+    ["Determination", "i-flag"],
+    ["Continuous learning", "i-bulb"],
+    ["Technology and innovation", "i-cpu"],
+    ["Family and personal roots", "i-home"],
+    ["Well-being", "i-leaf"],
+    ["Consistency and patience", "i-hourglass"]
+  ]
+}
