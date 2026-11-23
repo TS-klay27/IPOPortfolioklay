@@ -128,25 +128,17 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stro
    ===================================================================== */
 #arcade{z-index:50;display:flex;flex-direction:column;background:radial-gradient(ellipse 70% 50% at 50% 0,#12393f,transparent 60%),var(--bg);opacity:0;transform:scale(.985);transition:opacity .4s var(--ease),transform .5s var(--ease)}
 #arcade.on{opacity:1;transform:none}
-.ar-bar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:14px;height:60px;padding:0 14px;border-bottom:1px solid var(--line);background:rgba(7,26,31,.92)}
-.ar-bar .btn{--h:38px;padding:0 13px}
-.ar-brand{display:flex;align-items:center;gap:12px;min-width:0}
-.ar-logo{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;border:1px solid var(--line-3);background:linear-gradient(150deg,rgba(24,183,160,.22),rgba(11,37,42,.6));font:800 17px/1 var(--display);color:var(--accent-2)}
-.ar-brand strong{display:block;font:800 15px/1.1 var(--display);letter-spacing:.14em}
-.ar-brand strong b{color:var(--accent-2)}
-.ar-brand small{display:block;margin-top:4px;font:500 9.5px/1 var(--mono);letter-spacing:.2em;color:var(--muted)}
-.ar-actions{display:flex;gap:8px}
-.ar-x{width:38px;padding:0!important}
-.ar-x:hover{border-color:#ff9fb0;color:#ffb0bb;background:rgba(255,105,120,.1)}
 .ar-stage{position:relative;flex:1;min-height:0;background:#07111c}
 .ar-stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 .ar-load{position:absolute;inset:0;z-index:2;display:grid;place-items:center;text-align:center;background:var(--bg);transition:opacity .5s var(--ease)}
 .ar-load.done{opacity:0;pointer-events:none}
+.ar-exit{position:absolute;z-index:3;top:12px;right:12px}
+#arcade.integrated .ar-exit{display:none}
+.game-on #os,.game-on #room,.game-on #intro{visibility:hidden!important;transition:none!important}
 .ar-glyph{font:900 clamp(48px,7vw,80px)/1 var(--mono);letter-spacing:-.08em;color:var(--accent-2);text-shadow:0 0 30px rgba(42,199,201,.35)}
 .ar-load p{margin:16px 0 18px;font:600 11px/1 var(--mono);letter-spacing:.3em;color:var(--muted)}
 .ar-load i{display:block;width:200px;height:2px;margin:0 auto;border-radius:2px;background:linear-gradient(90deg,transparent,var(--accent-2),transparent) no-repeat;background-size:40% 100%;background-color:rgba(42,199,201,.12);animation:scan 1.4s var(--ease-io) infinite}
 @keyframes scan{from{background-position:-60% 0}to{background-position:160% 0}}
-#arcade:fullscreen .ar-bar{display:none}
 
 /* =====================================================================
    KIAN'S ROOM — the entrance

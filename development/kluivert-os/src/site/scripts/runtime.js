@@ -598,7 +598,7 @@ const OS = (() => {
   }
   document.addEventListener('keydown', e => {
     if (!isOpen || e.key !== 'Escape' || document.fullscreenElement) return;
-    if (Arcade.isOpen) { Router.go('projects'); return; }
+    if (Arcade.isOpen) { Arcade.focus(); return; }   // Esc belongs to the game (pause); leaving is the Exit button
     if (!menu.hidden) { toggleMenu(false); startBtn.focus(); return; }
     const t = topApp(); if (t) destroy(t);
   });
@@ -677,29 +677,82 @@ const Intro = (() => {
 /* =======================================================================
    KPC GAME — full-screen game mode (opened from Projects)
    ======================================================================= */
+/* Presentation only, applied from outside so the game file stays untouched: the board takes the whole screen. */
+const GAME_VIEW_CSS = [
+  ".shell.is-fullscreen{padding:0!important;gap:0!important}",
+  ".shell.is-fullscreen .topbar{min-height:46px!important;padding:4px 10px!important;border-bottom:1px solid #1d3444;background:#07131d}",
+  ".shell.is-fullscreen .brandlogo{width:30px!important;height:30px!important;font-size:16px!important}",
+  ".shell.is-fullscreen .brand p{display:none}",
+  ".shell.is-fullscreen .viewport-box{height:100%!important;border:0!important;border-radius:0!important;box-shadow:none!important;grid-template-rows:minmax(0,1fr) auto!important}",
+  ".shell.is-fullscreen .viewport-head{display:none!important}",
+  ".shell.is-fullscreen .viewport-bottom.level-dock{height:auto!important;min-height:58px;padding:6px 12px!important}",
+  ".shell>.layout{grid-template-columns:minmax(0,1fr)!important;gap:0!important}",
+  "#rank-toggle-btn{display:inline-flex!important}",
+  ".rank-panel{display:none!important}",
+  ".rank-panel.open{display:flex!important;position:fixed;z-index:80;right:10px;top:54px;bottom:10px;width:min(330px,calc(100vw - 20px));height:auto;max-height:calc(100dvh - 64px);box-shadow:0 25px 80px #000c}",
+  ".rank-close{display:block!important}",
+  ".dialog{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:#040c15e0!important}",
+  ".hud-panel{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}",
+].join('\n');
 const Arcade = (() => {
   const el = $('#arcade'), stage = $('#ar-stage'), load = $('#ar-load');
-  let isOpen = false;
-  $('#ar-back').addEventListener('click', () => Router.go('projects'));
-  $('#ar-close').addEventListener('click', () => Router.go('projects'));
-  $('#ar-full').addEventListener('click', async () => { try { if (!document.fullscreenElement) await el.requestFullscreen(); else await document.exitFullscreen(); } catch (_) { toast('FULLSCREEN NOT AVAILABLE'); } });
+  const behind = ['#intro', '#room', '#os'].map(s => $(s));   // kept out of Tab order and clicks while playing
+  let isOpen = false, hideT = 0, fsBtn = null, wasFull = false;
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+  const root = document.documentElement;
+  const enterFs = () => { const rq = root.requestFullscreen || root.webkitRequestFullscreen; if (!rq || fsEl()) return; try { const p = rq.call(root); if (p && p.catch) p.catch(() => {}); } catch (_) {} };   // refused: the game still fills the window
+  const exitFs = () => { if (!fsEl()) return; const ex = document.exitFullscreen || document.webkitExitFullscreen; try { const p = ex.call(document); if (p && p.catch) p.catch(() => {}); } catch (_) {} };
+  const focusGame = () => { const f = stage.querySelector('iframe'); if (f) try { f.contentWindow.focus(); } catch (_) {} };
+  const syncFs = () => { if (fsBtn) { const on = !!fsEl(); if (on) wasFull = true; fsBtn.textContent = on ? '⛶ EXIT FULLSCREEN' : '⛶ FULLSCREEN'; fsBtn.setAttribute('aria-pressed', String(on)); } if (isOpen) focusGame(); };
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, syncFs));
+  // Smooth play on any PC: live glows and internal resolution step down only if frames take too long. The board itself stays cached at full quality.
+  function tunePerformance(win, canvas) {
+    const blur = Object.getOwnPropertyDescriptor(win.CanvasRenderingContext2D.prototype, 'shadowBlur'), ctx = canvas.getContext('2d'), native = win.devicePixelRatio || 1;
+    const levels = [{ glow: 1, res: Math.min(native, 1.25) }, { glow: .5, res: 1 }, { glow: 0, res: 1 }, { glow: 0, res: .75 }];
+    let q = 0, last = 0, n = 0, sum = 0;
+    Object.defineProperty(ctx, 'shadowBlur', { configurable: true, get: () => blur.get.call(ctx), set: v => blur.set.call(ctx, v * levels[q].glow) });
+    Object.defineProperty(win, 'devicePixelRatio', { configurable: true, get: () => levels[q].res });
+    win.__kpcQuality = () => q;
+    const tick = t => { const dt = t - last; last = t; if (dt > 0 && dt < 250) { sum += dt; n++; } if (n >= 40) { if (sum / n > 21 && q < levels.length - 1) q++; n = sum = 0; } win.requestAnimationFrame(tick); };
+    win.requestAnimationFrame(tick);
+  }
+  // Adapts the untouched game page to this view from outside: full-size layout, exit button, fullscreen of the whole game view.
+  function integrate(f) {
+    try {
+      const d = f.contentDocument, exit = d.getElementById('back-portfolio-btn');
+      const css = d.createElement('style'); css.textContent = GAME_VIEW_CSS; d.head.append(css);
+      d.querySelector('.shell').classList.add('is-fullscreen'); d.documentElement.classList.add('game-fullscreen');
+      tunePerformance(f.contentWindow, d.getElementById('game'));
+      d.addEventListener('pointerdown', () => { if (!wasFull) enterFs(); }, { once: true });   // second chance if the browser refused the first request
+      exit.textContent = '✕ EXIT GAME'; exit.style.cssText = 'border-color:#2AC7C9;color:#E2F3F1;background:rgba(42,199,201,.14);box-shadow:0 0 12px rgba(42,199,201,.25)';
+      fsBtn = d.getElementById('fullscreen-btn'); fsBtn.onclick = () => { if (fsEl()) exitFs(); else enterFs(); };
+      syncFs(); f.contentWindow.dispatchEvent(new Event('resize')); el.classList.add('integrated');
+    } catch (_) {}   // if it ever fails, the view's own Exit button stays visible
+  }
+  $('#ar-exit').addEventListener('click', () => Router.go('projects'));
   return {
     get isOpen() { return isOpen; },
+    focus: focusGame,
+    // Called synchronously from the PLAY click: browsers only allow fullscreen inside the user's gesture.
+    launch() { clearTimeout(hideT); wasFull = false; el.hidden = false; enterFs(); },
     open() {
-      if (isOpen) return; isOpen = true;
-      el.hidden = false; setTimeout(() => { if (isOpen) el.classList.add('on'); }, 30);
+      if (isOpen) return; isOpen = true; clearTimeout(hideT);
+      behind.forEach(b => { b.inert = true; });
+      el.hidden = false; el.classList.remove('integrated'); setTimeout(() => { if (isOpen) el.classList.add('on'); }, 30);
+      setTimeout(() => { if (isOpen) root.classList.add('game-on'); }, reduced() ? 40 : 460);   // stop painting the desktop behind the game
       load.classList.remove('done');
       const f = document.createElement('iframe'); f.title = 'KPC GAME'; f.allow = 'fullscreen; autoplay'; f.src = 'kpc-game.html';
-      const ready = () => { load.classList.add('done'); try { f.contentWindow.focus(); } catch (_) {} };
-      f.addEventListener('load', ready, { once: true }); setTimeout(ready, 6000); // never leave the loader up
+      const ready = () => { if (f.isConnected) { load.classList.add('done'); focusGame(); } };
+      f.addEventListener('load', () => { integrate(f); ready(); }, { once: true }); setTimeout(ready, 6000); // never leave the loader up
       stage.append(f);
     },
     close() {
-      if (!isOpen) return; isOpen = false;
-      if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+      if (!isOpen) return; isOpen = false; fsBtn = null;
+      exitFs(); root.classList.remove('game-on');
+      behind.forEach(b => { b.inert = false; });
       el.classList.remove('on');
       const f = stage.querySelector('iframe'); if (f) { f.src = 'about:blank'; f.remove(); }
-      setTimeout(() => { if (!isOpen) el.hidden = true; }, reduced() ? 0 : 420);
+      hideT = setTimeout(() => { if (!isOpen) el.hidden = true; }, reduced() ? 0 : 420);
     },
   };
 })();
@@ -732,7 +785,7 @@ const Router = (() => {
   addEventListener('hashchange', () => { const r = parse(); if (r !== current) enqueue(r); });
   document.addEventListener('click', e => {
     const a = e.target.closest('[data-route]'); if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey) return;
-    e.preventDefault(); go(a.dataset.route);
+    e.preventDefault(); if (a.dataset.route === 'arcade') Arcade.launch(); go(a.dataset.route);
   });
   $('#intro-enter').addEventListener('click', e => { e.preventDefault(); go('lab'); });
   return { go, set, init };

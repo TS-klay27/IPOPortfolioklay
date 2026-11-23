@@ -52,7 +52,6 @@
   .showcase{max-height:none;aspect-ratio:1.3/1;justify-self:stretch}
   .in-hide{display:none}
   .in-foot{flex-wrap:wrap;gap:8px 18px;letter-spacing:.14em}
-  .ar-bar .label,.ar-brand small{display:none}
   .r-id{display:none}
   .os-desk{flex-direction:column;justify-content:flex-start;overflow-y:auto;gap:20px}
   .os-icons{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));width:100%}
