@@ -66,7 +66,7 @@
         add(peb, 'ellipse', { cx: cx.toFixed(1), cy: cy.toFixed(1), rx: rx.toFixed(1), ry: (rx * .62).toFixed(1), fill: 'url(#hxg-peb)' });
         add(peb, 'ellipse', { cx: (cx - rx * .25).toFixed(1), cy: (cy - rx * .25).toFixed(1), rx: (rx * .35).toFixed(1), ry: (rx * .12).toFixed(1), fill: '#effffb', opacity: '.16' });
       }
-      $$('.hx-fx', root).forEach(fx => { for (let i = 0; i < 14; i++) { const s = document.createElement('span'); s.style.cssText = `--x:${(rnd() * 100).toFixed(1)}%;--s:${(1.5 + rnd() * 2.5).toFixed(1)}px;--t:${(7 + rnd() * 8).toFixed(1)}s;--dl:${(-rnd() * 12).toFixed(1)}s;--dx:${(rnd() * 80 - 40).toFixed(0)}px`; fx.append(s); } });
+      $$('.hx-fx', root).forEach(fx => { for (let i = 0; i < 7; i++) { const s = document.createElement('span'); s.style.cssText = `--x:${(rnd() * 100).toFixed(1)}%;--s:${(1.5 + rnd() * 2.5).toFixed(1)}px;--t:${(7 + rnd() * 8).toFixed(1)}s;--dl:${(-rnd() * 12).toFixed(1)}s;--dx:${(rnd() * 80 - 40).toFixed(0)}px`; fx.append(s); } });
 
       // --- Chapters and session progress (kept in memory only; nothing is stored) ---
       const tabs = $$('[role="tab"]', root), views = tabs.map(t => $('#' + t.getAttribute('aria-controls'), root)), nav = tabs[0].parentElement;

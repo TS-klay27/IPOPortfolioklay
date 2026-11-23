@@ -44,10 +44,12 @@ const ROUTES = ['index', 'lab', 'os', ...ORDER, 'arcade'];
 /* ---------- Small UI helpers ---------- */
 let toastT = 0;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800); }
+let spotEl = null, spotX = 0, spotY = 0, spotRaf = 0;   // at most one update per frame
 document.addEventListener('pointermove', e => {
+  if (e.pointerType === 'touch') return;
   const el = e.target.closest && e.target.closest('.spot'); if (!el) return;
-  const r = el.getBoundingClientRect();
-  el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  spotEl = el; spotX = e.clientX; spotY = e.clientY;
+  if (!spotRaf) spotRaf = requestAnimationFrame(() => { spotRaf = 0; const r = spotEl.getBoundingClientRect(); spotEl.style.setProperty('--mx', (spotX - r.left) + 'px'); spotEl.style.setProperty('--my', (spotY - r.top) + 'px'); });
 }, { passive: true });
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-copy]'); if (!b) return;
@@ -482,6 +484,7 @@ const OS = (() => {
   tick(); setInterval(tick, 15000);
 
   function reveal() { osEl.classList.remove('reveal'); void osEl.offsetWidth; osEl.classList.add('reveal'); }
+  let coverT = 0;   // once the opaque desktop is up, the room behind it stops being painted
   async function open({ cinematic }) {
     if (isOpen) return opening || undefined;
     isOpen = true; roomEl.classList.add('os-open'); toggleMenu(false);
@@ -493,11 +496,13 @@ const OS = (() => {
       osEl.classList.add('on'); osEl.setAttribute('aria-hidden', 'false'); reveal();
       Room.pause();
       if (!Boot.el.hidden) await Boot.hide();
+      coverT = setTimeout(() => { if (isOpen) roomEl.classList.add('os-covered'); }, reduced() ? 40 : 520);
     })();
     await opening; opening = null;
   }
   async function close() {
     if (!isOpen) return; if (opening) await opening;
+    clearTimeout(coverT); roomEl.classList.remove('os-covered');
     isOpen = false; toggleMenu(false);
     [...wins.keys()].forEach(k => destroy(k, true));
     osEl.classList.remove('on'); osEl.setAttribute('aria-hidden', 'true');
@@ -574,10 +579,11 @@ const OS = (() => {
       if (a === 'close') destroy(k); else if (a === 'min') minimize(k); else if (a === 'max') el.classList.toggle('max');
     });
     bar.addEventListener('dblclick', e => { if (!e.target.closest('button') && !isSmall()) el.classList.toggle('max'); });
-    let d = null;
-    bar.addEventListener('pointerdown', e => { if (e.button !== 0 || e.target.closest('button') || isSmall() || el.classList.contains('max')) return; d = { x: e.clientX, y: e.clientY, l: el.offsetLeft, t: el.offsetTop }; bar.setPointerCapture(e.pointerId); });
-    bar.addEventListener('pointermove', e => { if (!d) return; const area = winsEl.getBoundingClientRect(); el.style.left = clamp(d.l + e.clientX - d.x, -el.offsetWidth + 120, area.width - 120) + 'px'; el.style.top = clamp(d.t + e.clientY - d.y, 0, area.height - 46) + 'px'; });
-    ['pointerup', 'pointercancel'].forEach(ev => bar.addEventListener(ev, () => { d = null; }));
+    let d = null, dragRaf = 0, nx = 0, ny = 0;   // dragging moves a compositor layer; left/top are written on release
+    const paintDrag = () => { dragRaf = 0; if (d) el.style.transform = `translate3d(${nx - d.l}px,${ny - d.t}px,0)`; };
+    bar.addEventListener('pointerdown', e => { if (e.button !== 0 || e.target.closest('button') || isSmall() || el.classList.contains('max')) return; const area = winsEl.getBoundingClientRect(); d = { x: e.clientX, y: e.clientY, l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, aw: area.width, ah: area.height }; nx = d.l; ny = d.t; el.classList.add('dragging'); bar.setPointerCapture(e.pointerId); });
+    bar.addEventListener('pointermove', e => { if (!d) return; nx = clamp(d.l + e.clientX - d.x, -d.w + 120, d.aw - 120); ny = clamp(d.t + e.clientY - d.y, 0, d.ah - 46); if (!dragRaf) dragRaf = requestAnimationFrame(paintDrag); });
+    ['pointerup', 'pointercancel'].forEach(ev => bar.addEventListener(ev, () => { if (!d) return; cancelAnimationFrame(dragRaf); dragRaf = 0; el.style.left = nx + 'px'; el.style.top = ny + 'px'; el.style.transform = ''; el.classList.remove('dragging'); d = null; }));
     const prog = body.querySelector('.win-progress');
     body.addEventListener('scroll', () => { const m = body.scrollHeight - body.clientHeight; prog.style.setProperty('--sp', m > 0 ? body.scrollTop / m : 0); }, { passive: true });
     const rvs = $$('.rv', body);

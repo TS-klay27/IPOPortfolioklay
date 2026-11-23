@@ -35,7 +35,7 @@
 @media (prefers-reduced-motion:reduce){.kpc-play{opacity:1;transform:translate(-50%,-50%)}}
 
 /* Lightbox */
-.lightbox{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(12px,4vw,48px);background:rgba(3,12,15,.9);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fade .25s}
+.lightbox{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(12px,4vw,48px);background:rgba(3,12,15,.9);animation:fade .25s}
 .lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:var(--e3);background:#fff}
 .lightbox button{position:absolute;right:16px;top:16px}
 
