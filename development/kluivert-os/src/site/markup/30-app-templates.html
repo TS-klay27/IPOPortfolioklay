@@ -1,185 +1,372 @@
 <!-- ============ APP TEMPLATES (inert until opened) ============ -->
 <template id="tpl-about">
-<div class="pg">
-  <div class="pg-head rv"><div><div class="eyebrow">01 / WHO I AM</div><h1>About Me<span>.</span></h1></div><p class="pg-note">A little about the person behind the systems.</p></div>
-  <div class="about-grid">
-    <figure class="card profile rv">
-      <div class="ph"><img src="%%IMG_PORTRAIT%%" alt="Illustrated portrait of Kluivert Manuel Peralta Carrera" width="820" height="1025" decoding="async"></div>
-      <figcaption><div><strong>Kluivert Peralta</strong><span>IT Systems &amp; Networks Student</span></div><span class="ico-shell"><svg class="i"><use href="#i-cpu"/></svg></span></figcaption>
-    </figure>
-    <div class="copy rv">
-      <p class="role">IT Systems &amp; Networks Student</p>
-      <h2 class="statement">Curiosity for <span class="hl">technology.</span><br>A drive to <span class="hl">keep learning.</span></h2>
-      <div class="focus" aria-label="Technical focus">
-        <div class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-cpu"/></svg></span><strong>Hardware</strong><span>Assembly &amp; maintenance</span></div>
-        <div class="card spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-terminal"/></svg></span><strong>Systems</strong><span>Windows &amp; Linux</span></div>
-        <div class="card spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-network"/></svg></span><strong>Networks</strong><span>Configuration &amp; connectivity</span></div>
+<div class="ax-shell">
+<div class="ax ax-about">
+  <nav class="ax-side" aria-label="About Me sections">
+    <div class="ax-brand"><span class="ax-logo"><svg class="i"><use href="#i-user"/></svg></span><div><strong>ABOUT ME</strong><small>PROFILE · 01</small></div></div>
+    <div class="ax-nav">
+      <button type="button" class="on" data-ax-go="ab-top"><span class="ic"><svg class="i"><use href="#i-home"/></svg></span><span class="lb">Overview</span></button>
+      <button type="button" data-ax-go="ab-profile"><span class="ic"><svg class="i"><use href="#i-file"/></svg></span><span class="lb">Profile</span></button>
+      <button type="button" data-ax-go="ab-skills"><span class="ic"><svg class="i"><use href="#i-cpu"/></svg></span><span class="lb">Skills</span></button>
+      <button type="button" data-ax-go="ab-interests"><span class="ic"><svg class="i"><use href="#i-heart"/></svg></span><span class="lb">Interests</span></button>
+      <button type="button" data-ax-go="ab-paradigm"><span class="ic"><svg class="i"><use href="#i-compass"/></svg></span><span class="lb">My Story</span></button>
+    </div>
+    <div class="ax-side-card"><span class="dot-live"></span><div><b>Kluivert Peralta</b><small>IT Systems &amp; Networks Student</small></div></div>
+  </nav>
+  <div class="ax-main" tabindex="-1">
+    <header class="ax-hero ab-hero" id="ab-top">
+      <svg class="ax-ridge" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#ax-ridge"/></svg>
+      <div class="ax-hero-copy">
+        <div class="eyebrow ax-in">01 / WHO I AM</div>
+        <h1 class="ax-title ax-in">About Me<span>.</span></h1>
+        <p class="ax-note ax-in">A little about the person behind the systems.</p>
+        <p class="role ax-in">IT Systems &amp; Networks Student</p>
+        <h2 class="statement ax-in">Curiosity for <span class="hl">technology.</span><br>A drive to <span class="hl">keep learning.</span></h2>
+        <div class="focus ax-in" aria-label="Technical focus">
+          <div class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-cpu"/></svg></span><strong>Hardware</strong><span>Assembly &amp; maintenance</span></div>
+          <div class="card spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-terminal"/></svg></span><strong>Systems</strong><span>Windows &amp; Linux</span></div>
+          <div class="card spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-network"/></svg></span><strong>Networks</strong><span>Configuration &amp; connectivity</span></div>
+        </div>
       </div>
-      <p>I'm currently studying a Vocational Education and Training programme in <strong>Microcomputer Systems and Networks (SMX)</strong>. I am a <strong>responsible and motivated</strong> person with work experience, good <strong>teamwork skills</strong> and a strong desire to continue learning and improving my IT knowledge.</p>
-      <p>During my studies, I have developed knowledge in <strong>computer assembly and maintenance</strong>, <strong>Windows and Linux operating systems</strong>, <strong>computer networks</strong>, <strong>Windows Server</strong> and <strong>virtual machines</strong>.</p>
-      <p>I'm especially interested in systems, networks and new technologies, and I would like to continue developing my skills through <strong>real-world experience</strong>.</p>
-      <div class="footnote"><span class="dot-live"></span>Growing through knowledge and hands-on experience.</div>
+      <figure class="ab-portrait ax-in">
+        <span class="ab-orbit ax-anim" aria-hidden="true"></span>
+        <div class="ph"><img src="%%IMG_PORTRAIT%%" alt="Illustrated portrait of Kluivert Manuel Peralta Carrera" width="820" height="1025" decoding="async"></div>
+        <i class="ab-hud tl" aria-hidden="true"></i><i class="ab-hud tr" aria-hidden="true"></i><i class="ab-hud bl" aria-hidden="true"></i><i class="ab-hud br" aria-hidden="true"></i>
+        <figcaption><div><strong>Kluivert Peralta</strong><span>IT Systems &amp; Networks Student</span></div><span class="ico-shell"><svg class="i"><use href="#i-cpu"/></svg></span></figcaption>
+      </figure>
+    </header>
+
+    <div class="ax-body">
+      <section class="ax-sec" id="ab-profile" aria-labelledby="ab-profile-t">
+        <div class="ab-intro">
+          <div class="copy ab-copy card rv">
+            <div class="ax-k" id="ab-profile-t">PERSONAL INTRODUCTION</div>
+            <p>I'm currently studying a Vocational Education and Training programme in <strong>Microcomputer Systems and Networks (SMX)</strong>. I am a <strong>responsible and motivated</strong> person with work experience, good <strong>teamwork skills</strong> and a strong desire to continue learning and improving my IT knowledge.</p>
+            <p>During my studies, I have developed knowledge in <strong>computer assembly and maintenance</strong>, <strong>Windows and Linux operating systems</strong>, <strong>computer networks</strong>, <strong>Windows Server</strong> and <strong>virtual machines</strong>.</p>
+            <p>I'm especially interested in systems, networks and new technologies, and I would like to continue developing my skills through <strong>real-world experience</strong>.</p>
+            <div class="footnote"><span class="dot-live"></span>Growing through knowledge and hands-on experience.</div>
+          </div>
+          <aside class="ab-facts rv" aria-label="Quick facts">
+            <div><span class="ico-shell"><svg class="i"><use href="#i-file"/></svg></span><p><small>STUDYING</small><b>SMX · Microcomputer Systems and Networks</b></p></div>
+            <div class="tone-b"><span class="ico-shell"><svg class="i"><use href="#i-flag"/></svg></span><p><small>SCHOOL</small><b>Institut Sa Palomera</b></p></div>
+            <div class="tone-v"><span class="ico-shell"><svg class="i"><use href="#i-pin"/></svg></span><p><small>BASED IN</small><b>Lloret de Mar, Girona</b></p></div>
+            <div><span class="ico-shell"><svg class="i"><use href="#i-globe"/></svg></span><p><small>LANGUAGES</small><b>Spanish · Catalan · English</b></p></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="ax-sec" id="ab-skills" aria-labelledby="skills-title">
+        <div class="ax-h rv"><div class="eyebrow">MY TOOLKIT</div><h2 class="h2" id="skills-title">Technical &amp; Personal Skills<span>.</span></h2><p class="lead">What I am learning and how I approach my work.</p></div>
+        <div class="group rv">
+          <div class="group-head"><h3>Technical Skills <span>Hard skills</span></h3><p>Practical knowledge developed during my SMX studies.</p></div>
+          <ul class="ab-mods">
+            <li class="card spot"><span class="n">01</span><span class="ico-shell"><svg class="i"><use href="#i-cpu"/></svg></span><div><h4>Computer Hardware</h4><p>Computer assembly, component identification and basic maintenance.</p></div></li>
+            <li class="card spot tone-b"><span class="n">02</span><span class="ico-shell"><svg class="i"><use href="#i-windows"/></svg></span><div><h4>Windows</h4><p>Operating system installation and basic configuration.</p></div></li>
+            <li class="card spot tone-v"><span class="n">03</span><span class="ico-shell"><svg class="i"><use href="#i-terminal"/></svg></span><div><h4>Linux</h4><p>Ubuntu and Linux Mint setup, basic commands and system configuration.</p></div></li>
+            <li class="card spot"><span class="n">04</span><span class="ico-shell"><svg class="i"><use href="#i-network"/></svg></span><div><h4>Computer Networks</h4><p>IP addressing, connectivity checks and basic network configuration.</p></div></li>
+            <li class="card spot tone-b"><span class="n">05</span><span class="ico-shell"><svg class="i"><use href="#i-server"/></svg></span><div><h4>Windows Server</h4><p>Practice with server roles, DHCP scopes and IP reservations.</p></div></li>
+            <li class="card spot tone-v"><span class="n">06</span><span class="ico-shell"><svg class="i"><use href="#i-vm"/></svg></span><div><h4>Virtual Machines</h4><p>Creating and configuring virtual machines with VirtualBox.</p></div></li>
+          </ul>
+        </div>
+        <div class="group rv">
+          <div class="group-head"><h3>Personal Skills <span>Soft skills</span></h3><p>The qualities I bring to learning and working with others.</p></div>
+          <ul class="ab-soft">
+            <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-team"/></svg></span><div><h4>Teamwork</h4><p>I enjoy working with others and contributing to shared tasks.</p></div></li>
+            <li class="card spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-puzzle"/></svg></span><div><h4>Problem Solving</h4><p>I work through problems step by step and try different solutions.</p></div></li>
+            <li class="card spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-shield"/></svg></span><div><h4>Responsibility</h4><p>I take my tasks seriously and aim to complete them carefully.</p></div></li>
+            <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span><div><h4>Willingness to Learn</h4><p>I am motivated to learn new tools and improve my IT knowledge.</p></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="ax-sec" id="ab-interests" aria-labelledby="interests-title">
+        <div class="ax-h rv"><div class="eyebrow">WHAT DRIVES ME</div><h2 class="h2" id="interests-title">Interests<span>.</span></h2><p class="lead">The areas I enjoy exploring — inside and outside the classroom.</p></div>
+        <ul class="interests ab-ints rv">
+          <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-network"/></svg></span>Computer systems &amp; networking</li>
+          <li class="card spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-server"/></svg></span>Linux &amp; Windows Server</li>
+          <li class="card spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-terminal"/></svg></span>System administration</li>
+          <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-code"/></svg></span>Programming</li>
+          <li class="card spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-spark"/></svg></span>Artificial intelligence</li>
+          <li class="card spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-game"/></svg></span>Game development</li>
+          <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-music"/></svg></span>Music production</li>
+          <li class="card spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span>Creative projects</li>
+        </ul>
+      </section>
+
+      <section class="ax-sec" id="ab-paradigm" aria-labelledby="paradigm-title">
+        <div class="ax-h rv"><div class="eyebrow">MY STORY / MY VALUES</div><h2 class="h2" id="paradigm-title">My Personal Paradigm<span>.</span></h2><p class="lead">I am shaped by where I come from, the people who support me, the mistakes I learn from, and the ideas I turn into something real.</p></div>
+        <div class="card root rv"><small>MY GUIDING IDEA</small><h3>Stay true to where I come from.<br><span>Keep creating who I want to become.</span></h3><p>My roots → My choices → My future</p></div>
+        <div class="map" id="paradigm-map"></div>
+        <p class="hint">Select a principle to read my personal reflection.</p>
+        <p class="source">Inspired by the 12 personal paradigms from <a href="https://interserediciones.com/paradigmas-personales-ciudadano-global/" target="_blank" rel="noopener noreferrer">InterSer · Read the original article ↗</a>. Adapted to reflect my own story, values and interests.</p>
+      </section>
     </div>
   </div>
-
-  <section class="sec" aria-labelledby="skills-title">
-    <div class="sec-head rv"><div class="eyebrow">MY TOOLKIT</div><h2 class="h2" id="skills-title">Technical &amp; Personal Skills<span>.</span></h2><p class="lead">What I am learning and how I approach my work.</p></div>
-    <div class="group rv">
-      <div class="group-head"><h3>Technical Skills <span>Hard skills</span></h3><p>Practical knowledge developed during my SMX studies.</p></div>
-      <ul class="ability">
-        <li class="card hov spot"><span class="ico-shell"><svg class="i"><use href="#i-cpu"/></svg></span><div><h4>Computer Hardware</h4><p>Computer assembly, component identification and basic maintenance.</p></div></li>
-        <li class="card hov spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-windows"/></svg></span><div><h4>Windows</h4><p>Operating system installation and basic configuration.</p></div></li>
-        <li class="card hov spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-terminal"/></svg></span><div><h4>Linux</h4><p>Ubuntu and Linux Mint setup, basic commands and system configuration.</p></div></li>
-        <li class="card hov spot"><span class="ico-shell"><svg class="i"><use href="#i-network"/></svg></span><div><h4>Computer Networks</h4><p>IP addressing, connectivity checks and basic network configuration.</p></div></li>
-        <li class="card hov spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-server"/></svg></span><div><h4>Windows Server</h4><p>Practice with server roles, DHCP scopes and IP reservations.</p></div></li>
-        <li class="card hov spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-vm"/></svg></span><div><h4>Virtual Machines</h4><p>Creating and configuring virtual machines with VirtualBox.</p></div></li>
-      </ul>
-    </div>
-    <div class="group rv">
-      <div class="group-head"><h3>Personal Skills <span>Soft skills</span></h3><p>The qualities I bring to learning and working with others.</p></div>
-      <ul class="ability">
-        <li class="card hov spot"><span class="ico-shell"><svg class="i"><use href="#i-team"/></svg></span><div><h4>Teamwork</h4><p>I enjoy working with others and contributing to shared tasks.</p></div></li>
-        <li class="card hov spot tone-b"><span class="ico-shell"><svg class="i"><use href="#i-puzzle"/></svg></span><div><h4>Problem Solving</h4><p>I work through problems step by step and try different solutions.</p></div></li>
-        <li class="card hov spot tone-v"><span class="ico-shell"><svg class="i"><use href="#i-shield"/></svg></span><div><h4>Responsibility</h4><p>I take my tasks seriously and aim to complete them carefully.</p></div></li>
-        <li class="card hov spot"><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span><div><h4>Willingness to Learn</h4><p>I am motivated to learn new tools and improve my IT knowledge.</p></div></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="sec" aria-labelledby="interests-title">
-    <div class="sec-head rv"><div class="eyebrow">WHAT DRIVES ME</div><h2 class="h2" id="interests-title">Interests<span>.</span></h2><p class="lead">The areas I enjoy exploring — inside and outside the classroom.</p></div>
-    <ul class="interests rv">
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-network"/></svg></span>Computer systems &amp; networking</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-server"/></svg></span>Linux &amp; Windows Server</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-terminal"/></svg></span>System administration</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-code"/></svg></span>Programming</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-spark"/></svg></span>Artificial intelligence</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-game"/></svg></span>Game development</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-music"/></svg></span>Music production</li>
-      <li class="card spot"><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span>Creative projects</li>
-    </ul>
-  </section>
-
-  <section class="sec" aria-labelledby="paradigm-title">
-    <div class="sec-head rv"><div class="eyebrow">MY STORY / MY VALUES</div><h2 class="h2" id="paradigm-title">My Personal Paradigm<span>.</span></h2><p class="lead">I am shaped by where I come from, the people who support me, the mistakes I learn from, and the ideas I turn into something real.</p></div>
-    <div class="card root rv"><small>MY GUIDING IDEA</small><h3>Stay true to where I come from.<br><span>Keep creating who I want to become.</span></h3><p>My roots → My choices → My future</p></div>
-    <div class="map" id="paradigm-map"></div>
-    <p class="hint">Select a principle to read my personal reflection.</p>
-    <p class="source">Inspired by the 12 personal paradigms from <a href="https://interserediciones.com/paradigmas-personales-ciudadano-global/" target="_blank" rel="noopener noreferrer">InterSer · Read the original article ↗</a>. Adapted to reflect my own story, values and interests.</p>
-  </section>
+</div>
 </div>
 </template>
 
 <template id="tpl-resume">
-<div class="pg">
-  <div class="pg-head rv"><div><div class="eyebrow">02 / MY BACKGROUND</div><h1>Resume<span>.</span></h1></div><p class="pg-note">Education, experience and skills — readable here or downloadable as PDF.</p></div>
-  <section aria-labelledby="cv-title" class="rv">
-    <div class="eyebrow">MY RESUME / TWO FORMATS</div>
-    <h2 class="h2" id="cv-title">Read my CV<span>.</span></h2>
-    <p class="lead">Explore my education, experience and skills in English or Catalan.</p>
-    <div class="cv-docs">
-      <article class="card hov spot cv-doc"><span class="ico-shell"><svg class="i"><use href="#i-file"/></svg></span><div><small>PDF DOCUMENT</small><h3>Europass Resume</h3><p>English · Europass format</p><div class="cv-actions"><button type="button" class="btn primary" data-cv-toggle="europass" aria-expanded="false" aria-controls="cv-europass">View CV +</button><a class="btn" href="pdfs/CV-Europass-Kluivert-Peralta.pdf" download="CV-Europass-Kluivert-Peralta.pdf"><svg class="i"><use href="#i-down"/></svg>Download PDF</a></div></div></article>
-      <article class="card hov spot cv-doc tone-b"><span class="ico-shell"><svg class="i"><use href="#i-file"/></svg></span><div><small>PDF DOCUMENT</small><h3>Catalan Resume</h3><p>Catalan · Personal format</p><div class="cv-actions"><button type="button" class="btn primary" data-cv-toggle="catalan" aria-expanded="false" aria-controls="cv-catalan">View CV +</button><a class="btn" href="pdfs/CV-Catalan-Kluivert-Peralta.pdf" download="CV-Catalan-Kluivert-Peralta.pdf"><svg class="i"><use href="#i-down"/></svg>Download PDF</a></div></div></article>
+<div class="ax-shell">
+<div class="ax ax-resume">
+  <nav class="ax-side" aria-label="Resume sections">
+    <div class="ax-brand"><span class="ax-logo"><svg class="i"><use href="#i-file"/></svg></span><div><strong>RESUME</strong><small>CAREER · 02</small></div></div>
+    <div class="ax-nav">
+      <button type="button" class="on" data-ax-go="rs-top"><span class="ic"><svg class="i"><use href="#i-file"/></svg></span><span class="lb">My CV</span></button>
+      <button type="button" data-ax-go="rs-path"><span class="ic"><svg class="i"><use href="#i-flag"/></svg></span><span class="lb">Education &amp; Work</span></button>
+      <button type="button" data-ax-go="rs-skills"><span class="ic"><svg class="i"><use href="#i-terminal"/></svg></span><span class="lb">Skills</span></button>
+      <button type="button" data-ax-go="rs-lang"><span class="ic"><svg class="i"><use href="#i-globe"/></svg></span><span class="lb">Languages</span></button>
     </div>
-    <section class="card cv-panel" id="cv-europass" aria-labelledby="cvp-e" hidden>
-      <header><h3 id="cvp-e">Europass Resume</h3><button type="button" class="btn" data-cv-close="europass">Close CV ×</button></header>
-      <div class="cv-pages">
-        <figure><img data-src="%%IMG_CV1%%" alt="Europass Resume, page 1" width="1062" height="1500"><figcaption>PAGE 1 OF 2</figcaption></figure>
-        <figure><img data-src="%%IMG_CV2%%" alt="Europass Resume, page 2" width="1062" height="1500"><figcaption>PAGE 2 OF 2</figcaption></figure>
+    <div class="ax-side-card"><svg class="i"><use href="#i-down"/></svg><div><b>2 PDF formats</b><small>Europass (EN) · Catalan (CA)</small></div></div>
+  </nav>
+  <div class="ax-main" tabindex="-1">
+    <header class="ax-hero rs-hero" id="rs-top">
+      <svg class="ax-ridge" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#ax-ridge"/></svg>
+      <svg class="rs-art ax-in" viewBox="0 0 360 260" aria-hidden="true">
+        <g class="rs-sheet" transform="rotate(-9 200 140)"><rect x="120" y="40" width="150" height="196" rx="10" fill="#0b2a30" stroke="#8ff0bd" stroke-opacity=".35"/><g fill="#cfeff0" opacity=".28"><rect x="140" y="66" width="70" height="7" rx="3"/><rect x="140" y="86" width="108" height="5" rx="2"/><rect x="140" y="100" width="96" height="5" rx="2"/><rect x="140" y="114" width="104" height="5" rx="2"/><rect x="140" y="140" width="60" height="6" rx="3"/><rect x="140" y="158" width="100" height="5" rx="2"/><rect x="140" y="172" width="88" height="5" rx="2"/></g></g>
+        <g transform="rotate(6 220 130)"><rect x="160" y="24" width="160" height="208" rx="10" fill="#0d3036" stroke="#5ff3e6" stroke-opacity=".55"/><circle cx="196" cy="62" r="16" fill="#5ff3e6" fill-opacity=".16" stroke="#5ff3e6" stroke-opacity=".6"/><g fill="#cfeff0"><rect x="222" y="52" width="76" height="8" rx="4" opacity=".55"/><rect x="222" y="66" width="52" height="5" rx="2" opacity=".3"/><rect x="180" y="98" width="118" height="5" rx="2" opacity=".3"/><rect x="180" y="110" width="104" height="5" rx="2" opacity=".3"/><rect x="180" y="134" width="60" height="7" rx="3" fill="#8ff0bd" opacity=".6"/><rect x="180" y="150" width="112" height="5" rx="2" opacity=".3"/><rect x="180" y="162" width="96" height="5" rx="2" opacity=".3"/><rect x="180" y="174" width="108" height="5" rx="2" opacity=".3"/><rect x="180" y="198" width="70" height="7" rx="3" fill="#5ff3e6" opacity=".5"/></g></g>
+        <path d="M24 236 C 70 236 70 196 110 190 S 150 150 190 146" fill="none" stroke="#8ff0bd" stroke-opacity=".5" stroke-width="2" stroke-dasharray="4 6"/>
+        <circle cx="24" cy="236" r="5" fill="#8ff0bd"/><circle cx="110" cy="190" r="5" fill="#8ff0bd"/><circle class="rs-pulse ax-anim" cx="190" cy="146" r="6" fill="#5ff3e6"/>
+      </svg>
+      <div class="ax-hero-copy">
+        <div class="eyebrow ax-in">02 / MY BACKGROUND</div>
+        <h1 class="ax-title ax-in">Resume<span>.</span></h1>
+        <p class="ax-note ax-in">Education, experience and skills — readable here or downloadable as PDF.</p>
+        <div class="ax-stats ax-in"><div><b>2</b><span>CV formats</span></div><div><b>3</b><span>Languages</span></div><div><b>8</b><span>Technical areas</span></div></div>
       </div>
-    </section>
-    <section class="card cv-panel" id="cv-catalan" aria-labelledby="cvp-c" hidden>
-      <header><h3 id="cvp-c">Catalan Resume</h3><button type="button" class="btn" data-cv-close="catalan">Close CV ×</button></header>
-      <div class="cv-pages">
-        <figure><img data-src="%%IMG_CV3%%" alt="Catalan Resume, page 1" width="1062" height="1500"><figcaption>PAGE 1 OF 1</figcaption></figure>
-      </div>
-    </section>
-  </section>
-  <div class="resume-grid">
-    <article class="card rc rv">
-      <h3><svg class="i"><use href="#i-file"/></svg>Education</h3>
-      <div class="entry"><span class="date">2025 – Present</span><h4>Vocational Education and Training in Microcomputer Systems and Networks (SMX)</h4><p>Institut Sa Palomera</p><p>Currently in the second year.</p></div>
-      <div class="entry"><h4>Compulsory Secondary Education (ESO)</h4><p>Institut Rocagrossa</p></div>
-    </article>
-    <article class="card rc rv">
-      <h3><svg class="i"><use href="#i-team"/></svg>Work Experience</h3>
-      <div class="entry"><span class="date">Seasonal work · 2022 – 2026</span><h4>Waiter</h4><p>54 Classic Dinner · Lloret de Mar</p>
-        <ul><li>Customer service and teamwork.</li><li>Organising and managing tasks during busy periods.</li><li>Taking responsibility and adapting to different work paces.</li></ul></div>
-    </article>
-    <article class="card rc rv">
-      <h3><svg class="i"><use href="#i-terminal"/></svg>Technical Knowledge</h3>
-      <ul><li>Computer assembly and maintenance.</li><li>Windows and Linux installation and basic configuration.</li><li>Basic hardware and software troubleshooting.</li><li>Local networks and basic network configuration.</li><li>IP addressing, DNS and default gateways.</li><li>Virtual machines with VirtualBox.</li><li>Microsoft 365 and cloud storage.</li><li>Software and peripheral installation and configuration.</li></ul>
-    </article>
-    <div class="stack">
-      <article class="card rc rv">
-        <h3><svg class="i"><use href="#i-globe"/></svg>Languages</h3>
-        <dl class="langs"><div><dt>Spanish</dt><dd>Native</dd></div><div><dt>Catalan</dt><dd>Advanced</dd></div><div><dt>English</dt><dd>Basic</dd></div></dl>
-      </article>
-      <article class="card rc rv">
-        <h3><svg class="i"><use href="#i-bulb"/></svg>Personal Strengths</h3>
-        <p>Responsibility, organisation, teamwork, adaptability, quick learning, problem solving, customer service and an interest in IT and technology.</p>
-      </article>
+    </header>
+
+    <div class="ax-body">
+      <section class="ax-sec" aria-labelledby="cv-title">
+        <div class="ax-h rv"><div class="eyebrow">MY RESUME / TWO FORMATS</div><h2 class="h2" id="cv-title">Read my CV<span>.</span></h2><p class="lead">Explore my education, experience and skills in English or Catalan.</p></div>
+        <div class="cv-docs rs-docs rv">
+          <article class="card spot cv-doc rs-doc"><div class="rs-thumb" aria-hidden="true"><img alt="" data-thumb="cv-europass" decoding="async"><span class="rs-lang-badge">EN</span></div><div class="rs-doc-body"><small>PDF DOCUMENT · 2 PAGES</small><h3>Europass Resume</h3><p>English · Europass format</p><div class="cv-actions"><button type="button" class="btn primary" data-cv-toggle="europass" aria-expanded="false" aria-controls="cv-europass">View CV +</button><a class="btn" href="pdfs/CV-Europass-Kluivert-Peralta.pdf" download="CV-Europass-Kluivert-Peralta.pdf"><svg class="i"><use href="#i-down"/></svg>Download PDF</a></div></div></article>
+          <article class="card spot cv-doc rs-doc tone-b"><div class="rs-thumb" aria-hidden="true"><img alt="" data-thumb="cv-catalan" decoding="async"><span class="rs-lang-badge">CA</span></div><div class="rs-doc-body"><small>PDF DOCUMENT · 1 PAGE</small><h3>Catalan Resume</h3><p>Catalan · Personal format</p><div class="cv-actions"><button type="button" class="btn primary" data-cv-toggle="catalan" aria-expanded="false" aria-controls="cv-catalan">View CV +</button><a class="btn" href="pdfs/CV-Catalan-Kluivert-Peralta.pdf" download="CV-Catalan-Kluivert-Peralta.pdf"><svg class="i"><use href="#i-down"/></svg>Download PDF</a></div></div></article>
+        </div>
+        <section class="card cv-panel" id="cv-europass" aria-labelledby="cvp-e" hidden>
+          <header><h3 id="cvp-e">Europass Resume</h3><button type="button" class="btn" data-cv-close="europass">Close CV ×</button></header>
+          <div class="cv-pages">
+            <figure><img data-src="%%IMG_CV1%%" alt="Europass Resume, page 1" width="1062" height="1500"><figcaption>PAGE 1 OF 2</figcaption></figure>
+            <figure><img data-src="%%IMG_CV2%%" alt="Europass Resume, page 2" width="1062" height="1500"><figcaption>PAGE 2 OF 2</figcaption></figure>
+          </div>
+        </section>
+        <section class="card cv-panel" id="cv-catalan" aria-labelledby="cvp-c" hidden>
+          <header><h3 id="cvp-c">Catalan Resume</h3><button type="button" class="btn" data-cv-close="catalan">Close CV ×</button></header>
+          <div class="cv-pages">
+            <figure><img data-src="%%IMG_CV3%%" alt="Catalan Resume, page 1" width="1062" height="1500"><figcaption>PAGE 1 OF 1</figcaption></figure>
+          </div>
+        </section>
+      </section>
+
+      <section class="ax-sec" id="rs-path" aria-labelledby="rs-path-t">
+        <div class="ax-h rv"><div class="eyebrow">MY PATH</div><h2 class="h2" id="rs-path-t">Education &amp; Work Experience<span>.</span></h2></div>
+        <div class="rs-path">
+          <article class="card rc rs-line rv">
+            <h3><span class="ico-shell"><svg class="i"><use href="#i-file"/></svg></span>Education</h3>
+            <div class="entry now"><span class="date">2025 – Present</span><h4>Vocational Education and Training in Microcomputer Systems and Networks (SMX)</h4><p>Institut Sa Palomera</p><p>Currently in the second year.</p></div>
+            <div class="entry"><h4>Compulsory Secondary Education (ESO)</h4><p>Institut Rocagrossa</p></div>
+          </article>
+          <article class="card rc rs-line tone-b rv">
+            <h3><span class="ico-shell"><svg class="i"><use href="#i-team"/></svg></span>Work Experience</h3>
+            <div class="entry now"><span class="date">Seasonal work · 2022 – 2026</span><h4>Waiter</h4><p>54 Classic Dinner · Lloret de Mar</p>
+              <ul><li>Customer service and teamwork.</li><li>Organising and managing tasks during busy periods.</li><li>Taking responsibility and adapting to different work paces.</li></ul></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="ax-sec" id="rs-skills" aria-labelledby="rs-skills-t">
+        <div class="ax-h rv"><div class="eyebrow">WHAT I KNOW</div><h2 class="h2" id="rs-skills-t">Technical Knowledge<span>.</span></h2></div>
+        <ul class="rs-know rv">
+          <li><svg class="i"><use href="#i-cpu"/></svg>Computer assembly and maintenance.</li>
+          <li><svg class="i"><use href="#i-windows"/></svg>Windows and Linux installation and basic configuration.</li>
+          <li><svg class="i"><use href="#i-tool"/></svg>Basic hardware and software troubleshooting.</li>
+          <li><svg class="i"><use href="#i-network"/></svg>Local networks and basic network configuration.</li>
+          <li><svg class="i"><use href="#i-globe"/></svg>IP addressing, DNS and default gateways.</li>
+          <li><svg class="i"><use href="#i-vm"/></svg>Virtual machines with VirtualBox.</li>
+          <li><svg class="i"><use href="#i-office"/></svg>Microsoft 365 and cloud storage.</li>
+          <li><svg class="i"><use href="#i-monitor"/></svg>Software and peripheral installation and configuration.</li>
+        </ul>
+        <article class="card rc rs-strengths rv">
+          <h3><span class="ico-shell"><svg class="i"><use href="#i-bulb"/></svg></span>Personal Strengths</h3>
+          <p>Responsibility, organisation, teamwork, adaptability, quick learning, problem solving, customer service and an interest in IT and technology.</p>
+        </article>
+      </section>
+
+      <section class="ax-sec" id="rs-lang" aria-labelledby="rs-lang-t">
+        <div class="ax-h rv"><div class="eyebrow">COMMUNICATION</div><h2 class="h2" id="rs-lang-t">Languages<span>.</span></h2></div>
+        <dl class="langs rs-langs rv">
+          <div style="--lv:3"><dt>Spanish</dt><dd>Native</dd><span class="rs-meter" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div style="--lv:2"><dt>Catalan</dt><dd>Advanced</dd><span class="rs-meter" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div style="--lv:1"><dt>English</dt><dd>Basic</dd><span class="rs-meter" aria-hidden="true"><i></i><i></i><i></i></span></div>
+        </dl>
+      </section>
     </div>
   </div>
+</div>
 </div>
 </template>
 
 <template id="tpl-certificates">
-<div class="pg">
-  <div class="pg-head rv"><div><div class="eyebrow">03 / CONTINUOUS LEARNING</div><h1>Certificates &amp; Diplomas<span>.</span></h1></div><p class="pg-note">Training certificates and diplomas from my studies at Institut Sa Palomera. Explore the original documents below.</p></div>
-  <div class="cert-bar rv">
-    <div class="filters" id="cert-filters" role="group" aria-label="Filter certificates"></div>
-    <a class="btn primary glare" href="https://drive.google.com/drive/folders/1UFFNmIrU3xmq0B0_AY4r_LpBKEJqLwvB?usp=drive_link" target="_blank" rel="noopener noreferrer">View all on Google Drive <svg class="i"><use href="#i-ext"/></svg></a>
+<div class="ax-shell">
+<div class="ax ax-certs">
+  <nav class="ax-side" aria-label="Certificates sections">
+    <div class="ax-brand"><span class="ax-logo"><svg class="i"><use href="#i-award"/></svg></span><div><strong>CERTIFICATES</strong><small>ARCHIVE · 03</small></div></div>
+    <div class="ax-nav">
+      <button type="button" class="on" data-ax-go="ce-top"><span class="ic"><svg class="i"><use href="#i-home"/></svg></span><span class="lb">Overview</span></button>
+      <button type="button" data-ax-go="ce-gallery"><span class="ic"><svg class="i"><use href="#i-award"/></svg></span><span class="lb">All Documents</span></button>
+    </div>
+    <div class="ax-nav ce-cats" aria-label="Categories"></div>
+    <a class="ax-side-card ax-side-link" href="https://drive.google.com/drive/folders/1UFFNmIrU3xmq0B0_AY4r_LpBKEJqLwvB?usp=drive_link" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-ext"/></svg><div><b>Google Drive</b><small>Original documents</small></div></a>
+  </nav>
+  <div class="ax-main" tabindex="-1">
+    <header class="ax-hero ce-hero" id="ce-top">
+      <svg class="ax-ridge" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#ax-ridge"/></svg>
+      <div class="ax-hero-copy">
+        <div class="eyebrow ax-in">03 / CONTINUOUS LEARNING</div>
+        <h1 class="ax-title ax-in">Certificates &amp; Diplomas<span>.</span></h1>
+        <p class="ax-note ax-in">Training certificates and diplomas from my studies at Institut Sa Palomera. Explore the original documents below.</p>
+        <div class="ce-mix ax-in" aria-label="Documents by category"><div class="ce-bar" id="ce-bar"></div><div class="ce-legend" id="ce-legend"></div></div>
+      </div>
+      <div class="ce-medal ax-in" aria-hidden="true">
+        <svg viewBox="0 0 220 220">
+          <g fill="none" stroke="#ffd58f" stroke-opacity=".55" stroke-width="2" stroke-linecap="round">
+            <path d="M58 170 C 30 140 26 98 44 64"/><path d="M162 170 C 190 140 194 98 176 64"/>
+          </g>
+          <g fill="#ffd58f" fill-opacity=".5">
+            <ellipse cx="40" cy="150" rx="7" ry="13" transform="rotate(-40 40 150)"/><ellipse cx="32" cy="122" rx="7" ry="13" transform="rotate(-20 32 122)"/><ellipse cx="32" cy="94" rx="7" ry="13" transform="rotate(5 32 94)"/><ellipse cx="42" cy="68" rx="7" ry="12" transform="rotate(25 42 68)"/>
+            <ellipse cx="180" cy="150" rx="7" ry="13" transform="rotate(40 180 150)"/><ellipse cx="188" cy="122" rx="7" ry="13" transform="rotate(20 188 122)"/><ellipse cx="188" cy="94" rx="7" ry="13" transform="rotate(-5 188 94)"/><ellipse cx="178" cy="68" rx="7" ry="12" transform="rotate(-25 178 68)"/>
+          </g>
+          <circle cx="110" cy="104" r="58" fill="#0b2a30" stroke="#5ff3e6" stroke-opacity=".55" stroke-width="2"/>
+          <circle cx="110" cy="104" r="46" fill="none" stroke="#ffd58f" stroke-opacity=".45" stroke-dasharray="3 5"/>
+          <path d="M110 74 l9 18 20 3 -14.5 14 3.5 20 -18 -9.5 -18 9.5 3.5 -20 -14.5 -14 20 -3z" fill="#ffd58f" fill-opacity=".85"/>
+          <path d="M86 156 l-10 40 16 -8 10 14 8 -36 M134 156 l10 40 -16 -8 -10 14 -8 -36" fill="#0d3036" stroke="#5ff3e6" stroke-opacity=".5"/>
+        </svg>
+        <div class="ce-count"><b id="ce-total">11</b><span>DOCUMENTS IN<br>THE ARCHIVE</span></div>
+      </div>
+    </header>
+
+    <div class="ax-body">
+      <section class="ax-sec" id="ce-gallery" aria-label="Certificate gallery">
+        <div class="cert-bar rv">
+          <div class="filters" id="cert-filters" role="group" aria-label="Filter certificates"></div>
+          <a class="btn primary glare" href="https://drive.google.com/drive/folders/1UFFNmIrU3xmq0B0_AY4r_LpBKEJqLwvB?usp=drive_link" target="_blank" rel="noopener noreferrer">View all on Google Drive <svg class="i"><use href="#i-ext"/></svg></a>
+        </div>
+        <div class="cert-top rv"><span class="chip" id="cert-count">11 DOCUMENTS</span><span class="chip">SYSTEMS · NETWORKS · DIGITAL SKILLS</span><span class="ce-tip">Select a document to preview it · ← → to browse</span></div>
+        <div class="cert-grid" id="cert-grid"></div>
+      </section>
+    </div>
   </div>
-  <div class="cert-top rv" style="margin:0 0 18px"><span class="chip" id="cert-count">11 DOCUMENTS</span><span class="chip">SYSTEMS · NETWORKS · DIGITAL SKILLS</span></div>
-  <div class="cert-grid" id="cert-grid"></div>
+</div>
 </div>
 </template>
 
 <template id="tpl-projects">
-<div class="pg">
-  <div class="pg-head rv"><div><div class="eyebrow">04 / SELECTED WORK</div><h1>Projects<span>.</span></h1></div><p class="pg-note">A selection of interactive experiments and systems built through design, programming and technical problem-solving.</p></div>
-  <article class="card feature rv">
-    <button class="kpc-vis" type="button" data-route="arcade" aria-label="Play KPC GAME">
-      <span class="kpc-floor"></span>
-      <span class="kpc-board"><span class="kpc-tiles"><i></i><i></i><i class="c"></i><i></i><i class="g"></i><i></i><i class="e"></i><i class="c"></i><i class="e"></i><i></i><i></i><i></i><i></i><i class="a"></i><i></i><i class="d"></i><i class="e"></i><i></i><i class="a"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="e"></i></span>
-        <span class="kpc-block"><b class="tp"></b><b class="s"></b><b class="ea"></b></span>
-      </span>
-      <span class="kpc-hud"><span><i class="dot-live"></i>NEON FORGE · LEVEL 01</span><span>MOVES 00</span></span>
-      <span class="kpc-play"><svg class="i"><use href="#i-play"/></svg>PLAY</span>
-      <span class="kpc-cap"><span>INTERACTIVE PUZZLE / 3D</span><strong>25 LEVELS · 5 ZONES</strong></span>
-    </button>
-    <div class="feature-copy">
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="eyebrow">FEATURED PROJECT / 001</span><span class="status st-live">Playable</span></div>
-      <h2 class="h2">KPC <span>GAME</span></h2>
-      <p>A browser-based 3D block puzzle campaign. Plan each movement, switch the active polarity and navigate five themed zones with distinct tile mechanics.</p>
-      <div class="tags"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">3D Canvas</span><span class="chip">Local save</span></div>
-      <ul><li>25 campaign levels across five zones.</li><li>Polarity switching, moving tiles, ice and portals.</li><li>Responsive controls and locally saved progress.</li></ul>
-      <div class="kpc-stats"><div><b>25</b><span>Levels</span></div><div><b>5</b><span>Zones</span></div><div><b>Top 10</b><span>Local ranking</span></div></div>
-      <div class="kpc-zones"><span>Neon Forge</span><span>Cryo Vault</span><span>Gravity Foundry</span><span>Circuit Lab</span><span>Obsidian Rift</span></div>
-      <div class="feature-actions"><button class="btn primary glare kpc-cta" type="button" data-route="arcade"><svg class="i"><use href="#i-play"/></svg>Play KPC GAME</button><small>Opens in full-screen game mode.</small></div>
+<div class="ax-shell">
+<div class="ax ax-projects">
+  <nav class="ax-side" aria-label="Projects sections">
+    <div class="ax-brand"><span class="ax-logo"><svg class="i"><use href="#i-code"/></svg></span><div><strong>PROJECTS</strong><small>DEV LAB · 04</small></div></div>
+    <div class="ax-nav">
+      <button type="button" class="on" data-ax-go="pj-top"><span class="ic"><svg class="i"><use href="#i-home"/></svg></span><span class="lb">Overview</span></button>
+      <button type="button" data-ax-go="pj-featured"><span class="ic"><svg class="i"><use href="#i-game"/></svg></span><span class="lb">Featured: KPC GAME</span></button>
+      <button type="button" data-ax-go="pj-lab"><span class="ic"><svg class="i"><use href="#i-layers"/></svg></span><span class="lb">More Projects</span></button>
     </div>
-  </article>
-  <div class="proj-grid">
-    <article class="card hov spot proj rv">
-      <header><span class="ico-shell"><svg class="i"><use href="#i-monitor"/></svg></span><span class="status st-live">Live</span></header>
-      <h3>KLUIVERT Portfolio</h3>
-      <p>This interactive portfolio: a 3D room you can explore, with KLUIVERT OS running on the computer.</p>
-      <div class="tags"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Three.js</span></div>
-    </article>
-    <article class="card hov spot proj tone-v rv">
-      <header><span class="ico-shell"><svg class="i"><use href="#i-spark"/></svg></span><span class="status st-dev">In development</span></header>
-      <h3>Lilith</h3>
-      <p>The AI assistant I'm developing — a project where I keep programming, testing new possibilities and improving as I learn new skills.</p>
-    </article>
-    <article class="card hov spot proj tone-b rv">
-      <header><span class="ico-shell"><svg class="i"><use href="#i-layers"/></svg></span><span class="status st-live">Live</span></header>
-      <h3>7HHEP.EXE</h3>
-      <p>The 7 Habits: a personal development app inside KLUIVERT OS. Three habits, three principles, one personal journey.</p>
-      <button class="btn" type="button" data-route="7hhep">Open 7HHEP.EXE</button>
-    </article>
+    <button type="button" class="ax-side-card ax-side-link" data-route="arcade"><svg class="i"><use href="#i-play"/></svg><div><b>Play KPC GAME</b><small>25 levels · 5 zones</small></div></button>
+  </nav>
+  <div class="ax-main" tabindex="-1">
+    <header class="ax-hero pj-hero" id="pj-top">
+      <svg class="ax-ridge" viewBox="0 0 800 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#ax-ridge"/></svg>
+      <svg class="pj-art ax-in" viewBox="0 0 360 260" aria-hidden="true">
+        <g fill="none" stroke="#5ff3e6" stroke-opacity=".28" stroke-width="1.5"><path d="M10 60 H90 L120 90 H200"/><path d="M10 120 H60 L90 150 H160"/><path d="M300 30 V80 L270 110 V170"/><path d="M350 200 H290 L260 230"/></g>
+        <g fill="#5ff3e6" fill-opacity=".6"><circle cx="200" cy="90" r="4"/><circle cx="160" cy="150" r="4"/><circle cx="270" cy="170" r="4"/><circle cx="260" cy="230" r="4"/><circle cx="90" cy="60" r="3"/></g>
+        <g transform="translate(176 150)">
+          <g fill="#0d3036" stroke="#5ff3e6" stroke-opacity=".35"><path d="M0 0 L40 -20 L80 0 L40 20Z"/><path d="M40 20 L80 0 L120 20 L80 40Z"/><path d="M-40 20 L0 0 L40 20 L0 40Z"/><path d="M0 40 L40 20 L80 40 L40 60Z"/></g>
+          <path d="M80 40 L120 20 L120 26 L80 46 L40 26 L40 20 Z" fill="#ffd58f" fill-opacity=".35"/>
+          <g class="pj-block ax-anim">
+            <path d="M20 -70 L40 -80 L60 -70 L40 -60Z" fill="#a6fbf3"/>
+            <path d="M20 -70 L40 -60 L40 10 L20 0Z" fill="#2ac7c9"/>
+            <path d="M40 -60 L60 -70 L60 0 L40 10Z" fill="#147f86"/>
+          </g>
+        </g>
+      </svg>
+      <div class="ax-hero-copy">
+        <div class="eyebrow ax-in">04 / SELECTED WORK</div>
+        <h1 class="ax-title ax-in">Projects<span>.</span></h1>
+        <p class="ax-note ax-in">A selection of interactive experiments and systems built through design, programming and technical problem-solving.</p>
+        <div class="ax-stats ax-in"><div><b>4</b><span>Projects</span></div><div><b>3</b><span>Live &amp; playable</span></div><div><b>1</b><span>In development</span></div></div>
+      </div>
+    </header>
+
+    <div class="ax-body">
+      <section class="ax-sec" id="pj-featured" aria-label="Featured project">
+        <article class="card feature pj-feature rv">
+          <button class="kpc-vis" type="button" data-route="arcade" aria-label="Play KPC GAME">
+            <span class="kpc-floor"></span>
+            <span class="kpc-board"><span class="kpc-tiles"><i></i><i></i><i class="c"></i><i></i><i class="g"></i><i></i><i class="e"></i><i class="c"></i><i class="e"></i><i></i><i></i><i></i><i></i><i class="a"></i><i></i><i class="d"></i><i class="e"></i><i></i><i class="a"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="e"></i></span>
+              <span class="kpc-block"><b class="tp"></b><b class="s"></b><b class="ea"></b></span>
+            </span>
+            <span class="kpc-hud"><span><i class="dot-live"></i>NEON FORGE · LEVEL 01</span><span>MOVES 00</span></span>
+            <span class="kpc-play"><svg class="i"><use href="#i-play"/></svg>PLAY</span>
+            <span class="kpc-cap"><span>INTERACTIVE PUZZLE / 3D</span><strong>25 LEVELS · 5 ZONES</strong></span>
+          </button>
+          <div class="feature-copy">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="eyebrow">FEATURED PROJECT / 001</span><span class="status st-live">Playable</span></div>
+            <h2 class="h2">KPC <span>GAME</span></h2>
+            <p>A browser-based 3D block puzzle campaign. Plan each movement, switch the active polarity and navigate five themed zones with distinct tile mechanics.</p>
+            <div class="tags"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">3D Canvas</span><span class="chip">Local save</span></div>
+            <ul><li>25 campaign levels across five zones.</li><li>Polarity switching, moving tiles, ice and portals.</li><li>Responsive controls and locally saved progress.</li></ul>
+            <div class="kpc-stats"><div><b>25</b><span>Levels</span></div><div><b>5</b><span>Zones</span></div><div><b>Top 10</b><span>Local ranking</span></div></div>
+            <div class="kpc-zones"><span>Neon Forge</span><span>Cryo Vault</span><span>Gravity Foundry</span><span>Circuit Lab</span><span>Obsidian Rift</span></div>
+            <div class="feature-actions"><button class="btn primary glare kpc-cta" type="button" data-route="arcade"><svg class="i"><use href="#i-play"/></svg>Play KPC GAME</button><small>Opens in full-screen game mode.</small></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="ax-sec" id="pj-lab" aria-labelledby="pj-lab-t">
+        <div class="ax-h rv"><div class="eyebrow">THE LAB</div><h2 class="h2" id="pj-lab-t">More Projects<span>.</span></h2></div>
+        <div class="proj-grid pj-grid">
+          <article class="card spot proj pj-card pj-os rv">
+            <div class="pj-art-box" aria-hidden="true">
+              <svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice"><rect width="300" height="150" fill="#071d22"/><g stroke="#2ac7c9" stroke-opacity=".08"><path d="M0 30H300M0 60H300M0 90H300M0 120H300M50 0V150M100 0V150M150 0V150M200 0V150M250 0V150"/></g>
+                <g fill="#0f3a40" stroke="#5ff3e6" stroke-opacity=".5"><rect x="14" y="16" width="22" height="22" rx="6"/><rect x="14" y="48" width="22" height="22" rx="6"/><rect x="14" y="80" width="22" height="22" rx="6"/></g>
+                <rect x="60" y="18" width="200" height="104" rx="8" fill="#0b2a30" stroke="#5ff3e6" stroke-opacity=".6"/><rect x="60" y="18" width="200" height="16" rx="8" fill="#123a40"/><g fill="#5ff3e6" opacity=".7"><circle cx="242" cy="26" r="2.5"/><circle cx="250" cy="26" r="2.5"/></g>
+                <g fill="#cfeff0" opacity=".35"><rect x="74" y="46" width="70" height="9" rx="4"/><rect x="74" y="62" width="120" height="5" rx="2"/><rect x="74" y="72" width="100" height="5" rx="2"/></g><rect x="200" y="46" width="46" height="60" rx="6" fill="#5ff3e6" fill-opacity=".12" stroke="#5ff3e6" stroke-opacity=".4"/>
+                <rect x="0" y="134" width="300" height="16" fill="#061418"/><rect x="8" y="138" width="10" height="8" rx="2" fill="#5ff3e6" opacity=".7"/></svg>
+            </div>
+            <header><span class="ico-shell"><svg class="i"><use href="#i-monitor"/></svg></span><span class="pj-type">WEB · INTERACTIVE OS</span><span class="status st-live">Live</span></header>
+            <h3>KLUIVERT Portfolio</h3>
+            <p>This interactive portfolio: a 3D room you can explore, with KLUIVERT OS running on the computer.</p>
+            <div class="tags"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span><span class="chip">Three.js</span></div>
+          </article>
+          <article class="card spot proj pj-card pj-ai tone-v rv">
+            <div class="pj-art-box" aria-hidden="true">
+              <svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice"><rect width="300" height="150" fill="#0a1424"/><defs><radialGradient id="pj-core"><stop offset="0" stop-color="#c4adff" stop-opacity=".9"/><stop offset=".45" stop-color="#7fdcff" stop-opacity=".35"/><stop offset="1" stop-color="#7fdcff" stop-opacity="0"/></radialGradient></defs>
+                <circle cx="150" cy="75" r="62" fill="url(#pj-core)" class="pj-core ax-anim"/>
+                <g fill="none" stroke="#c4adff" stroke-opacity=".45"><ellipse cx="150" cy="75" rx="96" ry="26"/><ellipse cx="150" cy="75" rx="96" ry="26" transform="rotate(60 150 75)"/><ellipse cx="150" cy="75" rx="96" ry="26" transform="rotate(-60 150 75)"/></g>
+                <circle cx="150" cy="75" r="14" fill="#e9e0ff"/>
+                <path d="M10 120 Q30 104 50 120 T90 120 T130 120" fill="none" stroke="#7fdcff" stroke-opacity=".5" stroke-width="2"/><path d="M170 120 Q190 98 210 120 T250 120 T290 120" fill="none" stroke="#c4adff" stroke-opacity=".5" stroke-width="2"/></svg>
+            </div>
+            <header><span class="ico-shell"><svg class="i"><use href="#i-spark"/></svg></span><span class="pj-type">AI ASSISTANT</span><span class="status st-dev">In development</span></header>
+            <h3>Lilith</h3>
+            <p>The AI assistant I'm developing — a project where I keep programming, testing new possibilities and improving as I learn new skills.</p>
+          </article>
+          <article class="card spot proj pj-card pj-hx tone-b rv">
+            <div class="pj-art-box" aria-hidden="true">
+              <svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice"><rect width="300" height="150" fill="#04141a"/><ellipse cx="200" cy="60" rx="140" ry="80" fill="#2ac7c9" fill-opacity=".1"/>
+                <path d="M0 110 L50 80 L90 96 L140 56 L180 82 L220 40 L260 74 L300 60 V150 H0Z" fill="#12363d"/><path d="M0 130 L70 108 L140 124 L210 100 L300 118 V150 H0Z" fill="#071a1f"/>
+                <path d="M120 150 C130 132 168 132 166 120 S150 104 176 96 S206 84 220 44" fill="none" stroke="#a6fbf3" stroke-width="2" stroke-dasharray="3 5"/><path d="M220 44 V26 L234 30 L220 34" fill="#5ff3e6" stroke="#dffcf7" stroke-width="1"/>
+                <g fill="#dffcf7" opacity=".7"><circle cx="40" cy="22" r="1"/><circle cx="90" cy="40" r=".8"/><circle cx="270" cy="20" r="1"/><circle cx="160" cy="14" r=".8"/></g></svg>
+            </div>
+            <header><span class="ico-shell"><svg class="i"><use href="#i-layers"/></svg></span><span class="pj-type">PERSONAL DEVELOPMENT APP</span><span class="status st-live">Live</span></header>
+            <h3>7HHEP.EXE</h3>
+            <p>The 7 Habits: a personal development app inside KLUIVERT OS. Six habits, six principles, one personal journey.</p>
+            <button class="btn" type="button" data-route="7hhep">Open 7HHEP.EXE</button>
+          </article>
+        </div>
+        <p class="disclaimer">More projects will be added as their descriptions, previews and repositories are prepared.</p>
+      </section>
+    </div>
   </div>
-  <p class="disclaimer">More projects will be added as their descriptions, previews and repositories are prepared.</p>
+</div>
 </div>
 </template>
 
@@ -674,14 +861,53 @@
 </template>
 
 <template id="tpl-contact">
-<div class="pg">
-  <div class="pg-head rv"><div><div class="eyebrow">06 / GET IN TOUCH</div><h1>Contact<span>.</span></h1></div><p class="pg-note">Open to opportunities, collaborations and conversations about technology.</p></div>
-  <div class="contact-grid">
-    <div class="card hov spot ct rv"><span class="ico-shell"><svg class="i"><use href="#i-mail"/></svg></span><small>Email</small><a class="main" href="mailto:kluivertp27@gmail.com"><strong>kluivertp27@gmail.com</strong></a><div class="act"><span>Send an email ↗</span><button class="copy-btn" type="button" data-copy="kluivertp27@gmail.com"><svg class="i"><use href="#i-copy"/></svg>COPY</button></div></div>
-    <div class="card hov spot ct tone-b rv"><span class="ico-shell"><svg class="i"><use href="#i-phone"/></svg></span><small>Phone</small><a class="main" href="tel:+34643750021"><strong>643 750 021</strong></a><div class="act"><span>Call me ↗</span><button class="copy-btn" type="button" data-copy="+34 643 750 021"><svg class="i"><use href="#i-copy"/></svg>COPY</button></div></div>
-    <div class="card ct tone-v rv"><span class="ico-shell"><svg class="i"><use href="#i-pin"/></svg></span><small>Location</small><strong>Lloret de Mar, Girona</strong><div class="act"><span>Spain</span></div></div>
+<div class="ax-shell">
+<div class="ax ax-contact">
+  <nav class="ax-side" aria-label="Contact sections">
+    <div class="ax-brand"><span class="ax-logo"><svg class="i"><use href="#i-mail"/></svg></span><div><strong>CONTACT</strong><small>COMM HUB · 06</small></div></div>
+    <div class="ax-nav">
+      <button type="button" class="on" data-ax-go="ct-top"><span class="ic"><svg class="i"><use href="#i-home"/></svg></span><span class="lb">Get in Touch</span></button>
+      <button type="button" data-ax-go="ct-channels"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><span class="lb">Channels</span></button>
+      <button type="button" data-ax-go="ct-location"><span class="ic"><svg class="i"><use href="#i-pin"/></svg></span><span class="lb">Location</span></button>
+      <button type="button" data-ax-go="ct-write"><span class="ic"><svg class="i"><use href="#i-spark"/></svg></span><span class="lb">Write to Me</span></button>
+    </div>
+    <div class="ax-side-card"><span class="dot-live"></span><div><b>Email is quickest</b><small>kluivertp27@gmail.com</small></div></div>
+  </nav>
+  <div class="ax-main" tabindex="-1">
+    <header class="ax-hero ct-hero" id="ct-top">
+      <svg class="ct-net ax-in" viewBox="0 0 420 260" aria-hidden="true">
+        <g fill="none" stroke="#7fdcff" stroke-opacity=".22"><circle cx="300" cy="130" r="96"/><ellipse cx="300" cy="130" rx="96" ry="34"/><ellipse cx="300" cy="130" rx="36" ry="96"/><ellipse cx="300" cy="130" rx="74" ry="96"/><path d="M204 130 H396"/></g>
+        <ellipse cx="300" cy="130" rx="150" ry="46" fill="none" stroke="#5ff3e6" stroke-opacity=".3" stroke-dasharray="2 6" transform="rotate(-14 300 130)"/>
+        <g stroke="#5ff3e6" stroke-opacity=".35" fill="none"><path d="M40 70 L120 40 L190 90 L262 74"/><path d="M60 190 L140 150 L190 90"/><path d="M140 150 L232 176 L330 160"/><path d="M120 40 L60 190"/></g>
+        <g fill="#5ff3e6"><circle cx="40" cy="70" r="3"/><circle cx="120" cy="40" r="4"/><circle cx="60" cy="190" r="3"/><circle cx="140" cy="150" r="4"/><circle cx="232" cy="176" r="3"/><circle cx="262" cy="74" r="4"/><circle cx="330" cy="160" r="4"/></g>
+        <circle cx="190" cy="90" r="6" fill="#dffcf7"/><circle class="ct-ping ax-anim" cx="190" cy="90" r="6" fill="none" stroke="#5ff3e6" stroke-width="2"/>
+        <circle cx="330" cy="160" r="4" fill="#dffcf7"/><circle class="ct-ping ct-ping2 ax-anim" cx="330" cy="160" r="5" fill="none" stroke="#7fdcff" stroke-width="2"/>
+      </svg>
+      <div class="ax-hero-copy">
+        <div class="eyebrow ax-in">06 / GET IN TOUCH</div>
+        <h1 class="ax-title ax-in">Contact<span>.</span></h1>
+        <p class="ax-note ax-in">Open to opportunities, collaborations and conversations about technology.</p>
+        <div class="ct-status ax-in"><span class="dot-live"></span>CHANNELS · EMAIL · PHONE · LLORET DE MAR</div>
+      </div>
+    </header>
+
+    <div class="ax-body">
+      <section class="ax-sec" id="ct-channels" aria-label="Contact channels">
+        <div class="contact-grid ct-grid">
+          <div class="card spot ct ct-ch ch-mail rv"><div class="ct-top"><span class="ico-shell"><svg class="i"><use href="#i-mail"/></svg></span><span class="ct-sig" aria-hidden="true"><i></i><i></i><i></i></span><span class="ct-id">CHANNEL 01</span></div><small>Email</small><a class="main" href="mailto:kluivertp27@gmail.com"><strong>kluivertp27@gmail.com</strong></a><div class="act"><span>Send an email ↗</span><button class="copy-btn" type="button" data-copy="kluivertp27@gmail.com"><svg class="i"><use href="#i-copy"/></svg>COPY</button></div></div>
+          <div class="card spot ct ct-ch ch-phone tone-b rv"><div class="ct-top"><span class="ico-shell"><svg class="i"><use href="#i-phone"/></svg></span><span class="ct-sig" aria-hidden="true"><i></i><i></i><i></i></span><span class="ct-id">CHANNEL 02</span></div><small>Phone</small><a class="main" href="tel:+34643750021"><strong>643 750 021</strong></a><div class="act"><span>Call me ↗</span><button class="copy-btn" type="button" data-copy="+34 643 750 021"><svg class="i"><use href="#i-copy"/></svg>COPY</button></div></div>
+          <div class="card ct ct-loc tone-v rv" id="ct-location">
+            <div class="ct-map" aria-hidden="true"><svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid slice"><rect width="300" height="140" fill="#0a1828"/><g stroke="#c4adff" stroke-opacity=".08"><path d="M0 28H300M0 56H300M0 84H300M0 112H300M60 0V140M120 0V140M180 0V140M240 0V140"/></g><path d="M0 0 H180 C170 20 186 34 176 52 C164 72 190 84 206 98 C222 112 250 116 300 120 V0Z" fill="#13283b" stroke="#c4adff" stroke-opacity=".35"/><g fill="none" stroke="#c4adff" stroke-opacity=".14"><path d="M190 60 C214 80 240 92 300 98"/><path d="M200 78 C226 96 256 104 300 108"/></g><circle cx="168" cy="62" r="5" fill="#e9e0ff"/><circle class="ct-ping ax-anim" cx="168" cy="62" r="6" fill="none" stroke="#c4adff" stroke-width="2"/></svg><span class="ct-coord">41.70° N · 2.85° E</span></div>
+            <div class="ct-loc-body"><span class="ico-shell"><svg class="i"><use href="#i-pin"/></svg></span><div><small>Location</small><strong>Lloret de Mar, Girona</strong><div class="act"><span>Spain</span></div></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="ax-sec" id="ct-write" aria-label="Write to me">
+        <div class="card contact-cta ct-cta rv"><span class="ct-cta-ic ico-shell" aria-hidden="true"><svg class="i"><use href="#i-mail"/></svg></span><div><h3>Let's build something<span class="accent">.</span></h3><p>The quickest way to reach me is by email.</p></div><a class="btn primary glare" href="mailto:kluivertp27@gmail.com"><svg class="i"><use href="#i-mail"/></svg>Write to me</a></div>
+      </section>
+    </div>
   </div>
-  <div class="card contact-cta rv"><div><h3>Let's build something<span class="accent">.</span></h3><p>The quickest way to reach me is by email.</p></div><a class="btn primary glare" href="mailto:kluivertp27@gmail.com"><svg class="i"><use href="#i-mail"/></svg>Write to me</a></div>
+</div>
 </div>
 </template>
 

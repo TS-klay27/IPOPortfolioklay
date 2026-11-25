@@ -30,13 +30,13 @@ function animate(ms, fn, soft = false) {
 
 /* ---------- App registry ---------- */
 const APPS = {
-  about:        { title: 'About Me',     icon: 'i-user',   w: 1080, h: 760 },
-  resume:       { title: 'Resume',       icon: 'i-file',   w: 1040, h: 760 },
-  certificates: { title: 'Certificates', icon: 'i-award',  w: 1120, h: 780 },
-  projects:     { title: 'Projects',     icon: 'i-code',   w: 1080, h: 760 },
+  about:        { title: 'About Me',     icon: 'i-user',   w: 1080, h: 760, bare: true },
+  resume:       { title: 'Resume',       icon: 'i-file',   w: 1040, h: 760, bare: true },
+  certificates: { title: 'Certificates', icon: 'i-award',  w: 1120, h: 780, bare: true },
+  projects:     { title: 'Projects',     icon: 'i-code',   w: 1080, h: 760, bare: true },
   arcade:       { title: 'KPC GAME',     icon: 'i-game',   w: 1180, h: 800, path: 'KMP://ARCADE' },
   '7hhep':      { title: '7HHEP.EXE',    icon: 'i-layers', w: 1200, h: 820, path: 'KMP://7HHEP.EXE', bare: true },   // bare: full-bleed app, no page footer
-  contact:      { title: 'Contact',      icon: 'i-mail',   w: 980,  h: 640 },
+  contact:      { title: 'Contact',      icon: 'i-mail',   w: 980,  h: 640, bare: true },
 };
 const ORDER = ['about', 'resume', 'certificates', 'projects', '7hhep', 'contact'];   // KPC GAME lives inside Projects
 const ROUTES = ['index', 'lab', 'os', ...ORDER, 'arcade'];
@@ -65,7 +65,11 @@ document.addEventListener('pointermove', e => {
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-copy]'); if (!b) return;
   e.preventDefault(); e.stopPropagation();
-  try { await navigator.clipboard.writeText(b.dataset.copy); toast('COPIED TO CLIPBOARD'); } catch (_) { toast(b.dataset.copy); }
+  try {
+    await navigator.clipboard.writeText(b.dataset.copy); toast('COPIED TO CLIPBOARD');
+    const lbl = [...b.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+    if (lbl) { b.dataset.label = b.dataset.label || lbl.textContent; lbl.textContent = 'COPIED'; b.classList.add('copied'); clearTimeout(b._copyT); b._copyT = setTimeout(() => { lbl.textContent = b.dataset.label; b.classList.remove('copied'); }, 1600); }
+  } catch (_) { toast(b.dataset.copy); }
 });
 
 /* =======================================================================
@@ -589,7 +593,9 @@ const OS = (() => {
     el.innerHTML = `<header class="win-bar"><svg class="i"><use href="#${app.icon}"/></svg><h2 class="win-title" id="wt-${k}">${app.title}</h2><span class="win-path">${app.path || 'KMP://' + k.toUpperCase()}</span><div class="win-ctl"><button type="button" data-act="min" aria-label="Minimize ${app.title}"><svg class="i"><use href="#i-min"/></svg></button><button type="button" data-act="max" aria-label="Maximize ${app.title}"><svg class="i"><use href="#i-max"/></svg></button><button type="button" data-act="close" aria-label="Close ${app.title}"><svg class="i"><use href="#i-close"/></svg></button></div></header><div class="win-body" tabindex="-1"><i class="win-progress"></i></div>` + ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'].map(d => `<i class="win-rs" data-rs="${d}" aria-hidden="true"></i>`).join('');
     const body = el.querySelector('.win-body');
     body.append(tpl.content.cloneNode(true));
-    if (k !== 'arcade' && !app.bare) body.insertAdjacentHTML('beforeend', `<div class="pg"><footer class="pg-foot"><div><b>KLUIVERT<span>.</span></b><div style="margin-top:8px">© 2026 Kluivert Manuel Peralta Carrera</div></div><div style="text-align:right">Personal Portfolio<br>Systems <em>•</em> Networks <em>•</em> Technology</div></footer></div>`);
+    if (app.bare) el.classList.add('bare');
+    const footHost = body.querySelector('.ax-main') || (app.bare ? null : body);   // app shells keep the footer inside their own scroller
+    if (k !== 'arcade' && footHost) footHost.insertAdjacentHTML('beforeend', `<div class="pg"><footer class="pg-foot"><div><b>KLUIVERT<span>.</span></b><div style="margin-top:8px">© 2026 Kluivert Manuel Peralta Carrera</div></div><div style="text-align:right">Personal Portfolio<br>Systems <em>•</em> Networks <em>•</em> Technology</div></footer></div>`);
     const area = winsEl.getBoundingClientRect();
     const w = Math.min(app.w, area.width - 40), h = Math.min(app.h, area.height - 40), off = (cascade++ % 6) * 28;
     el.style.width = w + 'px'; el.style.height = h + 'px';

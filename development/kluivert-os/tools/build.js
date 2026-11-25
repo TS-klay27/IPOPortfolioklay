@@ -48,7 +48,7 @@ const countDD = s => (s.match(/\$\$\(/g) || []).length;
 // ---------- 1. compose index.html ----------
 const stylesDir = path.join(SRC, 'site/styles');
 const styles = fs.readdirSync(stylesDir).filter(f => f.endsWith('.css')).sort().map(f => read('site/styles/' + f));
-if (styles.length !== 5) throw Error('expected 5 style files, found ' + styles.length);
+if (styles.length < 4) throw Error('expected the style files, found ' + styles.length);   // every file is included, in name order
 const hydrate = read('site/scripts/app-hydrate.js');
 const runtimeSrc = read('site/scripts/runtime.js');
 const runtime = inject(runtimeSrc, '%%HYDRATE%%', hydrate);
@@ -65,10 +65,7 @@ let html = `<!DOCTYPE html>
 <meta name="description" content="KLUIVERT — the interactive portfolio of Kluivert Manuel Peralta Carrera, IT Systems & Networks student. Step into Kian's Room and boot KLUIVERT OS.">
 <title>Kian's Room | KLUIVERT — Kluivert Peralta</title>
 <style>
-${styles[0]}
-${styles[1]}
-${styles[2]}
-${styles[3]}
+${styles.join('\n')}
 </style>
 </head>
 <body>

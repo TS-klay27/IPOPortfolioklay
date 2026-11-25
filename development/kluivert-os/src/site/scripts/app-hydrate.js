@@ -1,3 +1,17 @@
+    // App shells: side navigation scrolls the app's own content and follows the reading position.
+    const axEl = $('.ax', body);
+    if (axEl) {
+      const main = $('.ax-main', axEl), links = $$('[data-ax-go]', axEl), secs = links.map(l => $('#' + l.dataset.axGo, main)), prog = $('.win-progress', body); let spy = 0, hold = 0;
+      axEl.addEventListener('click', e => { const b = e.target.closest('[data-ax-go]'); if (!b) return; const s = $('#' + b.dataset.axGo, main); if (s) main.scrollTo({ top: Math.max(0, s.offsetTop - 8), behavior: reduced() ? 'auto' : 'smooth' }); hold = performance.now() + 1000; links.forEach(l => l.classList.toggle('on', l === b)); });   // the chosen section stays lit, even a short last one
+      main.addEventListener('scroll', () => {
+        if (spy) return; spy = requestAnimationFrame(() => {
+          spy = 0; const m = main.scrollHeight - main.clientHeight, y = main.scrollTop; prog.style.setProperty('--sp', m > 0 ? y / m : 0);
+          if (performance.now() < hold) return;
+          let cur = 0; secs.forEach((s, i) => { if (s && s.offsetTop - y < main.clientHeight * .35) cur = i; }); if (m > 0 && y >= m - 4) cur = secs.length - 1;
+          links.forEach((l, i) => l.classList.toggle('on', i === cur));
+        });
+      }, { passive: true });
+    }
     if (k === 'about') {
       const B = [
         ['i-compass', '01 / Growing through experience', 'My own path', [['Learn from my mistakes', "I've made decisions I would handle differently today. I believe that mistakes are part of growing up, and I try to learn from them instead of allowing them to define who I am."], ['Walk at my own pace', "I don't have everything figured out yet. Sometimes I question my direction, but I've learned that I don't need to follow someone else's path to make progress. I want to build a future that feels like my own."], ['Keep going when things get difficult', "Not everything works on the first attempt. Whether I'm struggling with an assignment or fixing a technical problem, I try different solutions, learn from what went wrong and keep moving forward."]]],
@@ -14,6 +28,7 @@
       toggles.forEach(b => b.addEventListener('click', () => { const key = b.dataset.cvToggle, open = b.getAttribute('aria-expanded') !== 'true'; toggles.forEach(t => set(t.dataset.cvToggle, open && t === b)); if (open) $('#cv-' + key, body).scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' }); }));
       $$('[data-cv-close]', body).forEach(b => b.addEventListener('click', () => { set(b.dataset.cvClose, false); toggles.find(t => t.dataset.cvToggle === b.dataset.cvClose).focus(); }));
       body.addEventListener('click', e => { const img = e.target.closest('.cv-pages img'); if (img) lightbox(img.src, img.alt); });
+      $$('[data-thumb]', body).forEach(im => { const src = $('#' + im.dataset.thumb + ' img[data-src]', body); if (src) im.src = src.dataset.src; });
     }
     if (k === 'certificates') {
       const C = [
@@ -30,16 +45,42 @@
         ['Introduction to Mobile Phone Repair', 'Hardware', '11_Introduction_to_Mobile_Phone_Repair.pdf', '%%IMG_CERT11%%'],
       ];
       const esc = s => s.replace(/&/g, '&amp;');
-      $('#cert-grid', body).innerHTML = C.map(([t, cat, f, img], i) => `<article class="card hov cert" data-cat="${esc(cat)}"><a class="cert-prev" href="pdfs/${f}" target="_blank" rel="noopener" aria-label="Open ${esc(t)} PDF"><img src="${img}" alt="Preview of ${esc(t)} certificate" loading="lazy" decoding="async"></a><div class="cert-body"><span class="cert-cat">${String(i + 1).padStart(2, '0')} / ${esc(cat)}</span><h3>${esc(t)}</h3><p>Institut Sa Palomera · June 2026</p><div class="cv-actions"><a class="btn primary" href="pdfs/${f}" target="_blank" rel="noopener">Open PDF <svg class="i"><use href="#i-ext"/></svg></a><a class="btn" href="pdfs/${f}" download="${f}"><svg class="i"><use href="#i-down"/></svg>Download</a></div></div></article>`).join('');
-      const cats = ['All', ...new Set(C.map(c => c[1]))];
-      const fl = $('#cert-filters', body);
-      fl.innerHTML = cats.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-f="${esc(c)}">${esc(c)}<span>${c === 'All' ? C.length : C.filter(x => x[1] === c).length}</span></button>`).join('');
-      fl.addEventListener('click', e => {
-        const b = e.target.closest('button'); if (!b) return; const f = b.dataset.f.replace(/&amp;/g, '&');
-        $$('button', fl).forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-        let shown = 0; $$('.cert', body).forEach(c => { const on = f === 'All' || c.dataset.cat.replace(/&amp;/g, '&') === f; c.classList.toggle('hidden', !on); shown += on; });
+      const COL = { Sustainability: '#8ff0bd', Systems: '#5ff3e6', Networks: '#7fdcff', 'AI & Productivity': '#c4adff', 'Microsoft Office': '#ffd58f', Hardware: '#ff9fb0' };
+      $('#cert-grid', body).innerHTML = C.map(([t, cat, f, img], i) => `<article class="card hov cert" data-cat="${esc(cat)}" data-i="${i}" data-f="${f}"><button class="cert-prev" type="button" aria-label="Preview ${esc(t)}"><img src="${img}" alt="Preview of ${esc(t)} certificate" loading="lazy" decoding="async"><span class="ce-num">${String(i + 1).padStart(2, '0')}</span><span class="ce-sw" style="--sw:${COL[cat]}"></span></button><div class="cert-body"><span class="cert-cat">${String(i + 1).padStart(2, '0')} / ${esc(cat)}</span><h3>${esc(t)}</h3><p>Institut Sa Palomera · June 2026</p><div class="cv-actions"><a class="btn primary" href="pdfs/${f}" target="_blank" rel="noopener">Open PDF <svg class="i"><use href="#i-ext"/></svg></a><a class="btn" href="pdfs/${f}" download="${f}"><svg class="i"><use href="#i-down"/></svg>Download</a></div></div></article>`).join('');
+      const cats = ['All', ...new Set(C.map(c => c[1]))], count = c => C.filter(x => x[1] === c).length;
+      const fl = $('#cert-filters', body), side = $('.ce-cats', body);
+      fl.innerHTML = cats.map((c, i) => `<button type="button" aria-pressed="${i === 0}" data-f="${esc(c)}">${esc(c)}<span>${c === 'All' ? C.length : count(c)}</span></button>`).join('');
+      side.innerHTML = cats.slice(1).map(c => `<button type="button" data-f="${esc(c)}"><i class="sw" style="--sw:${COL[c]}"></i><span class="lb">${esc(c)}</span><b>${count(c)}</b></button>`).join('');
+      $('#ce-total', body).textContent = C.length;
+      $('#ce-bar', body).innerHTML = cats.slice(1).map((c, k) => `<i style="--n:${count(c)};--sw:${COL[c]};--k:${k}" title="${esc(c)}: ${count(c)}"></i>`).join('');
+      $('#ce-legend', body).innerHTML = cats.slice(1).map(c => `<span style="--sw:${COL[c]}">${esc(c)} · ${count(c)}</span>`).join('');
+      const filter = f => {
+        $$('button', fl).forEach(x => x.setAttribute('aria-pressed', String(x.dataset.f === f)));
+        $$('button', side).forEach(x => x.classList.toggle('on', x.dataset.f === f));
+        let shown = 0; $$('.cert', body).forEach(c => { const on = f === 'All' || c.dataset.cat === f; c.classList.toggle('hidden', !on); shown += on; });
         $('#cert-count', body).textContent = shown + (shown === 1 ? ' DOCUMENT' : ' DOCUMENTS');
-      });
+      };
+      fl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) filter(b.dataset.f); });
+      side.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const on = b.classList.contains('on'); filter(on ? 'All' : b.dataset.f); const main = $('.ax-main', body), g = $('#ce-gallery', body); main.scrollTo({ top: g.offsetTop - 8, behavior: reduced() ? 'auto' : 'smooth' }); });
+      // Viewer: a large preview with previous / next across the documents currently shown.
+      const view = start => {
+        const list = $$('.cert:not(.hidden)', body); let i = Math.max(0, list.indexOf(start));
+        const v = document.createElement('div'); v.className = 'cv-view'; v.setAttribute('role', 'dialog'); v.setAttribute('aria-modal', 'true'); v.setAttribute('aria-label', 'Certificate preview');
+        v.innerHTML = `<button class="nav" type="button" data-step="-1" aria-label="Previous certificate"><svg class="i"><use href="#i-back"/></svg></button><figure><img alt=""><figcaption><small></small><strong></strong><span class="acts"><a class="btn primary" target="_blank" rel="noopener">Open PDF <svg class="i"><use href="#i-ext"/></svg></a><a class="btn"><svg class="i"><use href="#i-down"/></svg>Download</a></span></figcaption></figure><button class="nav" type="button" data-step="1" aria-label="Next certificate"><svg class="i"><use href="#i-next"/></svg></button><button class="btn x" type="button">Close ×</button>`;
+        const img = $('img', v), small = $('small', v), strong = $('strong', v), [open, dl] = $$('.acts a', v);
+        if (list.length < 2) $$('.nav', v).forEach(n => { n.style.visibility = 'hidden'; });
+        const show = n => {
+          i = (n + list.length) % list.length; const c = list[i], src = $('.cert-prev img', c), f = c.dataset.f;
+          img.src = src.src; img.alt = src.alt; img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+          small.textContent = `${String(+c.dataset.i + 1).padStart(2, '0')} · ${c.dataset.cat.replace(/&amp;/g, '&')} · ${i + 1} / ${list.length}`; strong.textContent = $('h3', c).textContent;
+          open.href = dl.href = 'pdfs/' + f; dl.setAttribute('download', f);
+        };
+        const close = () => { v.remove(); document.removeEventListener('keydown', key, true); $('.cert-prev', list[i]).focus({ preventScroll: true }); };
+        const key = e => { if (e.key === 'Escape') { e.stopImmediatePropagation(); e.preventDefault(); close(); } else if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); show(i - 1); } };
+        v.addEventListener('click', e => { const s = e.target.closest('[data-step]'); if (s) show(i + +s.dataset.step); else if (e.target === v || e.target.closest('.x')) close(); });
+        document.addEventListener('keydown', key, true); document.body.append(v); show(i); $('.nav[data-step="1"]', v).focus({ preventScroll: true });
+      };
+      $('#cert-grid', body).addEventListener('click', e => { const p = e.target.closest('.cert-prev'); if (p) view(p.closest('.cert')); });
     }
     if (k === '7hhep') {
       // Every listener lives on nodes inside this window, so closing the window releases them all.
@@ -118,6 +159,10 @@
       });
       paint(0);
     }
+    if (k === 'contact') body.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="mailto:"],a[href^="tel:"]'), card = a && (a.closest('.ct-ch') || a.closest('.ct-cta')); if (!card) return;
+      card.classList.remove('firing'); void card.offsetWidth; card.classList.add('firing'); setTimeout(() => card.classList.remove('firing'), 950);
+    });
     if (k === 'projects') Arcade.prefetch();
     if (k === 'arcade') {
       const st = $('[data-arc-stage]', body);
