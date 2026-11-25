@@ -114,7 +114,7 @@ if (highlighted !== (mission.highlights || []).length) throw Error(`only ${highl
 // ---------- 3. inline images and fill content placeholders ----------
 const A = f => path.join(SRC, 'assets', f);
 const uri = (f, mime) => `data:${mime};base64,` + fs.readFileSync(A(f)).toString('base64');
-const images = { IMG_PORTRAIT: uri('portrait.jpg', 'image/jpeg'), IMG_CV1: uri('resume-1.jpg', 'image/jpeg'), IMG_CV2: uri('resume-2.jpg', 'image/jpeg'), IMG_CV3: uri('resume-3.jpg', 'image/jpeg') };
+const images = { IMG_PORTRAIT: uri('portrait.jpg', 'image/jpeg'), IMG_CV1: uri('resume-1.jpg', 'image/jpeg'), IMG_CV3: uri('resume-3.jpg', 'image/jpeg') };
 for (let i = 1; i <= 11; i++) images['IMG_CERT' + i] = uri(`certificates-${i}.webp`, 'image/webp');
 const tokens = { ...images, ...missionTokens };
 html = html.replace(/%%([A-Z0-9_]+)%%/g, (m, k) => { if (!(k in tokens)) throw Error('unknown placeholder ' + k); return tokens[k]; });
