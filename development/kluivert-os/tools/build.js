@@ -48,7 +48,7 @@ const countDD = s => (s.match(/\$\$\(/g) || []).length;
 // ---------- 1. compose index.html ----------
 const stylesDir = path.join(SRC, 'site/styles');
 const styles = fs.readdirSync(stylesDir).filter(f => f.endsWith('.css')).sort().map(f => read('site/styles/' + f));
-if (styles.length !== 4) throw Error('expected 4 style files, found ' + styles.length);
+if (styles.length !== 5) throw Error('expected 5 style files, found ' + styles.length);
 const hydrate = read('site/scripts/app-hydrate.js');
 const runtimeSrc = read('site/scripts/runtime.js');
 const runtime = inject(runtimeSrc, '%%HYDRATE%%', hydrate);
