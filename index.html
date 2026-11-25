@@ -212,7 +212,6 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stro
   radial-gradient(ellipse 60% 60% at 12% 88%,rgba(24,183,160,.07),transparent 65%),
   linear-gradient(160deg,#0A2328,var(--bg))}
 #os.on{opacity:1;visibility:visible;transition:opacity .45s var(--ease),visibility 0s}
-#os::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(42,199,201,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(42,199,201,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(180deg,#000,rgba(0,0,0,.4))}
 #os::after{content:"K";position:absolute;right:3.5vw;bottom:calc(var(--taskbar) + 2vh);font:800 min(32vw,38vh)/0.8 var(--display);letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px rgba(42,199,201,.06);pointer-events:none}
 .os-desk{position:absolute;inset:0 0 var(--taskbar);padding:clamp(20px,3vw,40px);display:flex;justify-content:space-between;gap:32px;z-index:1}
 .os-icons{display:grid;grid-auto-flow:column;grid-template-rows:repeat(auto-fill,108px);grid-auto-columns:100px;gap:6px 8px;align-content:start}
@@ -298,6 +297,99 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stro
 .interests li{display:flex;align-items:center;gap:14px;padding:14px 16px;font-size:14px;font-weight:500}
 .interests .ico-shell{width:40px;height:40px;border-radius:11px}
 .interests .ico-shell .i{width:19px;height:19px}
+
+/* =====================================================================
+   KLUIVERT OS — living desktop: window resizing, icon feedback,
+   ambient background and taskbar motion. Continuous motion (class "ambient") only plays on a visible desktop with no open windows.
+   Everything animated uses transform / opacity only; pointer effects need "alive"
+   (motion allowed and the desktop actually visible).
+   ===================================================================== */
+#os{--spring:cubic-bezier(.34,1.56,.64,1)}
+
+/* ---------- Ambient background (three parallax layers) ---------- */
+.os-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:opacity .6s var(--ease)}
+#os.covered .os-bg{opacity:.3}
+.os-bg-l{position:absolute;inset:-40px}
+#os.ambient .os-bg-l{will-change:transform}   /* own GPU layer: parallax never repaints the screen */
+.os-bg-grid{overflow:hidden}
+.os-bg-grid i{position:absolute;inset:-48px;background-image:linear-gradient(rgba(42,199,201,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(42,199,201,.04) 1px,transparent 1px);background-size:48px 48px}
+.os-bg-grid::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,color-mix(in srgb,var(--bg) 72%,transparent))}   /* fades the grid toward the taskbar */
+.os-bg-glow i{position:absolute;width:48vmax;height:48vmax;border-radius:50%;background:radial-gradient(closest-side,rgba(42,199,201,.11),transparent);opacity:.7}
+.os-bg-glow i:first-child{left:50%;top:-16%}
+.os-bg-glow i:last-child{left:-14%;top:50%;background:radial-gradient(closest-side,rgba(24,183,160,.09),transparent)}
+.os-bg-motes i{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);border-radius:50%;background:#bffcf6;box-shadow:0 0 6px rgba(95,243,230,.55);opacity:0}
+#os.ambient .os-bg-grid i{animation:os-grid 16s linear infinite}
+#os.ambient .os-bg-glow i{animation:os-pulse 10s ease-in-out infinite alternate}
+#os.ambient .os-bg-glow i:last-child{animation-delay:-5s}
+#os.ambient .os-bg-motes i{animation:os-mote var(--t) ease-in-out var(--d) infinite}
+#os.covered .os-bg *,#os.covered .os-icon .glyph{animation-play-state:paused!important}
+@keyframes os-grid{to{transform:translate3d(48px,48px,0)}}
+@keyframes os-pulse{from{opacity:.45;transform:translate3d(0,0,0) scale(.92)}to{opacity:1;transform:translate3d(3vmax,2vmax,0) scale(1.06)}}
+@keyframes os-mote{0%,100%{opacity:0;transform:translate3d(0,0,0)}50%{opacity:.5;transform:translate3d(var(--dx),-70px,0)}}
+
+/* ---------- Desktop icons ---------- */
+.os-icons{position:relative;z-index:2}
+.os-icon{position:relative;transform-origin:50% 60%}
+.os-icon .glyph{transform:perspective(360px) translate3d(var(--mx,0px),calc(var(--my,0px) + var(--lift,0px)),0) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .35s var(--ease),scale .4s var(--spring),box-shadow var(--t2),border-color var(--t2)}
+.os-icon:hover .glyph,.os-icon:focus-visible .glyph{--lift:-4px;scale:1.07;transform:perspective(360px) translate3d(var(--mx,0px),calc(var(--my,0px) + var(--lift,0px)),0) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+#os.ambient .os-icon .glyph{animation:os-float var(--ft,5s) ease-in-out var(--fd,0s) infinite alternate}
+@keyframes os-float{from{translate:0 1.5px}to{translate:0 -2.5px}}
+.os-icon.tap{animation:os-tap .5s var(--spring)}
+@keyframes os-tap{0%{scale:1}30%{scale:.88}65%{scale:1.05}100%{scale:1}}
+.os-icon.sel{background:rgba(42,199,201,.08);border-color:rgba(42,199,201,.3)}
+.os-icon.sel .glyph{border-color:rgba(95,243,230,.7);box-shadow:inset 0 1px 0 rgba(200,255,248,.1),inset 0 0 18px rgba(42,199,201,.16),0 12px 26px rgba(0,0,0,.4),0 0 26px rgba(42,199,201,.32)}
+.os-icon::after{content:"";position:absolute;left:50%;bottom:2px;width:0;height:3px;border-radius:3px;background:var(--accent-2);box-shadow:0 0 8px rgba(42,199,201,.6);transform:translateX(-50%);opacity:0;transition:width .35s var(--spring),opacity .25s}
+.os-icon.open::after{width:14px;opacity:1}
+.os-icon.phys{will-change:transform}
+#os.idle .os-icon .glyph{animation:none}
+
+/* ---------- Taskbar ---------- */
+.task{transition:background var(--t2),color var(--t2),border-color var(--t2),transform .25s var(--ease)}
+.task:hover{transform:translateY(-2px)}
+.task:active,.os-start:active{transform:scale(.95)}
+.task::after{transition:width .35s var(--spring),background var(--t2),opacity var(--t2)}
+.task.min{color:var(--faint)}
+.task.min::after{width:6px;background:var(--accent-2);opacity:.45}
+.task.new{animation:task-in .4s var(--spring)}
+.task.flash{animation:task-flash .55s var(--ease)}
+@keyframes task-in{from{opacity:0;transform:translateY(10px) scale(.9)}}
+@keyframes task-flash{30%{box-shadow:0 0 0 3px rgba(95,243,230,.28),0 0 18px rgba(42,199,201,.35)}}
+.os-start{transition:border-color var(--t2),box-shadow var(--t2),transform .2s var(--spring)}
+.os-menu [data-motion] b{margin-left:auto;font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--accent-2)}
+
+/* ---------- Windows: resize handles and states ---------- */
+.win-rs{position:absolute;z-index:6;touch-action:none}
+.win-rs[data-rs="n"]{top:0;left:14px;right:14px;height:6px;cursor:ns-resize}
+.win-rs[data-rs="s"]{bottom:0;left:14px;right:14px;height:7px;cursor:ns-resize}
+.win-rs[data-rs="e"]{right:0;top:14px;bottom:14px;width:7px;cursor:ew-resize}
+.win-rs[data-rs="w"]{left:0;top:14px;bottom:14px;width:7px;cursor:ew-resize}
+.win-rs[data-rs="nw"]{left:0;top:0;width:14px;height:14px;cursor:nwse-resize}
+.win-rs[data-rs="se"]{right:0;bottom:0;width:16px;height:16px;cursor:nwse-resize}
+.win-rs[data-rs="ne"]{right:0;top:0;width:14px;height:14px;cursor:nesw-resize}
+.win-rs[data-rs="sw"]{left:0;bottom:0;width:16px;height:16px;cursor:nesw-resize}
+.win-rs[data-rs="se"]::after{content:"";position:absolute;right:4px;bottom:4px;width:7px;height:7px;border-right:2px solid rgba(95,243,230,.35);border-bottom:2px solid rgba(95,243,230,.35);border-radius:0 0 3px 0;opacity:0;transition:opacity var(--t2)}
+.win:hover .win-rs[data-rs="se"]::after{opacity:1}
+.win.max .win-rs,.win.min .win-rs{display:none}
+.win.resizing{transition:none;user-select:none}
+.win.resizing iframe,.win.dragging iframe{pointer-events:none}
+.win.dragging{user-select:none}
+.win.flying{pointer-events:none}
+
+@media (max-width:820px){
+  .win-rs{display:none}
+  .os-bg-motes{display:none}
+}
+
+/* The system asks for less motion, but the visitor switched "Living desktop" on in the K menu. */
+@media (prefers-reduced-motion:reduce){
+  #os.ambient .os-bg-grid i{animation-duration:16s!important;animation-iteration-count:infinite!important}
+  #os.ambient .os-bg-glow i{animation-duration:10s!important;animation-iteration-count:infinite!important}
+  #os.ambient .os-bg-motes i{animation-duration:var(--t)!important;animation-iteration-count:infinite!important}
+  #os.ambient .os-icon .glyph{animation-duration:var(--ft,5s)!important;animation-iteration-count:infinite!important;transition-duration:.35s!important}
+  #os.alive .os-icon.tap{animation-duration:.5s!important}
+  #os.alive .os-icon::after,#os.alive .task,#os.alive .task::after{transition-duration:.3s!important}
+  #os.alive .task.new,#os.alive .task.flash{animation-duration:.45s!important}
+}
 
 /* =====================================================================
    04 · PAGE CONTENT (inside windows)
@@ -883,90 +975,6 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stro
 .pg-head h1,.h2,.statement{letter-spacing:-.035em}
 .card{border-radius:var(--r-lg)}
 
-/* Projects — KPC GAME feature (large, playable preview) */
-.feature{grid-template-columns:1.2fr 1fr}
-.kpc-vis{all:unset;box-sizing:border-box;position:relative;display:block;min-height:480px;overflow:hidden;cursor:pointer;border-right:1px solid var(--line);background:radial-gradient(ellipse 70% 60% at 50% 45%,#16474e,#0a2429 60%,#061a1e);perspective:1200px}
-.kpc-vis:focus-visible{outline:2px solid var(--accent-2);outline-offset:-4px}
-.kpc-floor{position:absolute;inset:-30% -20% 0;background-image:linear-gradient(rgba(42,199,201,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(42,199,201,.12) 1px,transparent 1px);background-size:44px 44px;transform:perspective(600px) rotateX(62deg);transform-origin:50% 100%}
-.kpc-floor::after{content:"";position:absolute;inset:0;background:linear-gradient(#0a2429,rgba(10,36,41,0) 45%)}
-.kpc-tiles{display:grid;grid-template-columns:repeat(5,52px);gap:6px}   /* one flat layer instead of 25 */
-.kpc-board{position:absolute;left:50%;top:48%;display:block;transform:translate(-50%,-50%) rotateX(56deg) rotateZ(45deg);transform-style:preserve-3d;transition:transform 1.1s var(--ease)}
-.kpc-vis:hover .kpc-board{transform:translate(-50%,-52%) rotateX(54deg) rotateZ(54deg)}
-.kpc-board i{height:52px;border-radius:7px;background:linear-gradient(145deg,#3a6c72,#1f4a50);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 7px 0 #0c2a2f,0 16px 22px rgba(0,0,0,.35)}
-.kpc-board i.c{background:linear-gradient(145deg,#4fe6e2,#1aa7aa);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),0 7px 0 #0e5b5c,0 0 24px rgba(42,199,201,.45)}
-.kpc-board i.a{background:linear-gradient(145deg,#ffc27e,#e48a3f);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25),0 7px 0 #7a4519,0 0 20px rgba(255,170,90,.3)}
-.kpc-board i.d{background:linear-gradient(145deg,#4f7dff,#2a4fd0);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 7px 0 #1a2d78}
-.kpc-board i.o{background:linear-gradient(145deg,#ffa25c,#d86a2c);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 7px 0 #6e3413}
-.kpc-board i.g{background:radial-gradient(circle,#ff7ad1 0 22%,#2a1640 24% 40%,#ff7ad1 42% 48%,#1f4a50 50%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),0 7px 0 #0c2a2f,0 0 26px rgba(255,122,209,.5)}
-.kpc-board i.e{visibility:hidden}
-.kpc-block{position:absolute;left:0;top:0;width:52px;height:52px;transform:translate(58px,116px);transform-style:preserve-3d;transition:transform .9s var(--ease)}
-.kpc-vis:hover .kpc-block{transform:translate(58px,58px)}
-.kpc-block b{position:absolute;left:0;top:0;width:52px;height:52px}
-.kpc-block .tp{transform:translateZ(104px);background:linear-gradient(145deg,#8ff5e9,#2AC7C9);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4),0 0 30px rgba(42,199,201,.6)}
-.kpc-block .s{height:104px;transform-origin:top;transform:translateY(52px) rotateX(90deg);background:linear-gradient(#18B7A0,#0c6f62)}
-.kpc-block .ea{width:104px;transform-origin:left;transform:translateX(52px) rotateY(-90deg);background:linear-gradient(90deg,#0f8f80,#075048)}
-.kpc-hud{position:absolute;left:20px;right:20px;top:18px;display:flex;justify-content:space-between;font:500 10px/1 var(--mono);letter-spacing:.16em;color:var(--muted)}
-.kpc-hud span{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;border:1px solid var(--line);background:rgba(7,26,31,.6)}
-.kpc-play{position:absolute;left:50%;top:50%;display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font:700 13px/1 var(--mono);letter-spacing:.2em;box-shadow:0 18px 40px rgba(0,0,0,.4),0 0 40px rgba(24,183,160,.35);transform:translate(-50%,-50%) scale(.9);opacity:0;transition:opacity .3s var(--ease),transform .4s var(--ease)}
-.kpc-vis:hover .kpc-play,.kpc-vis:focus-visible .kpc-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
-.kpc-cap{position:absolute;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;font:500 10px/1 var(--mono);letter-spacing:.16em;color:var(--muted)}
-.kpc-cap strong{color:var(--accent-2);font-weight:600}
-.feature-copy .h2{font-size:clamp(34px,3.8vw,52px)}
-.kpc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 14px}
-.kpc-stats div{padding:12px;border-radius:10px;border:1px solid var(--line);background:rgba(7,26,31,.5)}
-.kpc-stats b{display:block;font:700 20px/1 var(--display);color:var(--accent-2)}
-.kpc-stats span{display:block;margin-top:6px;font:500 9.5px/1.2 var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
-.kpc-zones{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.kpc-zones span{padding:6px 10px;border-radius:999px;border:1px solid var(--line-2);font:500 11px/1 var(--sans);color:#bfe0dd}
-.kpc-cta{--h:48px;padding:0 22px;font-size:12.5px}
-@media (prefers-reduced-motion:reduce){.kpc-play{opacity:1;transform:translate(-50%,-50%)}}
-
-/* Lightbox */
-.lightbox{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:clamp(12px,4vw,48px);background:rgba(3,12,15,.9);animation:fade .25s}
-.lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:var(--e3);background:#fff}
-.lightbox button{position:absolute;right:16px;top:16px}
-
-/* =====================================================================
-   RESPONSIVE
-   ===================================================================== */
-@media (max-width:1100px){
-  .os-widget{width:270px}
-  .feature{grid-template-columns:1fr}.kpc-vis{min-height:400px;border-right:0;border-bottom:1px solid var(--line)}
-}
-@media (max-width:820px){
-  #intro{overflow-y:auto}
-  .in-main{grid-template-columns:1fr;align-content:start;padding:28px 0}
-  .showcase{max-height:none;aspect-ratio:1.3/1;justify-self:stretch}
-  .in-hide{display:none}
-  .in-foot{flex-wrap:wrap;gap:8px 18px;letter-spacing:.14em}
-  .r-id{display:none}
-  .os-desk{flex-direction:column;justify-content:flex-start;overflow-y:auto;gap:20px}
-  .os-icons{grid-auto-flow:row;grid-template-rows:none;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));width:100%}
-  .os-widget{width:100%;order:-1}
-  .os-widget .panel:nth-child(n+3){display:none}
-  .wg-clock{font-size:40px}
-  .win,.win.max{left:0!important;top:0!important;width:100%!important;height:100%!important;border-radius:0;border-width:0;min-width:0}
-  .win-bar{cursor:default}
-  .win-ctl button[data-act="max"]{display:none}
-  .os-tray .label{display:none}
-  .about-grid,.cv-docs,.resume-grid,.map,.contact-grid{grid-template-columns:1fr}
-  .profile{max-width:420px}
-  .focus{grid-template-columns:1fr 1fr 1fr;gap:8px}
-  .focus .card{padding:14px 12px}
-  .arc-top .status-l{text-align:left}
-}
-@media (max-width:520px){
-  .focus{grid-template-columns:1fr}
-  .os-tray .clock{display:none}
-  .wg-who img{width:46px;height:46px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
-  .rv{opacity:1;transform:none}
-  .lt,.in-title,.in-entry,.showcase{opacity:1;transform:none;filter:none}
-}
-@media (max-width:520px){ .in-name{font-size:clamp(34px,11vw,52px)} .in-mark small{display:none} }
-
 </style>
 </head>
 <body>
@@ -985,6 +993,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stro
  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
  <symbol id="i-min" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
  <symbol id="i-max" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="1.5"/></symbol>
+ <symbol id="i-restore" viewBox="0 0 24 24"><rect x="5" y="8.5" width="10.5" height="10.5" rx="1.5"/><path d="M8.5 8.5V6.5A1.5 1.5 0 0 1 10 5h7.5A1.5 1.5 0 0 1 19 6.5V14a1.5 1.5 0 0 1-1.5 1.5h-2"/></symbol>
  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
@@ -1097,6 +1106,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stro
 
 <!-- ============ KLUIVERT OS ============ -->
 <section id="os" class="screen" aria-label="KLUIVERT OS" aria-hidden="true">
+  <div class="os-bg" aria-hidden="true"><div class="os-bg-l os-bg-grid"><i></i></div><div class="os-bg-l os-bg-glow"><i></i><i></i></div><div class="os-bg-l os-bg-motes"></div></div>
   <div class="os-desk">
     <nav class="os-icons" aria-label="KLUIVERT OS applications" id="os-icons"></nav>
     <aside class="os-widget" aria-label="System widgets">
@@ -1870,6 +1880,17 @@ const ROUTES = ['index', 'lab', 'os', ...ORDER, 'arcade'];
 /* ---------- Small UI helpers ---------- */
 let toastT = 0;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800); }
+const Motion = (() => {
+  let pref = 'auto'; try { pref = localStorage.getItem('kos-motion') || 'auto'; } catch (_) {}
+  const subs = new Set(), notify = () => subs.forEach(f => f());
+  RM.addEventListener('change', notify);
+  return {
+    get pref() { return pref; },
+    on: () => pref === 'on' || (pref === 'auto' && !reduced()),
+    set(p) { pref = p; try { localStorage.setItem('kos-motion', p); } catch (_) {} notify(); },
+    sub: f => subs.add(f)
+  };
+})();
 let spotEl = null, spotX = 0, spotY = 0, spotRaf = 0;   // at most one update per frame
 document.addEventListener('pointermove', e => {
   if (e.pointerType === 'touch') return;
@@ -2296,11 +2317,17 @@ const OS = (() => {
     + `<button class="os-icon" type="button" data-route="lab" style="--i:${ORDER.length}"><span class="glyph"><svg class="i"><use href="#i-room"/></svg></span>Kian's Room</button>`;
   menu.innerHTML = `<header><strong>KLUIVERT OS</strong><span>v2.0 · PERSONAL ENVIRONMENT</span></header>`
     + ORDER.map(k => `<button type="button" role="menuitem" data-route="${k}"><svg class="i"><use href="#${APPS[k].icon}"/></svg>${APPS[k].title}</button>`).join('')
+    + `<hr><button type="button" role="menuitem" data-motion title="Animated desktop and playful idle icons. Auto follows your system's reduce-motion setting."><svg class="i"><use href="#i-spark"/></svg>Living desktop<b></b></button>`
     + `<hr><button type="button" role="menuitem" data-route="lab"><svg class="i"><use href="#i-room"/></svg>Leave desk · Kian's Room</button>`;
   function toggleMenu(force) { const show = force ?? menu.hidden; menu.hidden = !show; startBtn.setAttribute('aria-expanded', String(show)); if (show) menu.querySelector('button').focus(); }
   startBtn.addEventListener('click', e => { e.stopPropagation(); toggleMenu(); });
   document.addEventListener('click', e => { if (!menu.hidden && !e.target.closest('#os-menu,#os-start')) toggleMenu(false); });
-  menu.addEventListener('click', () => toggleMenu(false));
+  const motionLabel = () => { menu.querySelector('[data-motion] b').textContent = { auto: Motion.on() ? 'AUTO · ON' : 'AUTO · OFF', on: 'ON', off: 'OFF' }[Motion.pref]; };
+  motionLabel(); Motion.sub(motionLabel);
+  menu.addEventListener('click', e => {
+    if (e.target.closest('[data-motion]')) { const o = ['auto', 'on', 'off']; Motion.set(o[(o.indexOf(Motion.pref) + 1) % 3]); toast('Living desktop: ' + menu.querySelector('[data-motion] b').textContent); }
+    toggleMenu(false);
+  });
 
   function tick() {
     const d = new Date(), t = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
@@ -2323,13 +2350,14 @@ const OS = (() => {
       Room.pause();
       if (!Boot.el.hidden) await Boot.hide();
       coverT = setTimeout(() => { if (isOpen) roomEl.classList.add('os-covered'); }, reduced() ? 40 : 520);
+      Desk.active(true);
     })();
     await opening; opening = null;
   }
   async function close() {
     if (!isOpen) return; if (opening) await opening;
     clearTimeout(coverT); roomEl.classList.remove('os-covered');
-    isOpen = false; toggleMenu(false);
+    isOpen = false; toggleMenu(false); Desk.active(false);
     [...wins.keys()].forEach(k => destroy(k, true));
     osEl.classList.remove('on'); osEl.setAttribute('aria-hidden', 'true');
     roomEl.classList.remove('os-open'); view.classList.remove('entering');
@@ -2340,19 +2368,47 @@ const OS = (() => {
 
   /* ---- Windows ---- */
   function topApp() { let best = null, bz = -1; wins.forEach((w, k) => { if (!w.el.classList.contains('min') && +w.el.style.zIndex > bz) { bz = +w.el.style.zIndex; best = k; } }); return best; }
+  const taskBtn = k => runEl.querySelector(`[data-task="${k}"]`);
   function renderTasks() {
     const act = topApp();
-    runEl.innerHTML = [...wins.keys()].map(k => `<button class="task${k === act ? ' active' : ''}" type="button" data-task="${k}"><svg class="i"><use href="#${APPS[k].icon}"/></svg>${APPS[k].title}</button>`).join('');
-    wins.forEach((w, k) => w.el.classList.toggle('active', k === act));
+    [...runEl.children].forEach(b => { if (!wins.has(b.dataset.task)) b.remove(); });
+    wins.forEach((w, k) => {
+      let b = taskBtn(k);
+      if (!b) { b = document.createElement('button'); b.className = 'task new'; b.type = 'button'; b.dataset.task = k; b.innerHTML = `<svg class="i"><use href="#${APPS[k].icon}"/></svg>${APPS[k].title}`; b.addEventListener('animationend', () => b.classList.remove('new', 'flash')); runEl.append(b); }
+      b.classList.toggle('active', k === act); b.classList.toggle('min', w.el.classList.contains('min'));
+      w.el.classList.toggle('active', k === act);
+    });
+    $$('#os-icons .os-icon').forEach(i => i.classList.toggle('open', wins.has(i.dataset.route)));
+    let cover = false; wins.forEach(w => { if (w.el.classList.contains('max') && !w.el.classList.contains('min')) cover = true; });
+    osEl.classList.toggle('covered', cover);   // a maximized window hides the desktop
+    let shown = 0; wins.forEach(w => { if (!w.el.classList.contains('min')) shown++; });
+    Desk.windows(shown);   // continuous background motion only plays on an empty desktop
+  }
+  const flash = k => { const b = taskBtn(k); if (b) { b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); } };
+  // Animates a window between its own box and another box (a taskbar button or a desktop icon).
+  function fly(el, box, toBox, ms) {
+    const a = el.getBoundingClientRect(); if (!a.width || !box.width) return null;
+    const far = { transformOrigin: '0 0', opacity: .15, transform: `translate(${box.left - a.left}px,${box.top - a.top}px) scale(${box.width / a.width},${box.height / a.height})` }, home = { transformOrigin: '0 0', opacity: 1, transform: 'none' };
+    return el.animate(toBox ? [home, far] : [far, home], { duration: ms, easing: toBox ? 'cubic-bezier(.4,0,.7,.2)' : 'cubic-bezier(.2,.8,.2,1)' });
   }
   runEl.addEventListener('click', e => {
     const b = e.target.closest('[data-task]'); if (!b) return; const k = b.dataset.task, w = wins.get(k);
-    if (w.el.classList.contains('min')) { w.el.classList.remove('min'); focus(k); Router.set(k, true); }
+    if (w.el.classList.contains('min')) { focus(k); Router.set(k, true); }
     else if (k === topApp()) minimize(k);
-    else { focus(k); Router.set(k, true); }
+    else { focus(k); Router.set(k, true); flash(k); }
   });
-  function focus(k) { const w = wins.get(k); if (!w) return; w.el.style.zIndex = ++z; w.el.classList.remove('min'); renderTasks(); }
-  function minimize(k) { const w = wins.get(k); if (!w) return; w.el.classList.add('min'); renderTasks(); Router.set(topApp() || 'os', true); }
+  function focus(k) {
+    const w = wins.get(k); if (!w) return; const wasMin = w.el.classList.contains('min');
+    w.el.style.zIndex = ++z; w.el.classList.remove('min'); renderTasks();
+    if (wasMin) { flash(k); const b = taskBtn(k); if (b && Motion.on()) fly(w.el, b.getBoundingClientRect(), false, 280); }
+  }
+  function minimize(k) {
+    const w = wins.get(k); if (!w || w.el.classList.contains('min') || w.el.classList.contains('flying')) return;
+    const done = () => { w.el.classList.remove('flying'); w.el.classList.add('min'); renderTasks(); flash(k); Router.set(topApp() || 'os', true); };
+    const b = taskBtn(k), an = b && Motion.on() ? fly(w.el, b.getBoundingClientRect(), true, 240) : null;
+    if (!an) return done();
+    w.el.classList.add('flying'); an.onfinish = done;
+  }
   function destroy(k, silent) {
     const w = wins.get(k); if (!w) return; wins.delete(k);
     const iframe = w.el.querySelector('iframe'); if (iframe) iframe.src = 'about:blank';
@@ -2360,11 +2416,13 @@ const OS = (() => {
     renderTasks();
     if (!silent) { const t = topApp(); Router.set(t || 'os', true); if (t) focus(t); }
   }
+  let launch = null;   // the desktop icon that was just clicked, so its window can grow out of it
+  document.addEventListener('click', e => { const i = e.target.closest && e.target.closest('#os-icons .os-icon'); if (i) launch = { k: i.dataset.route, box: i.querySelector('.glyph').getBoundingClientRect(), t: performance.now() }; }, true);
   function create(k) {
     const app = APPS[k], tpl = $('#tpl-' + k);
     const el = document.createElement('article'); el.className = 'win'; el.dataset.app = k;
     el.setAttribute('role', 'dialog'); el.setAttribute('aria-labelledby', 'wt-' + k);
-    el.innerHTML = `<header class="win-bar"><svg class="i"><use href="#${app.icon}"/></svg><h2 class="win-title" id="wt-${k}">${app.title}</h2><span class="win-path">${app.path || 'KMP://' + k.toUpperCase()}</span><div class="win-ctl"><button type="button" data-act="min" aria-label="Minimize ${app.title}"><svg class="i"><use href="#i-min"/></svg></button><button type="button" data-act="max" aria-label="Maximize ${app.title}"><svg class="i"><use href="#i-max"/></svg></button><button type="button" data-act="close" aria-label="Close ${app.title}"><svg class="i"><use href="#i-close"/></svg></button></div></header><div class="win-body" tabindex="-1"><i class="win-progress"></i></div>`;
+    el.innerHTML = `<header class="win-bar"><svg class="i"><use href="#${app.icon}"/></svg><h2 class="win-title" id="wt-${k}">${app.title}</h2><span class="win-path">${app.path || 'KMP://' + k.toUpperCase()}</span><div class="win-ctl"><button type="button" data-act="min" aria-label="Minimize ${app.title}"><svg class="i"><use href="#i-min"/></svg></button><button type="button" data-act="max" aria-label="Maximize ${app.title}"><svg class="i"><use href="#i-max"/></svg></button><button type="button" data-act="close" aria-label="Close ${app.title}"><svg class="i"><use href="#i-close"/></svg></button></div></header><div class="win-body" tabindex="-1"><i class="win-progress"></i></div>` + ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw'].map(d => `<i class="win-rs" data-rs="${d}" aria-hidden="true"></i>`).join('');
     const body = el.querySelector('.win-body');
     body.append(tpl.content.cloneNode(true));
     if (k !== 'arcade' && !app.bare) body.insertAdjacentHTML('beforeend', `<div class="pg"><footer class="pg-foot"><div><b>KLUIVERT<span>.</span></b><div style="margin-top:8px">© 2026 Kluivert Manuel Peralta Carrera</div></div><div style="text-align:right">Personal Portfolio<br>Systems <em>•</em> Networks <em>•</em> Technology</div></footer></div>`);
@@ -2374,8 +2432,10 @@ const OS = (() => {
     el.style.left = clamp((area.width - w) / 2 + off - 60, 10, Math.max(10, area.width - w - 10)) + 'px';
     el.style.top = clamp((area.height - h) / 2 + off - 40, 10, Math.max(10, area.height - h - 10)) + 'px';
     if (isSmall() || area.width < 400) el.dataset.fit = '1';   // opened full-screen: take the normal size when the screen grows
+    const from = launch && launch.k === k && performance.now() - launch.t < 1500 && Motion.on() ? launch.box : null; launch = null;
     winsEl.append(el); wins.set(k, { el });
     wire(el, k); hydrate(k, body);
+    if (from) fly(el, from, false, 340);
   }
   // Keep windows usable when the screen size changes (e.g. a phone rotated, or a browser window widened).
   function fitWindows() {
@@ -2384,9 +2444,9 @@ const OS = (() => {
       if (el.classList.contains('max')) return;
       let w = el.offsetWidth, h = el.offsetHeight, l = el.offsetLeft, t = el.offsetTop;
       if (el.dataset.fit) { w = Math.min(APPS[k].w, area.width - 40); h = Math.min(APPS[k].h, area.height - 40); l = (area.width - w) / 2; t = (area.height - h) / 2; delete el.dataset.fit; }
-      else { w = Math.min(w, area.width - 20); h = Math.min(h, area.height - 20); }
+      else { w = Math.min(w, area.width); h = Math.min(h, area.height); }
       el.style.width = w + 'px'; el.style.height = h + 'px';
-      el.style.left = clamp(l, 10, Math.max(10, area.width - w - 10)) + 'px'; el.style.top = clamp(t, 10, Math.max(10, area.height - h - 10)) + 'px';
+      el.style.left = clamp(l, 0, Math.max(0, area.width - w)) + 'px'; el.style.top = clamp(t, 0, Math.max(0, area.height - h)) + 'px';
     });
   }
   let fitT = 0; addEventListener('resize', () => { clearTimeout(fitT); fitT = setTimeout(fitWindows, 150); });
@@ -2400,16 +2460,62 @@ const OS = (() => {
   function wire(el, k) {
     const bar = el.querySelector('.win-bar'), body = el.querySelector('.win-body');
     el.addEventListener('pointerdown', () => { if (k !== topApp()) { focus(k); Router.set(k, true); } }, true);
+    const maxBtn = el.querySelector('[data-act="max"]'), maxUse = maxBtn.querySelector('use'), title = APPS[k].title;
+    function setMax(on, animate = true) {
+      if (on === el.classList.contains('max') || (on && isSmall())) return;
+      const first = el.getBoundingClientRect();
+      el.classList.toggle('max', on); renderTasks();
+      maxUse.setAttribute('href', on ? '#i-restore' : '#i-max'); maxBtn.setAttribute('aria-label', (on ? 'Restore ' : 'Maximize ') + title);
+      if (animate && Motion.on()) fly(el, first, false, 260);   // restore returns to the size and place saved in left/top/width/height
+    }
     el.querySelector('.win-ctl').addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return; const a = b.dataset.act;
-      if (a === 'close') destroy(k); else if (a === 'min') minimize(k); else if (a === 'max') el.classList.toggle('max');
+      if (a === 'close') destroy(k); else if (a === 'min') minimize(k); else if (a === 'max') setMax(!el.classList.contains('max'));
     });
-    bar.addEventListener('dblclick', e => { if (!e.target.closest('button') && !isSmall()) el.classList.toggle('max'); });
-    let d = null, dragRaf = 0, nx = 0, ny = 0;   // dragging moves a compositor layer; left/top are written on release
-    const paintDrag = () => { dragRaf = 0; if (d) el.style.transform = `translate3d(${nx - d.l}px,${ny - d.t}px,0)`; };
-    bar.addEventListener('pointerdown', e => { if (e.button !== 0 || e.target.closest('button') || isSmall() || el.classList.contains('max')) return; const area = winsEl.getBoundingClientRect(); d = { x: e.clientX, y: e.clientY, l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, aw: area.width, ah: area.height }; nx = d.l; ny = d.t; el.classList.add('dragging'); bar.setPointerCapture(e.pointerId); });
-    bar.addEventListener('pointermove', e => { if (!d) return; nx = clamp(d.l + e.clientX - d.x, -d.w + 120, d.aw - 120); ny = clamp(d.t + e.clientY - d.y, 0, d.ah - 46); if (!dragRaf) dragRaf = requestAnimationFrame(paintDrag); });
-    ['pointerup', 'pointercancel'].forEach(ev => bar.addEventListener(ev, () => { if (!d) return; cancelAnimationFrame(dragRaf); dragRaf = 0; el.style.left = nx + 'px'; el.style.top = ny + 'px'; el.style.transform = ''; el.classList.remove('dragging'); d = null; }));
+    bar.addEventListener('dblclick', e => { if (!e.target.closest('button')) setMax(!el.classList.contains('max')); });
+    // Dragging moves a compositor layer and stays inside the desktop; left/top are written on release.
+    let d = null, dragRaf = 0, nx = 0, ny = 0;
+    const paintDrag = () => { dragRaf = 0; if (d && !d.fromMax) el.style.transform = `translate3d(${nx - d.l}px,${ny - d.t}px,0)`; };
+    const startDrag = (x, y, area) => { d = { x, y, l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight, aw: area.width, ah: area.height }; nx = d.l; ny = d.t; el.classList.add('dragging'); };
+    bar.addEventListener('pointerdown', e => {
+      if (e.button !== 0 || e.target.closest('button') || isSmall()) return;
+      bar.setPointerCapture(e.pointerId);
+      if (el.classList.contains('max')) { d = { fromMax: true, x: e.clientX, y: e.clientY }; return; }   // dragging a maximized window restores it
+      startDrag(e.clientX, e.clientY, winsEl.getBoundingClientRect());
+    });
+    bar.addEventListener('pointermove', e => {
+      if (!d) return;
+      if (d.fromMax) {
+        if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < 8) return;
+        const area = winsEl.getBoundingClientRect(), ratio = (e.clientX - area.left) / area.width;
+        setMax(false, false);
+        el.style.left = clamp(e.clientX - area.left - ratio * el.offsetWidth, 0, Math.max(0, area.width - el.offsetWidth)) + 'px'; el.style.top = '0px';
+        startDrag(e.clientX, e.clientY, area);
+      }
+      nx = clamp(d.l + e.clientX - d.x, 0, Math.max(0, d.aw - d.w)); ny = clamp(d.t + e.clientY - d.y, 0, Math.max(0, d.ah - Math.min(d.h, d.ah)));
+      if (!dragRaf) dragRaf = requestAnimationFrame(paintDrag);
+    });
+    ['pointerup', 'pointercancel'].forEach(ev => bar.addEventListener(ev, () => { if (!d) return; cancelAnimationFrame(dragRaf); dragRaf = 0; if (!d.fromMax) { el.style.left = nx + 'px'; el.style.top = ny + 'px'; el.style.transform = ''; } el.classList.remove('dragging'); d = null; }));
+    // Resizing from the edges and corners: at most one layout per frame, never smaller than usable or larger than the desktop.
+    const MIN_W = 360, MIN_H = 260; let rs = null, rsRaf = 0, rx = 0, ry = 0;
+    const paintResize = () => {
+      rsRaf = 0; if (!rs) return; const dx = rx - rs.x, dy = ry - rs.y, dir = rs.dir, minW = Math.min(MIN_W, rs.aw), minH = Math.min(MIN_H, rs.ah);
+      let l = rs.l, t = rs.t, w = rs.w, h = rs.h;
+      if (dir.includes('e')) w = clamp(rs.w + dx, minW, rs.aw - rs.l);
+      if (dir.includes('s')) h = clamp(rs.h + dy, minH, rs.ah - rs.t);
+      if (dir.includes('w')) { const right = rs.l + rs.w; l = clamp(rs.l + dx, 0, right - minW); w = right - l; }
+      if (dir.includes('n')) { const bottom = rs.t + rs.h; t = clamp(rs.t + dy, 0, bottom - minH); h = bottom - t; }
+      el.style.left = l + 'px'; el.style.top = t + 'px'; el.style.width = w + 'px'; el.style.height = h + 'px';
+    };
+    el.querySelectorAll('.win-rs').forEach(hd => {
+      hd.addEventListener('pointerdown', e => {
+        if (e.button !== 0 || isSmall() || el.classList.contains('max')) return; e.preventDefault();
+        const area = winsEl.getBoundingClientRect(); rs = { dir: hd.dataset.rs, x: e.clientX, y: e.clientY, l: el.offsetLeft, t: el.offsetTop, w: el.offsetWidth, h: el.offsetHeight, aw: area.width, ah: area.height }; rx = e.clientX; ry = e.clientY;
+        el.classList.add('resizing'); hd.setPointerCapture(e.pointerId);
+      });
+      hd.addEventListener('pointermove', e => { if (!rs) return; rx = e.clientX; ry = e.clientY; if (!rsRaf) rsRaf = requestAnimationFrame(paintResize); });
+      ['pointerup', 'pointercancel'].forEach(ev => hd.addEventListener(ev, () => { if (!rs) return; cancelAnimationFrame(rsRaf); paintResize(); rs = null; el.classList.remove('resizing'); }));
+    });
     const prog = body.querySelector('.win-progress');
     body.addEventListener('scroll', () => { const m = body.scrollHeight - body.clientHeight; prog.style.setProperty('--sp', m > 0 ? body.scrollTop / m : 0); }, { passive: true });
     const rvs = $$('.rv', body);
@@ -2566,6 +2672,207 @@ const OS = (() => {
   return { open, close, openApp, get isOpen() { return isOpen; } };
 })();
 
+
+/* =======================================================================
+   LIVING DESKTOP — ambient parallax, icon reactions and the idle Easter egg:
+   after 12 s without input the icons wake up and play (gravity, jumps,
+   collisions, stacking), then fly home the moment the visitor is back.
+   One rAF loop at a time, transforms only, nothing runs while hidden.
+   ======================================================================= */
+const Desk = (() => {
+  const osEl = $('#os'), deskEl = $('.os-desk', osEl), bg = $('.os-bg', osEl), layers = $$('.os-bg-l', bg), menuEl = $('#os-menu');
+  const icons = () => $$('#os-icons .os-icon');
+  const rnd = (a, b) => a + Math.random() * (b - a);
+
+  // Ambient detail, created once: a few light motes (desktop sizes only) and a different float rhythm per icon.
+  if (!isSmall()) {
+    const m = $('.os-bg-motes', bg); let s = 11; const r = () => (s = s * 16807 % 2147483647) / 2147483647;
+    for (let i = 0; i < 10; i++) { const e = document.createElement('i'); e.style.cssText = `--x:${(r() * 100).toFixed(1)}%;--y:${(30 + r() * 62).toFixed(1)}%;--s:${(1.5 + r() * 2).toFixed(1)}px;--t:${(9 + r() * 9).toFixed(1)}s;--d:${(-r() * 14).toFixed(1)}s;--dx:${((r() - .5) * 60).toFixed(0)}px`; m.append(e); }
+  }
+  icons().forEach((ic, i) => { const g = ic.firstElementChild; g.style.setProperty('--ft', (4.2 + (i * .37) % 1.6).toFixed(2) + 's'); g.style.setProperty('--fd', (-i * .9).toFixed(2) + 's'); });
+  let openWins = 0;
+  const syncAlive = () => { osEl.classList.toggle('alive', Motion.on()); osEl.classList.toggle('ambient', Motion.on() && on && !openWins && !document.hidden); if (!Motion.on()) finish(); };
+
+  /* ---- Pointer: parallax background + icons that lean toward the cursor (one shared frame) ---- */
+  const DEPTH = [10, 22, 34], R = 150;
+  let px = 0, py = 0, inside = false, cx = 0, cy = 0, uiRaf = 0, homes = null, homesAt = 0;
+  const near = new Set();
+  osEl.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse' || e.buttons) return; px = e.clientX; py = e.clientY; inside = true; if (!uiRaf) uiRaf = requestAnimationFrame(ui); }, { passive: true });
+  osEl.addEventListener('pointerleave', () => { inside = false; if (!uiRaf) uiRaf = requestAnimationFrame(ui); });
+  function ui() {
+    uiRaf = 0; if (!osEl.classList.contains('alive') || !osEl.classList.contains('on')) return;
+    const tx = inside ? px / innerWidth - .5 : 0, ty = inside ? py / innerHeight - .5 : 0;
+    cx += (tx - cx) * .12; cy += (ty - cy) * .12;
+    if (osEl.classList.contains('ambient')) layers.forEach((l, i) => { l.style.transform = `translate3d(${(-cx * DEPTH[i]).toFixed(2)}px,${(-cy * DEPTH[i]).toFixed(2)}px,0)`; });   // parallax only on an empty desktop
+    if (!phys && !osEl.classList.contains('covered')) lean();
+    if (Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002) uiRaf = requestAnimationFrame(ui);   // keep easing, then stop
+  }
+  const unlean = ic => { near.delete(ic); ['--mx', '--my', '--rx', '--ry'].forEach(p => ic.firstElementChild.style.removeProperty(p)); };
+  function lean() {
+    const now = performance.now(), list = icons();
+    if (!homes || now - homesAt > 1500) { homes = list.map(i => { const b = i.firstElementChild.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; }); homesAt = now; }
+    list.forEach((ic, i) => {
+      const dx = px - homes[i][0], dy = py - homes[i][1], d = Math.hypot(dx, dy);
+      if (!inside || d > R) { if (near.has(ic)) unlean(ic); return; }
+      near.add(ic); const f = 1 - d / R, g = ic.firstElementChild.style;
+      g.setProperty('--mx', (dx / R * 6 * f).toFixed(2) + 'px'); g.setProperty('--my', (dy / R * 6 * f).toFixed(2) + 'px');
+      g.setProperty('--rx', (-dy / R * 16 * f).toFixed(2) + 'deg'); g.setProperty('--ry', (dx / R * 16 * f).toFixed(2) + 'deg');
+    });
+  }
+
+  /* ---- Click feedback and selection ---- */
+  document.addEventListener('pointerdown', e => {
+    const ic = e.target.closest && e.target.closest('#os-icons .os-icon');
+    if (!ic) { if (e.target.closest && e.target.closest('.os-desk') && !e.target.closest('.os-widget')) icons().forEach(i => i.classList.remove('sel')); return; }
+    icons().forEach(i => i.classList.toggle('sel', i === ic));
+    ic.classList.remove('tap'); void ic.offsetWidth; ic.classList.add('tap');
+  }, true);
+  $('#os-icons').addEventListener('animationend', e => { if (e.animationName === 'os-tap') e.target.classList.remove('tap'); });
+
+  /* ---- Idle detection ---- */
+  const IDLE = 12000;
+  let on = false, lastInput = performance.now(), timer = 0, phys = null, raf = 0;
+  const typing = () => { const a = document.activeElement; return !!a && (a.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)); };
+  const canPlay = () => on && Motion.on() && !isSmall() && !document.hidden && osEl.classList.contains('on') && !osEl.classList.contains('covered')
+    && !document.documentElement.classList.contains('game-on') && menuEl.hidden && !typing() && !document.querySelector('.win.dragging,.win.resizing');
+  function input(e) { lastInput = performance.now(); if (phys && phys.mode === 'play') wake(e); }
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(t => addEventListener(t, input, { capture: true, passive: true }));
+  addEventListener('pointerup', () => { if (phys && phys.held) { phys.held = null; phys.rt = 0; phys.bodies.forEach(b => { b.fx = b.x - b.hx; b.fy = b.y - b.hy; b.fa = b.a; }); } }, true);
+  function check() { if (!phys && performance.now() - lastInput >= IDLE && canPlay()) play(); }
+  function active(v) { on = v; syncAlive(); clearInterval(timer); timer = 0; if (v && !document.hidden) { lastInput = performance.now(); timer = setInterval(check, 1000); } if (!v) finish(); }
+  document.addEventListener('visibilitychange', () => { syncAlive(); if (document.hidden) { finish(); clearInterval(timer); timer = 0; } else if (on) active(true); });
+  addEventListener('resize', () => { finish(); homes = null; });
+
+  /* ---- Idle physics: a tiny world of 7 boxes ---- */
+  const G = 1900, PAD = 14;   // gravity in px/s²; PAD slims the box so labels can overlap a little
+  const TYPES = ['hopper', 'wanderer', 'chaser', 'sleeper', 'bouncer', 'follower', 'climber'];
+  function play() {
+    const list = icons(); if (!list.length) return;
+    osEl.classList.remove('reveal'); osEl.classList.add('idle');
+    near.forEach(unlean);
+    const dr = deskEl.getBoundingClientRect(), B = { l: dr.left + 6, r: dr.right - 6, t: dr.top + 6, b: dr.bottom - 4 };
+    const bodies = list.map((el, i) => {
+      const b = el.getBoundingClientRect(); el.classList.add('phys');
+      return { el, i, type: TYPES[i % TYPES.length], hx: b.left, hy: b.top, x: b.left, y: b.top, w: b.width, h: b.height, vx: 0, vy: 0, a: 0, va: 0, drive: 0,
+        next: i * .45 + rnd(.2, 1.6), awake: false, ground: false, on: null, onSince: 0, stay: 0, wx: 0, wy: 0, wa: 0, target: null };
+    });
+    bodies.forEach(b => { if (b.type === 'chaser' || b.type === 'follower') b.target = bodies[(b.i + 3) % bodies.length]; });
+    phys = { bodies, B, t: 0, mode: 'play', last: 0, slow: 0, odd: false, napAt: rnd(70, 95), napping: false, still: 0, sleeping: false, napT: 0, held: null, rt: 0 };
+    raf = requestAnimationFrame(step);
+  }
+  function step(now) {
+    raf = 0; const P = phys; if (!P) return;
+    let dt = P.last ? (now - P.last) / 1000 : 1 / 60; P.last = now;
+    P.slow = P.slow * .96 + (dt > .024 ? .04 : 0);   // share of slow frames: when it is high, draw every other frame
+    dt = Math.min(dt, 1 / 20);
+    if (P.mode === 'return') returning(dt);
+    else { const n = dt > 1 / 45 ? 2 : 1; for (let k = 0; k < n; k++) simulate(dt / n); P.t += dt; nap(dt); }
+    if (!phys) return;
+    P.odd = !P.odd; if (P.slow < .5 || P.odd) render();
+    if (!P.sleeping) raf = requestAnimationFrame(step);
+  }
+  const jump = (b, v, vx) => { b.vy = -v; b.vx = vx; b.va = (vx >= 0 ? 1 : -1) * rnd(120, 280); b.ground = false; b.on = null; b.onSince = 0; };
+  const other = (b, all) => { let o; do o = all[Math.floor(Math.random() * all.length)]; while (o === b && all.length > 1); return o; };
+  function behave(b, t, all) {
+    if (!b.ground || phys.napping) return;
+    if (b.on && b.onSince && t - b.onSince > (b.stay || (b.stay = rnd(1.2, 3.2)))) {   // rested on a friend long enough: hop off
+      jump(b, rnd(380, 560), (Math.random() < .5 ? -1 : 1) * rnd(120, 220)); b.stay = 0; b.next = t + rnd(.8, 2); return;
+    }
+    if (t < b.next) {
+      if (b.target && (b.type === 'chaser' || b.type === 'follower')) { const dx = b.target.x - b.x; b.drive = b.type === 'follower' ? (Math.abs(dx) > 140 ? Math.sign(dx) * 90 : 0) : Math.sign(dx) * Math.min(170, Math.abs(dx) * 1.4); }
+      return;
+    }
+    if (Math.random() < .16) { b.drive = 0; b.next = t + rnd(1.4, 3.8); return; }   // a little rest
+    switch (b.type) {
+      case 'hopper': jump(b, rnd(520, 760), rnd(-80, 80)); b.next = t + rnd(.45, 1.1); break;
+      case 'wanderer': b.drive = (Math.random() < .5 ? -1 : 1) * rnd(40, 75); if (Math.random() < .35) jump(b, rnd(260, 360), b.drive); b.next = t + rnd(1.5, 3.5); break;
+      case 'chaser': case 'follower': if (Math.random() < .25) b.target = other(b, all); if (Math.abs(b.target.x - b.x) < 150) jump(b, rnd(540, 760), Math.sign(b.target.x - b.x || 1) * rnd(90, 160)); b.next = t + rnd(.9, 2.2); break;
+      case 'sleeper': if (Math.random() < .55) { b.drive = 0; b.next = t + rnd(3, 7); break; } jump(b, rnd(700, 950), (Math.random() < .5 ? -1 : 1) * rnd(200, 320)); b.drive = 0; b.next = t + rnd(3, 6); break;
+      case 'bouncer': { const o = other(b, all); jump(b, rnd(620, 880), Math.sign(o.x - b.x || 1) * rnd(160, 300)); b.next = t + rnd(1.2, 2.6); break; }
+      case 'climber': { const o = other(b, all), v = rnd(620, 780); jump(b, v, clamp((o.x - b.x) / (1.6 * v / G), -380, 380)); b.next = t + rnd(1.6, 3.2); break; }   // aims to land on another icon
+    }
+  }
+  function simulate(dt) {
+    const P = phys, { B, bodies } = P, t = P.t;
+    for (const b of bodies) {
+      if (!b.awake) { if (t >= b.next) { b.awake = true; jump(b, rnd(250, 520), rnd(-90, 90)); b.next = t + rnd(.6, 1.6); } continue; }
+      if (b === P.held) continue;
+      behave(b, t, bodies);
+      b.vy += G * dt;
+      if (b.ground) b.vx += (b.drive - b.vx) * Math.min(1, 7 * dt); else b.vx *= 1 - .15 * dt;
+      b.x += b.vx * dt; b.y += b.vy * dt;
+      if (b.ground) b.va += (-b.a * 60 - b.va * 10) * dt; else b.va *= 1 - .6 * dt;   // settle upright on the ground, spin a little in the air
+      b.a = clamp(b.a + b.va * dt, -40, 40);
+      b.ground = false; b.on = null;
+      if (b.x < B.l) { b.x = B.l; if (b.vx < 0) { b.vx = -b.vx * .6; b.va += 120; } b.drive = Math.abs(b.drive); }
+      if (b.x + b.w > B.r) { b.x = B.r - b.w; if (b.vx > 0) { b.vx = -b.vx * .6; b.va -= 120; } b.drive = -Math.abs(b.drive); }
+      if (b.y < B.t) { b.y = B.t; if (b.vy < 0) b.vy = -b.vy * .3; }
+      if (b.y + b.h >= B.b) { b.y = B.b - b.h; if (b.vy > 160) { b.vy = -b.vy * .38; b.va += (Math.random() - .5) * 160; } else if (b.vy > 0) b.vy = 0; b.ground = b.vy === 0; }
+    }
+    // 7 bodies → 21 pairs: plain box checks are enough.
+    for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
+      const a = bodies[i], b = bodies[j]; if (!a.awake || !b.awake || a === P.held || b === P.held) continue;
+      const ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x) - PAD * 2, oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+      if (ox <= 0 || oy <= 0) continue;
+      if (oy < ox * .9) {   // landing on top: stack
+        const top = a.y < b.y ? a : b, bot = top === a ? b : a;
+        top.y -= oy;
+        if (top.vy > bot.vy) { const rv = top.vy - bot.vy; top.vy = rv > 220 ? bot.vy - rv * .3 : bot.vy; top.va += (top.x < bot.x ? -1 : 1) * Math.min(rv, 400) * .2; }
+        if (Math.abs(top.vy - bot.vy) < 1) { top.ground = true; top.on = bot; if (!top.onSince) top.onSince = t; }
+      } else {              // side bump: push apart, trade speed, wobble
+        const l = a.x < b.x ? a : b, rr = l === a ? b : a, push = ox / 2;
+        l.x -= push; rr.x += push;
+        if (l.vx - rr.vx > 0) {
+          const lv = l.vx, rv = rr.vx; l.vx = rv * .8 - 30; rr.vx = lv * .8 + 30; l.drive = -Math.abs(l.drive); rr.drive = Math.abs(rr.drive); l.va -= 140; rr.va += 140;
+          if (l.ground && rr.ground && lv - rv > 90) { l.vy = -rnd(160, 320); rr.vy = -rnd(160, 320); l.ground = rr.ground = false; }
+        }
+      }
+    }
+    for (const b of bodies) if (!b.on) b.onSince = 0;
+  }
+  // After a while the icons settle down and the loop stops completely; they play again later.
+  function nap(dt) {
+    const P = phys;
+    if (!P.napping && P.t > P.napAt) { P.napping = true; P.bodies.forEach(b => { b.drive = 0; }); }
+    if (!P.napping) return;
+    const still = P.bodies.every(b => !b.awake || (b.ground && Math.abs(b.vx) < 4 && Math.abs(b.va) < 3 && Math.abs(b.a) < 1));
+    P.still = still ? P.still + dt : 0;
+    if (P.still > 1) {
+      P.sleeping = true;
+      P.napT = setTimeout(() => { if (phys !== P || P.mode !== 'play') return; P.napping = false; P.sleeping = false; P.still = 0; P.napAt = P.t + rnd(60, 90); P.bodies.forEach(b => { b.next = P.t + rnd(.2, 2.5); }); P.last = 0; raf = requestAnimationFrame(step); }, rnd(15000, 28000));
+    }
+  }
+  function render() {
+    for (const b of phys.bodies) {
+      const dx = b.x - b.hx, dy = b.y - b.hy;
+      if (Math.abs(dx - b.wx) + Math.abs(dy - b.wy) + Math.abs(b.a - b.wa) < .08) continue;   // nothing visible changed
+      b.wx = dx; b.wy = dy; b.wa = b.a;
+      b.el.style.transform = `translate3d(${dx.toFixed(1)}px,${dy.toFixed(1)}px,0) rotate(${b.a.toFixed(1)}deg)`;
+    }
+  }
+  /* ---- Back to work: every icon flies home; the one being pressed waits under the finger ---- */
+  function wake(e) {
+    const P = phys; clearTimeout(P.napT); P.mode = 'return'; P.rt = 0; P.sleeping = false;
+    const ic = e && e.type === 'pointerdown' && e.target.closest && e.target.closest('#os-icons .os-icon');
+    P.held = ic ? P.bodies.find(b => b.el === ic) || null : null;
+    P.bodies.forEach(b => { b.fx = b.x - b.hx; b.fy = b.y - b.hy; b.fa = b.a; });
+    if (!raf) { P.last = 0; raf = requestAnimationFrame(step); }
+  }
+  const backOut = t => { const c = 1.3; t -= 1; return 1 + (c + 1) * t * t * t + c * t * t; };
+  function returning(dt) {
+    const P = phys, D = .7; P.rt += dt;
+    P.bodies.forEach((b, i) => { if (b === P.held) return; const k = backOut(clamp((P.rt - i * .03) / D)); b.x = b.hx + b.fx * (1 - k); b.y = b.hy + b.fy * (1 - k); b.a = b.fa * (1 - k); });
+    if (P.rt > D + .3 && !P.held) finish();
+  }
+  function finish() {
+    const P = phys; if (!P) return; phys = null;
+    cancelAnimationFrame(raf); raf = 0; clearTimeout(P.napT);
+    P.bodies.forEach(b => { b.el.style.transform = ''; b.el.classList.remove('phys'); });
+    osEl.classList.remove('idle'); homes = null; lastInput = performance.now();
+  }
+  Motion.sub(syncAlive); syncAlive();
+  return { active, windows(n) { if (n !== openWins) { openWins = n; syncAlive(); } }, get playing() { return !!phys && phys.mode === 'play'; }, get sleeping() { return !!phys && phys.sleeping; } };
+})();
 
 /* =======================================================================
    CODE-RAIN SWEEP — the original KMP page transition (intro ⇄ room)
