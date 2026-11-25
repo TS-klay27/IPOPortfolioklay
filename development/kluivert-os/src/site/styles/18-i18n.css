@@ -1,0 +1,22 @@
+/* Language picker (EN / ES / CA) — intro, Kian's Room and the desktop tray */
+.lang{position:relative;display:inline-flex;pointer-events:auto}
+.lang-btn{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 11px 0 9px;border-radius:999px;border:1px solid var(--line-2);background:rgba(7,26,31,.6);color:var(--muted);font:600 10.5px/1 var(--mono);letter-spacing:.16em;transition:border-color var(--t2),color var(--t2),box-shadow var(--t2)}
+.lang-btn .i{width:14px;height:14px;color:var(--accent-2)}
+.lang-btn b{font-weight:700;color:var(--text)}
+.lang-btn:hover,.lang-btn[aria-expanded="true"],.lang-btn:focus-visible{border-color:var(--accent-2);color:var(--text);box-shadow:0 0 16px rgba(42,199,201,.18);outline:none}
+.lang-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:60;min-width:170px;padding:6px;border-radius:14px;border:1px solid var(--line-2);background:rgba(8,28,33,.97);box-shadow:var(--e3);transform-origin:100% 0;animation:pop .2s var(--ease)}
+.lang.up .lang-menu{top:auto;bottom:calc(100% + 10px);transform-origin:100% 100%}
+.lang-menu button{display:flex;align-items:center;gap:12px;width:100%;padding:9px 10px;border-radius:9px;color:var(--muted);font:500 13px/1 var(--sans);text-align:left;transition:background var(--t1),color var(--t1)}
+.lang-menu button b{display:grid;place-items:center;width:30px;height:22px;border-radius:6px;border:1px solid var(--line-2);font:700 10.5px/1 var(--mono);letter-spacing:.08em;color:var(--accent-2)}
+.lang-menu button:hover,.lang-menu button:focus-visible{background:rgba(42,199,201,.08);color:var(--text);outline:none}
+.lang-menu button[aria-selected="true"]{color:var(--text);background:rgba(42,199,201,.1)}
+.lang-menu button[aria-selected="true"] b{background:var(--accent-2);border-color:var(--accent-2);color:var(--accent-ink);box-shadow:0 0 12px rgba(42,199,201,.4)}
+.lang-menu button[aria-selected="true"]::after{content:"";margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 8px var(--accent-2)}
+.in-right .lang{margin-left:10px}
+.r-right{display:flex;align-items:flex-start;gap:18px}
+.os-tray .lang-btn{height:38px;border-radius:11px}
+html.lang-swap .win-body,html.lang-swap #intro .in-main,html.lang-swap .os-desk,html.lang-swap .os-tasks,html.lang-swap .r-head{animation:lang-in .4s var(--ease)}
+@keyframes lang-in{from{opacity:.35}}
+@media (max-width:520px){ .lang-btn{padding:0 9px 0 8px} .in-right .lang{margin-left:6px} }
+.in-motion,.lang-btn{white-space:nowrap}
+@media (max-width:520px){ .in-right > span:not(.dot-live){display:none} .in-motion{margin-left:0} }

@@ -55,6 +55,10 @@ const runtime = inject(runtimeSrc, '%%HYDRATE%%', hydrate);
 if (!runtime.includes(hydrate)) throw Error('hydrate block was not injected verbatim');
 if (countDD(runtime) !== countDD(runtimeSrc) + countDD(hydrate)) throw Error('$$( count changed during injection');
 
+// Translations (English is the source text in the markup). Inlined as JSON, parsed by the page only when chosen.
+const I18N_LANGS = ['es', 'ca'];
+const i18nScripts = I18N_LANGS.map(l => `<script type="application/json" id="i18n-${l}">${JSON.stringify(JSON.parse(read(`i18n/${l}.json`))).replace(/</g, '\\u003c')}</script>`).join('\n');
+
 let html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +78,7 @@ ${styles.join('\n')}
 ${read('site/markup/10-icons.html')}
 ${read('site/markup/20-screens.html')}
 ${read('site/markup/30-app-templates.html')}
+${i18nScripts}
 <script>
 ${runtime}
 </script>
@@ -123,10 +128,13 @@ fs.writeFileSync(path.join(OUT, 'index.html'), html);
 
 // ---------- 4. KPC GAME (English) ----------
 execFileSync(process.execPath, [path.join(__dirname, 'translate-game.js'), path.join(SRC, 'game/kpc-game.es.html'), path.join(OUT, 'kpc-game.html')], { stdio: 'pipe' });
+// Spanish (the original text, with the KPC GAME name) and Catalan builds of the game, opened when the portfolio is in that language.
+const GAMES = ['kpc-game.html', ...I18N_LANGS.map(l => `kpc-game.${l}.html`)];
+for (const l of I18N_LANGS) execFileSync(process.execPath, [path.join(__dirname, 'localize-game.js'), path.join(SRC, 'game/kpc-game.es.html'), path.join(SRC, `i18n/game-${l}.json`), path.join(OUT, `kpc-game.${l}.html`)], { stdio: 'pipe' });
 
 // ---------- 5. syntax check of every inline script ----------
 const vm = require('vm');
-for (const f of ['index.html', 'kpc-game.html']) {
+for (const f of ['index.html', ...GAMES]) {
   const t = fs.readFileSync(path.join(OUT, f), 'utf8');
   for (const m of t.matchAll(/<script(?![^>]*type="application\/json")[^>]*>([\s\S]*?)<\/script>/g)) new vm.Script(m[1], { filename: f });
 }
@@ -134,7 +142,7 @@ for (const f of ['index.html', 'kpc-game.html']) {
 const kb = f => (fs.statSync(path.join(OUT, f)).size / 1024).toFixed(0) + ' KB';
 if (CHECK) {
   let same = true;
-  for (const f of ['index.html', 'kpc-game.html', 'pdfs/' + MISSION_PDF]) {
+  for (const f of ['index.html', ...GAMES, 'pdfs/' + MISSION_PDF]) {
     const a = fs.readFileSync(path.join(OUT, f)), b = fs.existsSync(path.join(OUT_FINAL, f)) ? fs.readFileSync(path.join(OUT_FINAL, f)) : null;
     const eq = b && a.equals(b); same = same && eq;
     console.log(`${f}: ${eq ? 'identical' : 'DIFFERS'} to ${path.join(OUT_FINAL, f)}`);
@@ -142,4 +150,4 @@ if (CHECK) {
   fs.rmSync(OUT, { recursive: true, force: true });
   process.exit(same ? 0 : 1);
 }
-console.log(`built index.html (${kb('index.html')}), kpc-game.html (${kb('kpc-game.html')}) and pdfs/${MISSION_PDF} (${kb('pdfs/' + MISSION_PDF)}) in ${OUT}`);
+console.log(`built index.html (${kb('index.html')}), ${GAMES.map(g => `${g} (${kb(g)})`).join(', ')} and pdfs/${MISSION_PDF} (${kb('pdfs/' + MISSION_PDF)}) in ${OUT}`);

@@ -57,6 +57,124 @@ const Motion = (() => {
 })();
 const forceMotion = () => document.documentElement.classList.toggle('motion-forced', Motion.pref === 'on' && reduced());
 forceMotion(); Motion.sub(forceMotion);
+
+/* =======================================================================
+   I18N — English is the source text written in the markup. Spanish and
+   Catalan live in two dictionaries (inlined as JSON, parsed only when that
+   language is chosen) and are applied in place to text, a few rich
+   paragraphs and accessibility attributes. A MutationObserver keeps text
+   that the code writes later (labels, counters, new windows) translated.
+   English is the default; the visitor's choice is remembered.
+   ======================================================================= */
+const I18n = (() => {
+  const LANGS = { en: 'en-GB', es: 'es-ES', ca: 'ca-ES' };
+  let lang = 'en'; try { const s = localStorage.getItem('kos-lang'); if (s && s in LANGS) lang = s; } catch (_) {}
+  const WS = /\s+/g, norm = s => s.replace(WS, ' ').trim();
+  const cache = {}, subs = new Set();
+  function dict(l) {
+    if (cache[l]) return cache[l];
+    const node = document.getElementById('i18n-' + l), raw = node ? JSON.parse(node.textContent) : {}, map = new Map(), pats = [];
+    for (const sec in raw) {
+      if (sec === '_patterns') { for (const p in raw[sec]) pats.push([new RegExp('^' + p + '$'), raw[sec][p]]); continue; }
+      for (const k in raw[sec]) map.set(k, raw[sec][k]);
+    }
+    return (cache[l] = { map, pats });
+  }
+  function lookup(k, d) {
+    const v = d.map.get(k); if (v !== undefined) return v;
+    for (const [re, out] of d.pats) { const m = re.exec(k); if (m) return out.replace(/\$(\d)/g, (_, i) => { const g = m[i] || ''; const x = lookup(g, d); return x === undefined ? g : x; }); }
+    if (k.includes(' · ')) { const parts = k.split(' · '), tr = parts.map(p => { const x = lookup(p, d); return x === undefined ? p : x; }); if (tr.some((p, i) => p !== parts[i])) return tr.join(' · '); }
+    return undefined;
+  }
+  // t(): translate one English string (used by the code for titles, toasts and canvas text).
+  function t(s) {
+    if (lang === 'en' || s == null) return s;
+    s = String(s); const k = norm(s); if (!k) return s;
+    const v = lookup(k, dict(lang)); if (v === undefined) return s;
+    return /^\s*/.exec(s)[0] + v + /\s*$/.exec(s)[0];
+  }
+
+  // ---- DOM application ----
+  const src = new WeakMap(), wrote = new WeakMap(), srcAttr = new WeakMap(), srcHTML = new WeakMap();
+  const ATTRS = ['aria-label', 'title', 'alt', 'placeholder', 'data-open-label'], ATTR_SEL = ATTRS.map(a => `[${a}]`).join(',');
+  const INLINE = new Set(['STRONG', 'EM', 'MARK', 'B', 'I', 'SPAN', 'A', 'BR', 'SMALL', 'Q', 'ABBR', 'CODE', 'U', 'SUP', 'SUB']);
+  const skip = el => !el || el.closest('script,style,template,noscript,svg,textarea,[translate="no"]');
+  function text(n) {
+    const p = n.parentElement; if (skip(p) || p.closest('[data-i18n-rich]')) return;
+    if (n.data !== wrote.get(n)) src.set(n, n.data);          // new English written by the page
+    const s = src.get(n), v = t(s); if (n.data !== v) n.data = v; wrote.set(n, v);
+  }
+  function attrs(el) {
+    let rec = srcAttr.get(el); if (!rec) srcAttr.set(el, rec = {});
+    for (const a of ATTRS) {
+      const cur = el.getAttribute(a); if (cur == null) continue;
+      if (cur !== rec['w' + a]) rec[a] = cur;
+      const v = t(rec[a]); if (cur !== v) el.setAttribute(a, v); rec['w' + a] = v;
+    }
+  }
+  const richShape = el => { let txt = false, inl = false; for (const k of el.childNodes) { if (k.nodeType === 3) { if (k.data.trim()) txt = true; } else if (k.nodeType === 1) { if (!INLINE.has(k.tagName) || k.querySelector(':not(' + [...INLINE].join('):not(') + ')')) return false; inl = true; } } return txt && inl; };
+  const wroteHTML = new WeakMap();
+  function rich(el) {   // paragraphs with inline markup are translated whole, so word order can change
+    if (srcHTML.has(el) && el.innerHTML !== wroteHTML.get(el)) { srcHTML.delete(el); el.removeAttribute('data-i18n-rich'); }   // the page rewrote it
+    let en = srcHTML.get(el);
+    if (en === undefined) { if (lang === 'en' || !richShape(el) || skip(el)) return; en = el.innerHTML; }
+    const v = lang === 'en' ? undefined : dict(lang).map.get(norm(en));
+    if (v === undefined) { if (srcHTML.has(el)) { el.innerHTML = en; el.removeAttribute('data-i18n-rich'); srcHTML.delete(el); } return; }
+    srcHTML.set(el, en); if (el.innerHTML !== v) el.innerHTML = v; wroteHTML.set(el, el.innerHTML); el.setAttribute('data-i18n-rich', '');
+  }
+  function apply(root) {
+    if (!root) return;
+    if (root.nodeType === 3) { text(root); return; }
+    if (root.nodeType !== 1 || skip(root)) return;
+    rich(root); root.querySelectorAll('*').forEach(rich);
+    if (root.matches(ATTR_SEL)) attrs(root); root.querySelectorAll(ATTR_SEL).forEach(attrs);
+    const tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = tw.nextNode())) text(n);
+  }
+  // Text written by the code after the first pass (labels, counters, new windows) is translated as it appears.
+  const mo = new MutationObserver(recs => {
+    for (const r of recs) {
+      if (r.type === 'characterData') { if (r.target.data !== wrote.get(r.target)) text(r.target); }
+      else if (r.type === 'attributes') { const el = r.target, rec = srcAttr.get(el); if (!rec || el.getAttribute(r.attributeName) !== rec['w' + r.attributeName]) attrs(el); }
+      else r.addedNodes.forEach(nd => { if (nd.nodeType === 3 && nd.parentElement) rich(nd.parentElement); apply(nd); });
+    }
+  });
+  const watch = () => { mo.disconnect(); if (lang !== 'en') mo.observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ATTRS }); };
+
+  function set(l, save = true) {
+    if (!(l in LANGS)) l = 'en';
+    const changed = l !== lang; lang = l;
+    if (save) try { localStorage.setItem('kos-lang', l); } catch (_) {}
+    document.documentElement.lang = l;
+    if (!changed) return;
+    mo.disconnect(); apply(document.body); watch();
+    const root = document.documentElement; root.classList.remove('lang-swap'); void root.offsetWidth; root.classList.add('lang-swap');
+    clearTimeout(set.t); set.t = setTimeout(() => root.classList.remove('lang-swap'), 450);
+    subs.forEach(f => f(l));
+  }
+  function init() { document.documentElement.lang = lang; if (lang !== 'en') apply(document.body); watch(); }
+
+  // ---- Language picker (intro, Kian's Room, taskbar): same state everywhere ----
+  const NAMES = { en: ['EN', 'English'], es: ['ES', 'Español'], ca: ['CA', 'Català'] };
+  function picker(host, up) {
+    const box = document.createElement('div'); box.className = 'lang' + (up ? ' up' : ''); box.setAttribute('translate', 'no');
+    box.innerHTML = `<button class="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language"><svg class="i"><use href="#i-globe"/></svg><b></b></button><div class="lang-menu" role="listbox" aria-label="Language" hidden>${Object.keys(NAMES).map(k => `<button type="button" role="option" data-lang="${k}" lang="${k}"><b>${NAMES[k][0]}</b><span>${NAMES[k][1]}</span></button>`).join('')}</div>`;
+    const btn = box.firstElementChild, menu = box.lastElementChild;
+    const open = v => { menu.hidden = !v; btn.setAttribute('aria-expanded', String(v)); if (v) (menu.querySelector('[aria-selected="true"]') || menu.firstElementChild).focus(); };
+    const paint = () => { btn.querySelector('b').textContent = NAMES[lang][0]; btn.setAttribute('aria-label', { en: 'Language: English', es: 'Idioma: español', ca: 'Idioma: català' }[lang]); menu.querySelectorAll('[data-lang]').forEach(o => o.setAttribute('aria-selected', String(o.dataset.lang === lang))); };
+    btn.addEventListener('click', e => { e.stopPropagation(); open(menu.hidden); });
+    menu.addEventListener('click', e => { const o = e.target.closest('[data-lang]'); if (!o) return; e.stopPropagation(); set(o.dataset.lang); open(false); btn.focus(); });
+    box.addEventListener('keydown', e => {
+      if (menu.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); open(false); btn.focus(); }
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); const os = [...menu.children], i = os.indexOf(document.activeElement); os[(i + (e.key === 'ArrowDown' ? 1 : os.length - 1)) % os.length].focus(); }
+    });
+    document.addEventListener('click', e => { if (!menu.hidden && !box.contains(e.target)) open(false); });
+    paint(); subs.add(paint); host.append(box);
+  }
+  return { t, set, init, picker, sub: f => subs.add(f), get lang() { return lang; }, get locale() { return LANGS[lang]; } };
+})();
+
+const L = s => I18n.t(s);   // short form for text drawn on canvas
 let spotEl = null, spotX = 0, spotY = 0, spotRaf = 0;   // at most one update per frame
 document.addEventListener('pointermove', e => {
   if (e.pointerType === 'touch') return;
@@ -144,7 +262,7 @@ const Room = (() => {
       ctx.strokeStyle = '#344761'; ctx.lineWidth = .012; ctx.strokeRect(.045, .045, .91, .91);
       ctx.fillStyle = '#22f0d0'; ctx.fillRect(.09, .12, .055, .025);
       ctx.fillStyle = '#9fb2ca'; ctx.font = 'bold .075px monospace'; ctx.textAlign = 'left';
-      ctx.fillText(n ? 'SYSTEM MONITOR' : 'KIAN / STATUS', .18, .145);
+      ctx.fillText(L(n ? 'SYSTEM MONITOR' : 'KIAN / STATUS'), .18, .145);
       ctx.fillStyle = '#617b98'; ctx.fillRect(.09, .19, .82, .008);
       if (!n) {
         ctx.strokeStyle = '#203c56'; ctx.lineWidth = .008;
@@ -153,7 +271,7 @@ const Room = (() => {
         for (let i = 0; i <= 32; i++) { const x = .1 + i * .025; const y = .57 + Math.sin(i * .52) * .13 + Math.sin(i * 1.21) * .035; ctx.lineTo(x, y); }
         ctx.strokeStyle = '#22f0d0'; ctx.lineWidth = .025; ctx.stroke();
         ctx.fillStyle = '#9b7cff'; ctx.fillRect(.1, .86, .18, .025); ctx.fillStyle = '#22f0d0'; ctx.fillRect(.31, .86, .12, .025);
-        ctx.fillStyle = '#66849f'; ctx.font = '.055px monospace'; ctx.fillText('SIGNAL STABLE  /  98.7%', .48, .885);
+        ctx.fillStyle = '#66849f'; ctx.font = '.055px monospace'; ctx.fillText(L('SIGNAL STABLE / 98.7%'), .48, .885);
       } else {
         for (let i = 0; i < 5; i++) {
           const y = .27 + i * .105;
@@ -190,11 +308,11 @@ const Room = (() => {
     ctx.fillStyle = '#0b2036'; ctx.fillRect(.018, .025, .964, .95);
     ctx.fillStyle = '#22f0d0'; ctx.fillRect(.055, .105, .025, .025);
     ctx.fillStyle = '#e2fff9'; ctx.font = 'bold .105px monospace'; ctx.textAlign = 'left'; ctx.fillText('KIAN', .105, .13);
-    ctx.fillStyle = '#7795b0'; ctx.font = '.045px monospace'; ctx.fillText('WORKSTATION', .66, .13);
+    ctx.fillStyle = '#7795b0'; ctx.font = '.045px monospace'; ctx.fillText(L('WORKSTATION'), .66, .13);
     ctx.fillStyle = '#1a4058'; ctx.fillRect(.055, .21, .89, .008);
     ctx.fillStyle = '#102b43'; ctx.fillRect(.055, .27, .89, .34);
-    ctx.fillStyle = '#7f9bb5'; ctx.font = '.06px monospace'; ctx.fillText('SYSTEM STATUS', .095, .36);
-    ctx.fillStyle = '#22f0d0'; ctx.font = 'bold .095px monospace'; ctx.fillText(hover ? 'CLICK TO ENTER' : 'SYSTEM ONLINE', .095, .47);
+    ctx.fillStyle = '#7f9bb5'; ctx.font = '.06px monospace'; ctx.fillText(L('SYSTEM STATUS'), .095, .36);
+    ctx.fillStyle = '#22f0d0'; ctx.font = 'bold .095px monospace'; ctx.fillText(L(hover ? 'CLICK TO ENTER' : 'SYSTEM ONLINE'), .095, .47);
     ctx.strokeStyle = '#22f0d0'; ctx.lineWidth = .012; ctx.beginPath(); ctx.moveTo(.095, .55);
     for (let i = 0; i <= 44; i++) { const x = .095 + i * .018; const y = .55 + Math.sin(i * .42 + time * 1.25) * .035 + Math.sin(i * .91) * .012; ctx.lineTo(x, y); }
     ctx.stroke();
@@ -220,7 +338,7 @@ const Room = (() => {
       const T = (str, y, font, color, ls) => { ctx.save(); ctx.translate(.5, y); ctx.scale(k, 1); ctx.font = font; ctx.fillStyle = color; ctx.textAlign = 'center'; if (ls && 'letterSpacing' in ctx) ctx.letterSpacing = ls; ctx.fillText(str, 0, 0); ctx.restore(); };
       T('K', .427, '800 .031px "Segoe UI",Inter,Arial,sans-serif', '#2AC7C9');
       T('KLUIVERT OS', .53, '800 .053px "Segoe UI",Inter,Arial,sans-serif', '#E2F3F1', '.0106px');
-      T('PERSONAL OPERATING ENVIRONMENT · v2.0', .567, '500 .0117px monospace', '#93B4B5', '.0037px');
+      T(L('PERSONAL OPERATING ENVIRONMENT · v2.0'), .567, '500 .0117px monospace', '#93B4B5', '.0037px');
       ctx.fillStyle = 'rgba(42,199,201,.14)'; ctx.fillRect(.32, .605, .36, .0024);
       ctx.textAlign = 'left'; ctx.globalAlpha = 1;
       if (flick > 0) { ctx.fillStyle = `rgba(190,255,245,${flick * .35})`; ctx.fillRect(0, 0, 1, 1); }
@@ -436,6 +554,7 @@ const Room = (() => {
       await run({ zoom: 1, fk: 0, act: 0 }, reduced() ? 500 : 1050);
       frozen = false; hintOk = true; render(); wake();
     },
+    relabel() { layerKey = ''; render(); },   // canvas text follows the language
     snapFocused() { frozen = true; hintOk = false; zoom = targetZoom(); fk = 1; act = 1; render(); },
     pause() { paused = true; cancelAnimationFrame(raf); raf = 0; hint.classList.remove('show'); },
     resume() { paused = false; last = performance.now(); wake(); },
@@ -502,9 +621,9 @@ const OS = (() => {
   function tick() {
     const d = new Date(), t = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     $('#wg-clock').textContent = t; $('#tray-clock').textContent = t;
-    $('#wg-date').textContent = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    $('#wg-date').textContent = d.toLocaleDateString(I18n.locale, { weekday: 'long', day: 'numeric', month: 'long' });
   }
-  tick(); setInterval(tick, 15000);
+  tick(); setInterval(tick, 15000); I18n.sub(tick);
 
   function reveal() { osEl.classList.remove('reveal'); void osEl.offsetWidth; osEl.classList.add('reveal'); }
   let coverT = 0;   // once the opaque desktop is up, the room behind it stops being painted
@@ -1014,6 +1133,7 @@ const Intro = (() => {
    KPC GAME — full-screen game mode (opened from Projects)
    ======================================================================= */
 /* Presentation only, applied from outside so the game file stays untouched: the board takes the whole screen. */
+const gameFile = () => I18n.lang === 'en' ? 'kpc-game.html' : `kpc-game.${I18n.lang}.html`;   // English, Spanish or Catalan build of the game
 const GAME_VIEW_CSS = [
   ".shell.is-fullscreen{padding:0!important;gap:0!important}",
   ".shell.is-fullscreen .topbar{min-height:46px!important;padding:4px 10px!important;border-bottom:1px solid #1d3444;background:#07131d}",
@@ -1069,7 +1189,7 @@ const Arcade = (() => {
       d.querySelector('.shell').classList.add('is-fullscreen'); d.documentElement.classList.add('game-fullscreen');
       tunePerformance(f.contentWindow, d.getElementById('game'));
       d.addEventListener('pointerdown', () => { if (!wasFull) enterFs(); }, { once: true });   // second chance if the browser refused the first request
-      exit.textContent = '✕ EXIT GAME'; exit.style.cssText = 'border-color:#2AC7C9;color:#E2F3F1;background:rgba(42,199,201,.14);box-shadow:0 0 12px rgba(42,199,201,.25)';
+      exit.textContent = I18n.t('✕ EXIT GAME'); exit.style.cssText = 'border-color:#2AC7C9;color:#E2F3F1;background:rgba(42,199,201,.14);box-shadow:0 0 12px rgba(42,199,201,.25)';
       fsBtn = d.getElementById('fullscreen-btn'); fsBtn.onclick = () => { if (fsEl()) exitFs(); else enterFs(); };
       syncFs(); f.contentWindow.dispatchEvent(new Event('resize')); el.classList.add('integrated');
     } catch (_) {}   // if it ever fails, the view's own Exit button stays visible
@@ -1078,7 +1198,7 @@ const Arcade = (() => {
   return {
     get isOpen() { return isOpen; },
     focus: focusGame,
-    prefetch() { if (prefetched) return; prefetched = true; setTimeout(() => { const l = document.createElement('link'); l.rel = 'prefetch'; l.href = 'kpc-game.html'; document.head.append(l); }, 700); },
+    prefetch() { if (prefetched) return; prefetched = true; setTimeout(() => { const l = document.createElement('link'); l.rel = 'prefetch'; l.href = gameFile(); document.head.append(l); }, 700); },
     // Called synchronously from the PLAY click: browsers only allow fullscreen inside the user's gesture.
     launch() { clearTimeout(hideT); wasFull = false; el.hidden = false; enterFs(); },
     open() {
@@ -1087,7 +1207,7 @@ const Arcade = (() => {
       el.hidden = false; el.classList.remove('integrated'); setTimeout(() => { if (isOpen) el.classList.add('on'); }, 30);
       setTimeout(() => { if (isOpen) root.classList.add('game-on'); }, reduced() ? 40 : 460);   // stop painting the desktop behind the game
       load.classList.remove('done');
-      const f = document.createElement('iframe'); f.title = 'KPC GAME'; f.allow = 'fullscreen; autoplay'; f.src = 'kpc-game.html';
+      const f = document.createElement('iframe'); f.title = 'KPC GAME'; f.allow = 'fullscreen; autoplay'; f.src = gameFile();
       const ready = () => { if (f.isConnected) { load.classList.add('done'); focusGame(); } };
       f.addEventListener('load', () => { integrate(f); ready(); }, { once: true }); setTimeout(ready, 6000); // never leave the loader up
       setTimeout(() => { if (isOpen && !stage.querySelector('iframe')) stage.append(f); }, 70);   // let the view paint first
@@ -1110,7 +1230,8 @@ const Router = (() => {
   let queue = Promise.resolve(), current = '', first = true;
   const parse = () => { const h = decodeURIComponent(location.hash.replace(/^#\/?/, '')).toLowerCase(); return h === '' ? 'index' : ROUTES.includes(h) ? h : 'index'; };
   const titles = { index: 'KLUIVERT | Kluivert Manuel Peralta Carrera', lab: "Kian's Room | KLUIVERT", os: 'KLUIVERT OS | Kluivert Peralta', arcade: 'KPC GAME | KLUIVERT OS' };
-  const setTitle = r => { document.title = titles[r] || `${APPS[r].title} | KLUIVERT OS`; };
+  const setTitle = r => { document.title = I18n.t(titles[r] || `${APPS[r].title} | KLUIVERT OS`); };
+  I18n.sub(() => { if (current) setTitle(current); });
   function set(r, replace) { current = r; setTitle(r); const h = '#/' + r; if (location.hash !== h) history[replace ? 'replaceState' : 'pushState']({ r }, '', h); }
   async function apply(r) {
     if (r === current) { if (APPS[r] && r !== 'arcade' && OS.isOpen) OS.openApp(r); return; }
@@ -1141,5 +1262,11 @@ window.openPortfolioPage = r => Router.go(r);   // used by KPC GAME's "← PORTF
 $('#enter-os').addEventListener('click', () => Router.go('os'));
 Room.onMonitor(() => Router.go('os'));
 Room.start();
+// Language pickers: intro header, Kian's Room header and the desktop tray share one state.
+I18n.picker($('#intro .in-right'));
+{ const rid = $('#room .r-id'), right = document.createElement('div'); right.className = 'r-right'; rid.replaceWith(right); right.append(rid); I18n.picker(right); }
+{ const tray = $('.os-tray'); I18n.picker(tray, true); tray.prepend(tray.lastElementChild); }
+I18n.sub(() => Room.relabel());
+I18n.init();
 Router.init();
 })();
