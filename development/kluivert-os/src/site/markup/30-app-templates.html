@@ -142,7 +142,7 @@
   <article class="card feature rv">
     <button class="kpc-vis" type="button" data-route="arcade" aria-label="Play KPC GAME">
       <span class="kpc-floor"></span>
-      <span class="kpc-board"><i></i><i></i><i class="c"></i><i></i><i class="g"></i><i></i><i class="e"></i><i class="c"></i><i class="e"></i><i></i><i></i><i></i><i></i><i class="a"></i><i></i><i class="d"></i><i class="e"></i><i></i><i class="a"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="e"></i>
+      <span class="kpc-board"><span class="kpc-tiles"><i></i><i></i><i class="c"></i><i></i><i class="g"></i><i></i><i class="e"></i><i class="c"></i><i class="e"></i><i></i><i></i><i></i><i></i><i class="a"></i><i></i><i class="d"></i><i class="e"></i><i></i><i class="a"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="e"></i></span>
         <span class="kpc-block"><b class="tp"></b><b class="s"></b><b class="ea"></b></span>
       </span>
       <span class="kpc-hud"><span><i class="dot-live"></i>NEON FORGE · LEVEL 01</span><span>MOVES 00</span></span>
@@ -311,6 +311,85 @@
     <g fill="none" stroke="#f3dcab" stroke-opacity=".22"><path d="M30 150 Q130 130 230 146"/><path d="M300 136 Q400 118 520 128"/><path d="M60 206 Q170 188 290 204"/><path d="M360 198 Q460 182 580 192"/><path d="M20 262 Q140 246 260 258"/><path d="M330 256 Q440 240 590 250"/></g>
     <rect width="600" height="300" fill="url(#hxp-grain)"/>
   </symbol>
+  <!-- Habit 04: two circles that overlap, on a balanced beam -->
+  <symbol id="hx-art-balance" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <rect width="1200" height="600" fill="url(#hxg-sky3)"/>
+    <ellipse cx="820" cy="330" rx="430" ry="250" fill="url(#hxg-halo)"/>
+    <g fill="#dffcf7" opacity=".6"><circle cx="120" cy="80" r="1.2"/><circle cx="260" cy="150" r=".9"/><circle cx="420" cy="60" r="1.1"/><circle cx="560" cy="130" r=".8"/><circle cx="1010" cy="70" r="1.2"/><circle cx="1130" cy="160" r=".9"/><circle cx="700" cy="40" r="1"/><circle cx="330" cy="230" r=".8"/></g>
+    <path d="M0 470 L160 430 L320 452 L480 418 L640 446 L820 412 L980 444 L1200 420 V600 H0Z" fill="#0c2a31"/>
+    <path d="M0 540 Q300 512 600 526 T1200 520 V600 H0Z" fill="#050f13"/>
+    <g transform="translate(213 50) scale(.85)">
+      <circle cx="740" cy="320" r="120" fill="#5ff3e6" fill-opacity=".06" stroke="#5ff3e6" stroke-opacity=".6" stroke-width="2"/>
+      <circle cx="900" cy="320" r="120" fill="#8ff0bd" fill-opacity=".06" stroke="#8ff0bd" stroke-opacity=".6" stroke-width="2"/>
+      <path d="M820 230.6 A120 120 0 0 1 820 409.4 A120 120 0 0 1 820 230.6Z" fill="#a6fbf3" fill-opacity=".22"/>
+      <circle cx="820" cy="320" r="7" fill="#effffc"/>
+      <path d="M820 470 L786 540 H854Z" fill="#123a40" stroke="#5ff3e6" stroke-opacity=".35"/>
+      <path d="M650 470 H990" stroke="#a6fbf3" stroke-width="4" stroke-linecap="round"/>
+      <g stroke="#5ff3e6" stroke-opacity=".45" fill="none"><path d="M670 470 L650 506 M670 470 L690 506"/><path d="M970 470 L950 506 M970 470 L990 506"/></g>
+      <path d="M636 506 H704 Q700 524 670 524 Q640 524 636 506Z" fill="#0f3036" stroke="#5ff3e6" stroke-opacity=".6"/>
+      <path d="M936 506 H1004 Q1000 524 970 524 Q940 524 936 506Z" fill="#0f3036" stroke="#8ff0bd" stroke-opacity=".6"/>
+      <rect x="658" y="488" width="24" height="18" rx="3" fill="#5ff3e6" fill-opacity=".75"/>
+      <rect x="958" y="488" width="24" height="18" rx="3" fill="#8ff0bd" fill-opacity=".75"/>
+    </g>
+  </symbol>
+
+  <!-- Habit 05: someone talks, someone listens -->
+  <symbol id="hx-art-listen" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <rect width="1200" height="600" fill="url(#hxg-room)"/>
+    <ellipse cx="820" cy="330" rx="440" ry="250" fill="url(#hxg-halo)"/>
+    <path d="M0 500 L1200 486 V600 H0Z" fill="#06151a"/><path d="M0 500 L1200 486" stroke="#2ac7c9" stroke-opacity=".3"/>
+    <g transform="translate(288 39) scale(.72)">
+    <g transform="translate(560 250)">
+      <rect width="250" height="130" rx="22" fill="#0b2a30" stroke="#7fd2ff" stroke-opacity=".6" stroke-width="2"/>
+      <path d="M60 130 L44 172 L100 130Z" fill="#0b2a30" stroke="#7fd2ff" stroke-opacity=".6" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M58 129 H102" stroke="#0b2a30" stroke-width="4"/>
+      <g fill="#cfeff0"><rect x="30" y="34" width="150" height="9" rx="4.5" opacity=".55"/><rect x="30" y="60" width="190" height="9" rx="4.5" opacity=".35"/><rect x="30" y="86" width="110" height="9" rx="4.5" opacity=".45"/></g>
+    </g>
+    <g fill="none" stroke-linecap="round">
+      <path d="M876 318 Q868 330 876 342" stroke="#7fd2ff" stroke-opacity=".9" stroke-width="3"/>
+      <path d="M902 296 Q884 330 902 364" stroke="#7fd2ff" stroke-opacity=".6" stroke-width="3"/>
+      <path d="M928 274 Q900 330 928 386" stroke="#7fd2ff" stroke-opacity=".35" stroke-width="3"/>
+    </g>
+    <g transform="translate(960 238)">
+      <circle cx="80" cy="80" r="78" fill="#081d22" stroke="#5ff3e6" stroke-opacity=".45" stroke-width="2"/>
+      <path d="M62 44 C100 30 128 66 108 96 C98 112 86 112 84 128 C82 142 64 144 58 132" fill="none" stroke="#a6fbf3" stroke-width="5" stroke-linecap="round"/>
+      <path d="M76 70 C92 64 102 82 90 94" fill="none" stroke="#a6fbf3" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    </g>
+    <path d="M1050 448 c-9 -12 -28 -4 -22 12 c4 10 22 20 22 20 s18 -10 22 -20 c6 -16 -13 -24 -22 -12z" fill="#ffd58f" fill-opacity=".8"/>
+    </g>
+  </symbol>
+
+  <!-- Habit 06: beats and vocals meet in one song -->
+  <symbol id="hx-art-studio" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <rect width="1200" height="600" fill="url(#hxg-room)"/>
+    <ellipse cx="820" cy="320" rx="440" ry="250" fill="url(#hxg-halo)"/>
+    <path d="M0 480 L1200 466 V600 H0Z" fill="#06151a"/><path d="M0 480 L1200 466" stroke="#2ac7c9" stroke-opacity=".3"/>
+    <g transform="translate(255 75) scale(.75)">
+    <g transform="translate(540 362)">
+      <rect width="150" height="104" rx="10" fill="#08191e" stroke="#5ff3e6" stroke-opacity=".5"/>
+      <g fill="#5ff3e6"><rect x="14" y="14" width="26" height="18" rx="3" opacity=".8"/><rect x="46" y="14" width="26" height="18" rx="3" opacity=".25"/><rect x="78" y="14" width="26" height="18" rx="3" opacity=".55"/><rect x="110" y="14" width="26" height="18" rx="3" opacity=".25"/><rect x="14" y="40" width="26" height="18" rx="3" opacity=".25"/><rect x="46" y="40" width="26" height="18" rx="3" opacity=".8"/><rect x="78" y="40" width="26" height="18" rx="3" opacity=".25"/><rect x="110" y="40" width="26" height="18" rx="3" opacity=".65"/><rect x="14" y="66" width="26" height="18" rx="3" opacity=".55"/><rect x="46" y="66" width="26" height="18" rx="3" opacity=".25"/><rect x="78" y="66" width="26" height="18" rx="3" opacity=".8"/><rect x="110" y="66" width="26" height="18" rx="3" opacity=".25"/></g>
+    </g>
+    <g transform="translate(730 200)">
+      <rect width="300" height="190" rx="10" fill="#08191e" stroke="#5ff3e6" stroke-opacity=".45"/>
+      <rect x="12" y="12" width="276" height="166" rx="5" fill="url(#hxg-screen)"/>
+      <path d="M26 70 Q44 48 62 70 T98 70 T134 70 T170 70 T206 70 T242 70 T272 70" fill="none" stroke="#5ff3e6" stroke-width="2.4" opacity=".85"/>
+      <path d="M26 112 Q38 92 50 112 T74 112 T98 112 T122 112 T146 112 T170 112 T194 112 T218 112 T242 112 T272 112" fill="none" stroke="#ffd58f" stroke-width="2.4" opacity=".85"/>
+      <path d="M26 150 H272" stroke="#cffcf6" stroke-opacity=".2" stroke-width="8" stroke-linecap="round"/>
+      <path d="M26 150 H190" stroke="#8ff0bd" stroke-opacity=".75" stroke-width="8" stroke-linecap="round"/>
+      <rect x="136" y="190" width="28" height="44" fill="#0a1e23"/><path d="M100 234h100l8 10H92z" fill="#0c2329"/>
+    </g>
+    <g transform="translate(1080 250)">
+      <rect x="-16" y="0" width="32" height="70" rx="16" fill="#0a1f25" stroke="#ffd58f" stroke-opacity=".75" stroke-width="2"/>
+      <g stroke="#ffd58f" stroke-opacity=".35"><path d="M-12 18 H12 M-12 30 H12 M-12 42 H12"/></g>
+      <path d="M-26 46 Q-26 92 0 92 Q26 92 26 46" fill="none" stroke="#5ff3e6" stroke-opacity=".5" stroke-width="3"/>
+      <path d="M0 92 V216 M-34 216 H34" stroke="#0f2a31" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    <g fill="none" stroke-width="2" stroke-dasharray="4 8" stroke-linecap="round">
+      <path d="M690 380 Q720 330 760 300" stroke="#5ff3e6" stroke-opacity=".6"/>
+      <path d="M1056 290 Q1040 300 1010 312" stroke="#ffd58f" stroke-opacity=".6"/>
+    </g>
+    </g>
+  </symbol>
 </svg>
 
 <div class="hx" data-view="0">
@@ -322,15 +401,18 @@
       <button type="button" role="tab" id="hx-t1" aria-controls="hx-v1" aria-selected="false" tabindex="-1"><span class="ic">01</span><span class="lb"><span class="full">Be Proactive</span><span class="sh">Proactive</span></span><svg class="i ok" aria-hidden="true"><use href="#i-check"/></svg></button>
       <button type="button" role="tab" id="hx-t2" aria-controls="hx-v2" aria-selected="false" tabindex="-1"><span class="ic">02</span><span class="lb"><span class="full">Begin with the End in Mind</span><span class="sh">End in Mind</span></span><svg class="i ok" aria-hidden="true"><use href="#i-check"/></svg></button>
       <button type="button" role="tab" id="hx-t3" aria-controls="hx-v3" aria-selected="false" tabindex="-1"><span class="ic">03</span><span class="lb"><span class="full">First Things First</span><span class="sh">First Things</span></span><svg class="i ok" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="tab" id="hx-t4" aria-controls="hx-v4" aria-selected="false" tabindex="-1"><span class="ic">04</span><span class="lb"><span class="full">Think Win-Win</span><span class="sh">Win-Win</span></span><svg class="i ok" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="tab" id="hx-t5" aria-controls="hx-v5" aria-selected="false" tabindex="-1"><span class="ic">05</span><span class="lb"><span class="full">Seek First to Understand</span><span class="sh">Understand</span></span><svg class="i ok" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="tab" id="hx-t6" aria-controls="hx-v6" aria-selected="false" tabindex="-1"><span class="ic">06</span><span class="lb"><span class="full">Synergize</span><span class="sh">Synergize</span></span><svg class="i ok" aria-hidden="true"><use href="#i-check"/></svg></button>
     </div>
     <div class="hx-links">
       <button type="button" class="hx-link" data-goto="mission"><svg class="i"><use href="#i-compass"/></svg>My Mission</button>
       <a class="hx-link" href="pdfs/%%MISSION_PDF%%" download="%%MISSION_PDF%%"><svg class="i"><use href="#i-down"/></svg>Mission PDF</a>
     </div>
     <section class="hx-journey" aria-label="My journey in this session">
-      <div class="hx-jh"><span>MY JOURNEY</span><b data-explored-count>0 / 3</b></div>
-      <div class="hx-jbar" aria-hidden="true"><i data-j="1"></i><i data-j="2"></i><i data-j="3"></i></div>
-      <div class="hx-jlab" aria-hidden="true"><span>01</span><span>02</span><span>03</span></div>
+      <div class="hx-jh"><span>MY JOURNEY</span><b data-explored-count>0 / 6</b></div>
+      <div class="hx-jbar" aria-hidden="true"><i data-j="1"></i><i data-j="2"></i><i data-j="3"></i><i data-j="4"></i><i data-j="5"></i><i data-j="6"></i></div>
+      <div class="hx-jlab" aria-hidden="true"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
       <p class="hx-jnote">Habits explored in this session. Nothing is saved: it resets when 7HHEP.EXE closes.</p>
     </section>
   </nav>
@@ -344,7 +426,7 @@
         <div class="hx-hero-copy">
           <div class="hx-kicker hx-in" style="--d:.1s">7HHEP.EXE · PERSONAL DEVELOPMENT SYSTEM</div>
           <h1 class="hx-title hx-in" style="--d:.25s">THE <em>7</em> HABITS</h1>
-          <p class="hx-sub hx-in" style="--d:.5s">Three habits. Three principles. One personal journey.</p>
+          <p class="hx-sub hx-in" style="--d:.5s">Six habits. Six principles. One personal journey.</p>
         </div>
         <button class="hx-cta hx-in" style="--d:.85s" type="button" data-go="1">Start journey<svg class="i"><use href="#i-next"/></svg></button>
       </div>
@@ -352,12 +434,15 @@
         <button class="hx-chap" type="button" data-go="1"><svg class="hx-scene" aria-hidden="true"><use href="#hx-art-desk"/></svg><span class="no">01</span><span class="done">EXPLORED</span><strong>Be Proactive</strong><span class="d">Take initiative, explore ideas and make things happen.</span><span class="go" aria-hidden="true"><svg class="i"><use href="#i-next"/></svg></span></button>
         <button class="hx-chap" type="button" data-go="2"><svg class="hx-scene" aria-hidden="true"><use href="#hx-art-city"/></svg><span class="no">02</span><span class="done">EXPLORED</span><strong>Begin with the End in Mind</strong><span class="d">Define my purpose and build a future with intention.</span><span class="go" aria-hidden="true"><svg class="i"><use href="#i-next"/></svg></span></button>
         <button class="hx-chap" type="button" data-go="3"><svg class="hx-scene" aria-hidden="true"><use href="#hx-art-cairn"/></svg><span class="no">03</span><span class="done">EXPLORED</span><strong>First Things First</strong><span class="d">Focus on what truly matters and manage my priorities.</span><span class="go" aria-hidden="true"><svg class="i"><use href="#i-next"/></svg></span></button>
+        <button class="hx-chap" type="button" data-go="4"><svg class="hx-scene" aria-hidden="true" viewBox="630 120 480 480" preserveAspectRatio="xMidYMid slice"><use href="#hx-art-balance" width="1200" height="600"/></svg><span class="no">04</span><span class="done">EXPLORED</span><strong>Think Win-Win</strong><span class="d">Look for agreements where everyone benefits.</span><span class="go" aria-hidden="true"><svg class="i"><use href="#i-next"/></svg></span></button>
+        <button class="hx-chap" type="button" data-go="5"><svg class="hx-scene" aria-hidden="true" viewBox="630 120 480 480" preserveAspectRatio="xMidYMid slice"><use href="#hx-art-listen" width="1200" height="600"/></svg><span class="no">05</span><span class="done">EXPLORED</span><strong>Seek First to Understand</strong><span class="d">Listen first, without judging, before being understood.</span><span class="go" aria-hidden="true"><svg class="i"><use href="#i-next"/></svg></span></button>
+        <button class="hx-chap" type="button" data-go="6"><svg class="hx-scene" aria-hidden="true" viewBox="630 120 480 480" preserveAspectRatio="xMidYMid slice"><use href="#hx-art-studio" width="1200" height="600"/></svg><span class="no">06</span><span class="done">EXPLORED</span><strong>Synergize</strong><span class="d">Combine different strengths to create something better.</span><span class="go" aria-hidden="true"><svg class="i"><use href="#i-next"/></svg></span></button>
       </div>
       <div class="hx-ojourney">
         <span class="hx-oj-ic"><svg class="i"><use href="#i-chart"/></svg></span>
         <div class="hx-oj-txt"><strong>My Journey</strong><span>Explored in this session only — nothing is saved.</span></div>
-        <div class="hx-jbar" aria-hidden="true"><i data-j="1"></i><i data-j="2"></i><i data-j="3"></i></div>
-        <b class="hx-oj-n"><span data-explored-count>0 / 3</span> habits explored</b>
+        <div class="hx-jbar" aria-hidden="true"><i data-j="1"></i><i data-j="2"></i><i data-j="3"></i><i data-j="4"></i><i data-j="5"></i><i data-j="6"></i></div>
+        <b class="hx-oj-n"><span data-explored-count>0 / 6</span> habits explored</b>
       </div>
     </section>
 
@@ -474,7 +559,113 @@
           </article>
         </div>
         <div class="hx-statement"><span class="hx-kick">THE PRINCIPLE</span><p>Protect my most important priorities first.<span>Smaller activities should not take the time they need.</span></p></div>
-        <div class="hx-next"><span>You have explored <b data-explored-count>0 / 3</b> habits in this session.</span><button class="btn" type="button" data-go="0"><svg class="i"><use href="#i-home"/></svg>Back to overview</button></div>
+        <div class="hx-next"><span>NEXT CHAPTER</span><button class="btn primary glare" type="button" data-go="4">Think Win-Win<svg class="i"><use href="#i-next"/></svg></button></div>
+      </div>
+    </section>
+    <!-- ===== HABIT 04 ===== -->
+    <section class="hx-view hx-c4" role="tabpanel" id="hx-v4" aria-labelledby="hx-t4" tabindex="0" hidden>
+      <header class="hx-ch">
+        <svg class="hx-scene" aria-hidden="true"><use href="#hx-art-balance"/></svg>
+        <div class="hx-fx" aria-hidden="true"></div>
+        <div class="hx-ch-copy"><span class="hx-badge">HABIT 04</span><h2 class="hx-ch-title">Think Win-Win</h2><div class="hx-tags"><span>Collaboration</span><span>Balance</span><span>Mutual Benefit</span><span>Agreement</span></div></div>
+      </header>
+      <div class="hx-wrap">
+        <figure class="hx-example">
+          <span class="q" aria-hidden="true">&ldquo;</span>
+          <div>
+            <figcaption class="hx-kick">MY PERSONAL EXAMPLE</figcaption>
+            <blockquote>
+              <p>A win-win situation in my life was when a friend and I decided to buy FL Studio together. Instead of one person paying the full price, we agreed to <mark>split the cost equally</mark>. This made it cheaper for both of us, and we could both enjoy using the software to produce music. We both contributed the same amount and both benefited from the agreement. I think this is a good example of a win-win situation because <mark>nobody lost and we both got what we wanted</mark>.</p>
+            </blockquote>
+          </div>
+        </figure>
+
+        <section class="hx-deal" aria-labelledby="hx-deal-t">
+          <div class="hx-blk-head"><span class="hx-kick">THE AGREEMENT</span><h3 id="hx-deal-t">Two equal shares, one shared result</h3></div>
+          <div class="hx-deal-row">
+            <div class="hx-share"><span class="hx-share-ic"><svg class="i"><use href="#i-user"/></svg></span><small>ME</small><strong>Equal share</strong><span class="hx-share-bar" aria-hidden="true"><i></i></span></div>
+            <span class="hx-op" aria-hidden="true">+</span>
+            <div class="hx-share"><span class="hx-share-ic"><svg class="i"><use href="#i-team"/></svg></span><small>MY FRIEND</small><strong>Equal share</strong><span class="hx-share-bar" aria-hidden="true"><i></i></span></div>
+            <span class="hx-op" aria-hidden="true">=</span>
+            <div class="hx-share hx-share-win"><span class="hx-share-ic"><svg class="i"><use href="#i-music"/></svg></span><small>WIN-WIN</small><strong>FL Studio for both of us</strong></div>
+          </div>
+          <ul class="hx-ticks"><li><svg class="i"><use href="#i-check"/></svg>Cheaper for both of us</li><li><svg class="i"><use href="#i-check"/></svg>The same contribution</li><li><svg class="i"><use href="#i-check"/></svg>Both of us benefited</li></ul>
+        </section>
+
+        <div class="hx-statement"><span class="hx-kick">WHAT WIN-WIN MEANS TO ME</span><p>Nobody lost. <span>We both got what we wanted.</span></p></div>
+        <div class="hx-next"><span>NEXT CHAPTER</span><button class="btn primary glare" type="button" data-go="5">Seek First to Understand<svg class="i"><use href="#i-next"/></svg></button></div>
+      </div>
+    </section>
+
+    <!-- ===== HABIT 05 ===== -->
+    <section class="hx-view hx-c5" role="tabpanel" id="hx-v5" aria-labelledby="hx-t5" tabindex="0" hidden>
+      <header class="hx-ch">
+        <svg class="hx-scene" aria-hidden="true"><use href="#hx-art-listen"/></svg>
+        <div class="hx-fx" aria-hidden="true"></div>
+        <div class="hx-ch-copy"><span class="hx-badge">HABIT 05</span><h2 class="hx-ch-title">Seek First to Understand, Then to Be Understood</h2><div class="hx-tags"><span>Listening</span><span>Empathy</span><span>Understanding</span><span>Support</span></div></div>
+      </header>
+      <div class="hx-wrap">
+        <figure class="hx-example">
+          <span class="q" aria-hidden="true">&ldquo;</span>
+          <div>
+            <figcaption class="hx-kick">MY PERSONAL EXAMPLE</figcaption>
+            <blockquote>
+              <p>When someone talks to me about their problems, I usually listen carefully, nod or say things like "yeah" or "I understand". I try not to judge them or immediately give my opinion because sometimes I feel that <mark>simply listening is more helpful than giving advice</mark>. I prefer to let the other person think about their situation and find their own solution, even if it is different from what I would have chosen.</p>
+            </blockquote>
+          </div>
+        </figure>
+
+        <section class="hx-phrases" aria-labelledby="hx-phrases-t">
+          <div class="hx-blk-head"><span class="hx-kick">HOW I SUPPORT OTHERS</span><h3 id="hx-phrases-t">Some phrases I use to support others are:</h3></div>
+          <ul class="hx-bubbles">
+            <li style="--i:0"><span class="hx-wave" aria-hidden="true"><i></i><i></i><i></i></span><q>Don't worry, I'm here if you need me.</q></li>
+            <li style="--i:1"><span class="hx-wave" aria-hidden="true"><i></i><i></i><i></i></span><q>I understand how you feel.</q></li>
+            <li style="--i:2"><span class="hx-wave" aria-hidden="true"><i></i><i></i><i></i></span><q>Take your time, there's no rush.</q></li>
+          </ul>
+        </section>
+
+        <section class="hx-support" aria-labelledby="hx-support-t">
+          <span class="hx-kick" id="hx-support-t">WHAT BEING SUPPORTIVE MEANS TO ME</span>
+          <p>For me, being supportive means listening without judging, respecting other people's decisions and being there when they need someone.</p>
+          <ul class="hx-ticks"><li><svg class="i"><use href="#i-check"/></svg>Listening without judging</li><li><svg class="i"><use href="#i-check"/></svg>Respecting their decisions</li><li><svg class="i"><use href="#i-heart"/></svg>Being there</li></ul>
+        </section>
+
+        <div class="hx-statement"><span class="hx-kick">THE PRINCIPLE</span><p>Sometimes, people don't need someone to solve their problems; <span>they just need someone who listens.</span></p></div>
+        <div class="hx-next"><span>NEXT CHAPTER</span><button class="btn primary glare" type="button" data-go="6">Synergize<svg class="i"><use href="#i-next"/></svg></button></div>
+      </div>
+    </section>
+
+    <!-- ===== HABIT 06 ===== -->
+    <section class="hx-view hx-c6" role="tabpanel" id="hx-v6" aria-labelledby="hx-t6" tabindex="0" hidden>
+      <header class="hx-ch">
+        <svg class="hx-scene" aria-hidden="true"><use href="#hx-art-studio"/></svg>
+        <div class="hx-fx" aria-hidden="true"></div>
+        <div class="hx-ch-copy"><span class="hx-badge">HABIT 06</span><h2 class="hx-ch-title">Synergize</h2><div class="hx-tags"><span>Teamwork</span><span>Music</span><span>Different Skills</span><span>Better Results</span></div></div>
+      </header>
+      <div class="hx-wrap">
+        <figure class="hx-example">
+          <span class="q" aria-hidden="true">&ldquo;</span>
+          <div>
+            <figcaption class="hx-kick">MY PERSONAL EXAMPLE</figcaption>
+            <blockquote>
+              <p>An example of synergy in my life is making music with a friend. I am not very good at creating instrumentals, but my friend is good at making beats. On the other hand, he sometimes needs help setting up his microphone and improving the sound of his vocals, so I help him with that. We combine our different skills to create a complete song. Without his beats or my help with the vocals, it would be much harder for us to finish the song. This shows how <mark>working together and sharing our strengths can produce better results</mark>.</p>
+            </blockquote>
+          </div>
+        </figure>
+
+        <section class="hx-mix" aria-labelledby="hx-mix-t">
+          <div class="hx-blk-head"><span class="hx-kick">THE MIX</span><h3 id="hx-mix-t">Two different skills, one complete song</h3></div>
+          <div class="hx-mix-row">
+            <div class="hx-track" style="--c:#5ff3e6"><span class="hx-share-ic"><svg class="i"><use href="#i-music"/></svg></span><small>MY FRIEND</small><strong>Making beats</strong><span class="hx-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+            <span class="hx-op" aria-hidden="true">+</span>
+            <div class="hx-track" style="--c:#ffd58f"><span class="hx-share-ic"><svg class="i"><use href="#i-tool"/></svg></span><small>ME</small><strong>Microphone setup &amp; vocal sound</strong><span class="hx-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+            <span class="hx-op" aria-hidden="true">=</span>
+            <div class="hx-track hx-track-song" style="--c:#8ff0bd"><span class="hx-share-ic"><svg class="i"><use href="#i-spark"/></svg></span><small>TOGETHER</small><strong>A complete song</strong><span class="hx-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          </div>
+        </section>
+
+        <div class="hx-statement"><span class="hx-kick">WHAT SYNERGY MEANS TO ME</span><p>Working together and sharing our strengths <span>can produce better results.</span></p></div>
+        <div class="hx-next"><span>You have explored <b data-explored-count>0 / 6</b> habits in this session.</span><button class="btn" type="button" data-go="0"><svg class="i"><use href="#i-home"/></svg>Back to overview</button></div>
       </div>
     </section>
   </div>

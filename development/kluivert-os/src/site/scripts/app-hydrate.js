@@ -72,7 +72,7 @@
       const tabs = $$('[role="tab"]', root), views = tabs.map(t => $('#' + t.getAttribute('aria-controls'), root)), nav = tabs[0].parentElement;
       const seen = new Set();
       const paint = cur => {
-        $$('[data-explored-count]', root).forEach(e => { e.textContent = seen.size + ' / 3'; });
+        $$('[data-explored-count]', root).forEach(e => { e.textContent = seen.size + ' / ' + (tabs.length - 1); });
         $$('.hx-jbar i', root).forEach(i => { const n = +i.dataset.j; i.classList.toggle('seen', seen.has(n)); i.classList.toggle('cur', n === cur); });
         tabs.forEach((t, n) => t.classList.toggle('seen', seen.has(n)));
         $$('.hx-chap', root).forEach(c => c.classList.toggle('seen', seen.has(+c.dataset.go)));
@@ -81,6 +81,7 @@
         tabs.forEach((t, j) => { const on = j === v; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; views[j].hidden = !on; });
         root.dataset.view = v; if (v > 0) seen.add(v); paint(v);
         main.scrollTop = 0;
+        if (nav.scrollWidth > nav.clientWidth + 1) { const a = nav.getBoundingClientRect(), b = tabs[v].getBoundingClientRect(); nav.scrollLeft += b.left - a.left - (a.width - b.width) / 2; }   // mobile tab bar: keep the current habit in view
         if (focus) tabs[v].focus({ preventScroll: true });
       };
       tabs.forEach((t, i) => t.addEventListener('click', () => show(i)));
@@ -117,6 +118,7 @@
       });
       paint(0);
     }
+    if (k === 'projects') Arcade.prefetch();
     if (k === 'arcade') {
       const st = $('[data-arc-stage]', body);
       $('[data-arc="play"]', body).addEventListener('click', () => {

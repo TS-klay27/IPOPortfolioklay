@@ -703,7 +703,7 @@ const GAME_VIEW_CSS = [
 const Arcade = (() => {
   const el = $('#arcade'), stage = $('#ar-stage'), load = $('#ar-load');
   const behind = ['#intro', '#room', '#os'].map(s => $(s));   // kept out of Tab order and clicks while playing
-  let isOpen = false, hideT = 0, fsBtn = null, wasFull = false;
+  let isOpen = false, hideT = 0, fsBtn = null, wasFull = false, prefetched = false;
   const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement || null;
   const root = document.documentElement;
   const enterFs = () => { const rq = root.requestFullscreen || root.webkitRequestFullscreen; if (!rq || fsEl()) return; try { const p = rq.call(root); if (p && p.catch) p.catch(() => {}); } catch (_) {} };   // refused: the game still fills the window
@@ -711,16 +711,25 @@ const Arcade = (() => {
   const focusGame = () => { const f = stage.querySelector('iframe'); if (f) try { f.contentWindow.focus(); } catch (_) {} };
   const syncFs = () => { if (fsBtn) { const on = !!fsEl(); if (on) wasFull = true; fsBtn.textContent = on ? '⛶ EXIT FULLSCREEN' : '⛶ FULLSCREEN'; fsBtn.setAttribute('aria-pressed', String(on)); } if (isOpen) focusGame(); };
   ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, syncFs));
-  // Smooth play on any PC: live glows and internal resolution step down only if frames take too long. The board itself stays cached at full quality.
+  // Smooth play on any PC, without touching game logic: menus redraw rarely, an idle board runs at 30 fps,
+  // moves run at full rate, and glows / internal resolution step down only if frames take too long.
   function tunePerformance(win, canvas) {
-    const blur = Object.getOwnPropertyDescriptor(win.CanvasRenderingContext2D.prototype, 'shadowBlur'), ctx = canvas.getContext('2d'), native = win.devicePixelRatio || 1;
-    const levels = [{ glow: 1, res: Math.min(native, 1.25) }, { glow: .5, res: 1 }, { glow: 0, res: 1 }, { glow: 0, res: .75 }];
-    let q = 0, last = 0, n = 0, sum = 0;
-    Object.defineProperty(ctx, 'shadowBlur', { configurable: true, get: () => blur.get.call(ctx), set: v => blur.set.call(ctx, v * levels[q].glow) });
+    const d = win.document, proto = win.CanvasRenderingContext2D.prototype, blur = Object.getOwnPropertyDescriptor(proto, 'shadowBlur');
+    const live = canvas.getContext('2d'), native = win.devicePixelRatio || 1, dialog = d.getElementById('dialog'), nameForm = d.getElementById('name-form');
+    const levels = [{ live: 1, board: 1, res: Math.min(native, 1.25) }, { live: .5, board: .7, res: 1 }, { live: 0, board: .4, res: 1 }, { live: 0, board: .25, res: .75 }];
+    let q = 0, last = 0, n = 0, sum = 0, active = 0, lastDraw = 0, nextId = 1;
+    let overlayOn = true, overlayAt = -1e9;   // layout is read at most 4 times a second, never on every frame
+    const overlay = () => { const now = win.performance.now(); if (now - overlayAt > 250) { overlayAt = now; overlayOn = !dialog.hidden || nameForm.getClientRects().length > 0; } return overlayOn; };
+    Object.defineProperty(proto, 'shadowBlur', { configurable: true, get() { return blur.get.call(this); }, set(v) { blur.set.call(this, v * (this === live ? levels[q].live : levels[q].board)); } });
     Object.defineProperty(win, 'devicePixelRatio', { configurable: true, get: () => levels[q].res });
-    win.__kpcQuality = () => q;
-    const tick = t => { const dt = t - last; last = t; if (dt > 0 && dt < 250) { sum += dt; n++; } if (n >= 40) { if (sum / n > 21 && q < levels.length - 1) q++; n = sum = 0; } win.requestAnimationFrame(tick); };
-    win.requestAnimationFrame(tick);
+    ['keydown', 'pointerdown'].forEach(ev => d.addEventListener(ev, () => { active = win.performance.now(); overlayAt = -1e9; }, true));
+    const nativeRaf = win.requestAnimationFrame.bind(win), nativeCancel = win.cancelAnimationFrame.bind(win), jobs = new Map();
+    const gap = t => overlay() ? 120 : t - active < 1400 ? 0 : 32;
+    win.requestAnimationFrame = cb => { const id = nextId++; const step = t => { if (t - lastDraw < gap(t) - 2) { jobs.set(id, nativeRaf(step)); return; } lastDraw = t; jobs.delete(id); cb(t); }; jobs.set(id, nativeRaf(step)); return id; };
+    win.cancelAnimationFrame = id => { const j = jobs.get(id); if (j !== undefined) nativeCancel(j); jobs.delete(id); };
+    win.__kpcQuality = () => q; win.__kpcRaf = nativeRaf;
+    const tick = t => { const dt = t - last; last = t; if (dt > 0 && dt < 250 && !overlay()) { sum += dt; n++; } if (n >= 30) { if (sum / n > 21 && q < levels.length - 1) q++; n = sum = 0; } nativeRaf(tick); };
+    nativeRaf(tick);
   }
   // Adapts the untouched game page to this view from outside: full-size layout, exit button, fullscreen of the whole game view.
   function integrate(f) {
@@ -739,6 +748,7 @@ const Arcade = (() => {
   return {
     get isOpen() { return isOpen; },
     focus: focusGame,
+    prefetch() { if (prefetched) return; prefetched = true; setTimeout(() => { const l = document.createElement('link'); l.rel = 'prefetch'; l.href = 'kpc-game.html'; document.head.append(l); }, 700); },
     // Called synchronously from the PLAY click: browsers only allow fullscreen inside the user's gesture.
     launch() { clearTimeout(hideT); wasFull = false; el.hidden = false; enterFs(); },
     open() {
@@ -750,7 +760,7 @@ const Arcade = (() => {
       const f = document.createElement('iframe'); f.title = 'KPC GAME'; f.allow = 'fullscreen; autoplay'; f.src = 'kpc-game.html';
       const ready = () => { if (f.isConnected) { load.classList.add('done'); focusGame(); } };
       f.addEventListener('load', () => { integrate(f); ready(); }, { once: true }); setTimeout(ready, 6000); // never leave the loader up
-      stage.append(f);
+      setTimeout(() => { if (isOpen && !stage.querySelector('iframe')) stage.append(f); }, 70);   // let the view paint first
     },
     close() {
       if (!isOpen) return; isOpen = false; fsBtn = null;
