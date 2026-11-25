@@ -55,6 +55,8 @@ const Motion = (() => {
     sub: f => subs.add(f)
   };
 })();
+const forceMotion = () => document.documentElement.classList.toggle('motion-forced', Motion.pref === 'on' && reduced());
+forceMotion(); Motion.sub(forceMotion);
 let spotEl = null, spotX = 0, spotY = 0, spotRaf = 0;   // at most one update per frame
 document.addEventListener('pointermove', e => {
   if (e.pointerType === 'touch') return;
@@ -963,11 +965,36 @@ const Intro = (() => {
   h1.innerHTML = h1.dataset.lines.split('|').map((line, li, arr) => '<span class="ln" aria-hidden="true">' + [...line].map(ch => ch === ' ' ? `<span class="lt sp" style="--i:${n++}"> </span>` : `<span class="lt" style="--i:${n++}">${ch}</span>`).join('') + (li === arr.length - 1 ? `<span class="lt stop" style="--i:${n++}">.</span>` : '') + '</span>').join('');
   cells.innerHTML = '<i></i>'.repeat(24); const cellEls = $$('i', cells);
   const setTerm = p => { const on = Math.round(p * 24); cellEls.forEach((c, i) => c.classList.toggle('on', i < on)); const v = Math.round(p * 100); $('#term-pct').textContent = String(v).padStart(2, '0') + '%'; cells.setAttribute('aria-valuenow', v); };
+  // Living intro: motes, cursor tilt, a count-up, and the motion switch. Nothing runs while the intro is hidden.
+  const sc = $('.showcase', el), orbit = $('.orbit', el), count = $('#sc-count'), motionBtn = $('#in-motion');
+  { const m = $('.in-motes', el); let s = 29; const r = () => (s = s * 16807 % 2147483647) / 2147483647; for (let i = 0; i < 5; i++) { const e = document.createElement('i'); e.style.cssText = `--x:${(r() * 100).toFixed(1)}%;--y:${(25 + r() * 70).toFixed(1)}%;--s:${(1.5 + r() * 2).toFixed(1)}px;--t:${(10 + r() * 9).toFixed(1)}s;--d:${(-r() * 15).toFixed(1)}s;--dx:${((r() - .5) * 70).toFixed(0)}px`; m.append(e); } }
+  const syncMotion = () => { el.classList.toggle('alive', Motion.on()); $('b', motionBtn).textContent = { auto: Motion.on() ? 'AUTO · ON' : 'AUTO · OFF', on: 'ON', off: 'OFF' }[Motion.pref]; if (!Motion.on()) { sc.style.transform = ''; orbit.style.translate = ''; } };
+  syncMotion(); Motion.sub(syncMotion);
+  motionBtn.addEventListener('click', () => { const o = ['auto', 'on', 'off']; Motion.set(o[(o.indexOf(Motion.pref) + 1) % 3]); toast('Motion: ' + $('b', motionBtn).textContent); });
+  // Hovering the card tilts it in 3D and lets the orbit float deeper; elsewhere on the page nothing moves.
+  let tx = 0, ty = 0, cx = 0, cy = 0, tiltRaf = 0, onCard = false;
+  const tilt = () => {
+    tiltRaf = 0; cx += (tx - cx) * .14; cy += (ty - cy) * .14;
+    const still = Math.abs(cx) < .002 && Math.abs(cy) < .002; if (still) { cx = cy = 0; }
+    orbit.style.translate = still ? '' : `${(cx * 12).toFixed(1)}px ${(cy * 12).toFixed(1)}px`;
+    if (onCard) sc.style.transform = `perspective(1200px) rotateX(${(-cy * 7).toFixed(2)}deg) rotateY(${(cx * 7).toFixed(2)}deg)`;
+    if (Math.abs(tx - cx) > .002 || Math.abs(ty - cy) > .002) tiltRaf = requestAnimationFrame(tilt);
+  };
+  el.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse' || !Motion.on() || isSmall()) return;
+    const b = sc.getBoundingClientRect(), inCard = e.clientX >= b.left && e.clientX <= b.right && e.clientY >= b.top && e.clientY <= b.bottom;
+    if (inCard !== onCard) { onCard = inCard; sc.classList.toggle('tilting', inCard); if (!inCard) { sc.style.transform = ''; tx = ty = 0; } }
+    if (!inCard && !cx && !cy) return;   // away from the card nothing moves
+    if (inCard) { tx = clamp((e.clientX - b.left - b.width / 2) / (b.width / 2), -1, 1); ty = clamp((e.clientY - b.top - b.height / 2) / (b.height / 2), -1, 1); }
+    if (!tiltRaf) tiltRaf = requestAnimationFrame(tilt);
+  }, { passive: true });
+  el.addEventListener('pointerleave', () => { tx = ty = 0; onCard = false; sc.classList.remove('tilting'); sc.style.transform = ''; if (!tiltRaf) tiltRaf = requestAnimationFrame(tilt); });
+  const countUp = () => { if (!Motion.on()) { count.textContent = '026'; return; } const t0 = performance.now() + 1100; const f = t => { const k = clamp((t - t0) / 1300); count.textContent = String(Math.round(ease(k) * 26)).padStart(3, '0'); if (k < 1 && visible) requestAnimationFrame(f); }; requestAnimationFrame(f); };
   function reset() { btn.hidden = false; $('#term').hidden = true; status.innerHTML = 'A digital space for everything I create <span>✦</span>'; el.style.clipPath = ''; el.style.opacity = ''; }
   return {
     get visible() { return visible; },
     async show(animated) {
-      reset(); el.hidden = false; visible = true;
+      reset(); el.hidden = false; visible = true; countUp();
       if (animated) { el.style.clipPath = 'inset(0 100% 0 0)'; await sweep(el, { reveal: true, duration: 1300 }); }
       Room.pause(); btn.focus({ preventScroll: true });
     },
